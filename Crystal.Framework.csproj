@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+
+    <PackageId>Crystal.Framework</PackageId>
+    <Version>0.0.2</Version>
+    <Authors>Pietro Carrara</Authors>
+    <Company>None</Company>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <metadata>
+      <license type="expression">MIT</license>
+    </metadata>  
+  </PropertyGroup>
+
+  
+<ItemGroup>
+  <None Include="LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+</ItemGroup>
+
+</Project>
