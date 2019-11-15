@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Crystal.ECS.Query
+namespace Crystal.Framework.ECS.Query
 {
     public class EntityQuery
     {

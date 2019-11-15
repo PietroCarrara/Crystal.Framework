@@ -1,4 +1,4 @@
-namespace Crystal.ECS
+namespace Crystal.Framework.ECS
 {
     public interface IRenderer
     {

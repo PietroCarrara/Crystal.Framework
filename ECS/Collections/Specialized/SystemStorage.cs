@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Crystal.ECS.Collections.Specialized
+namespace Crystal.Framework.ECS.Collections.Specialized
 {
     public class SystemStorage : IEnumerable<ISystem>
     {

@@ -2,7 +2,7 @@ using System;
 using Crystal.Framework;
 using Crystal.Framework.Graphics;
 
-namespace Crystal.ECS.Components.Graphical
+namespace Crystal.Framework.ECS.Components.Graphical
 {
     public class Sprite : IComponent, IDisposable
     {

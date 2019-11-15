@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Crystal.ECS.Collections.Specialized;
+using Crystal.Framework.ECS.Collections.Specialized;
 
-namespace Crystal.ECS
+namespace Crystal.Framework.ECS
 {
     public sealed class Entity
     {

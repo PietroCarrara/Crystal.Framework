@@ -1,9 +1,9 @@
 using System.Linq;
-using Crystal.ECS.Query;
-using Crystal.ECS.Components;
-using Crystal.ECS.Components.Graphical;
+using Crystal.Framework.ECS.Query;
+using Crystal.Framework.ECS.Components;
+using Crystal.Framework.ECS.Components.Graphical;
 
-namespace Crystal.ECS.Systems.Graphical
+namespace Crystal.Framework.ECS.Systems.Graphical
 {
     public class CameraSpriteRenderer : IRenderer
     {

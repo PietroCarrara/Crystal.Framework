@@ -1,4 +1,4 @@
-namespace Crystal.ECS.Components.Graphical
+namespace Crystal.Framework.ECS.Components.Graphical
 {
     public class Camera : IComponent
     {

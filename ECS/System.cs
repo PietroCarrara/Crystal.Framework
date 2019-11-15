@@ -1,6 +1,6 @@
-using Crystal.ECS.Query;
+using Crystal.Framework.ECS.Query;
 
-namespace Crystal.ECS
+namespace Crystal.Framework.ECS
 {
     public interface ISystem
     {

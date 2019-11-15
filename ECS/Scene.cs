@@ -1,7 +1,8 @@
 using System.Collections.Generic;
-using Crystal.ECS.Collections.Specialized;
+using Crystal.Framework.ECS.Collections.Specialized;
+using Crystal.Framework.Input;
 
-namespace Crystal.ECS
+namespace Crystal.Framework.ECS
 {
     public class Scene
     {
@@ -13,6 +14,8 @@ namespace Crystal.ECS
         /// If this scene has already been initialized
         /// </summary>
         public bool Initialized;
+
+        public IInput Input;
         
         /// <summary>
         /// Dictionary of resources
