@@ -10,11 +10,6 @@ namespace Crystal.Framework.ECS
         public SystemStorage Systems { get; private set; } = new SystemStorage();
         public RendererStorage Renderers { get; private set; } = new RendererStorage();
 
-        /// <summary>
-        /// If this scene has already been initialized
-        /// </summary>
-        public bool Initialized;
-
         public IInput Input;
         
         /// <summary>
