@@ -27,8 +27,8 @@ namespace Crystal.Framework.Input
         /// </summary>
         /// <param name="action">The action</param>
         /// <returns>
-        /// Returns a value in range [0, 1]. For actions that are
-        /// binary (true or false), returns 0 or 1
+        /// Returns a value in range [0, 1] if the mouse wheel is not present in the action.
+        /// For actions that are binary (true or false), returns 0 or 1
         /// </returns>
         float GetActionStrength(string action);
 
