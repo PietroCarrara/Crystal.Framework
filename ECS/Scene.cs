@@ -6,12 +6,17 @@ namespace Crystal.Framework.ECS
 {
     public class Scene
     {
-        public EntityStorage Entities { get; private set; } = new EntityStorage();
-        public SystemStorage Systems { get; private set; } = new SystemStorage();
-        public RendererStorage Renderers { get; private set; } = new RendererStorage();
+        private EntityStorage entities = new EntityStorage();
+        private SystemStorage systems = new SystemStorage();
+        private RendererStorage renderers = new RendererStorage();
 
         public IInput Input;
-        
+
+        public EntityStorage Entities
+        {
+            get => entities;
+        }
+
         /// <summary>
         /// Dictionary of resources
         /// The idea is that you preload assets into your scene and
@@ -27,13 +32,49 @@ namespace Crystal.Framework.ECS
         }
 
         /// <summary>
+        /// Initialize all this scenes systems
+        /// </summary>
+        public void Initialize()
+        {
+            foreach (var system in this.systems)
+            {
+                system.Initialize(this);
+            }
+        }
+
+        /// <summary>
+        /// Update all this scenes systems
+        /// </summary>
+        /// <param name="deltaTime">Time in seconds elapsed since last update</param>
+        public void Update(float deltaTime)
+        {
+            this.Input.Update();
+
+            foreach (var system in this.systems)
+            {
+                system.Update(this, deltaTime);
+            }
+        }
+
+        /// <summary>
+        /// Draws the current state to the screen
+        /// </summary>
+        public void Render()
+        {
+            foreach (var renderer in this.renderers)
+            {
+                renderer.Render(this);
+            }
+        }
+
+        /// <summary>
         /// Add a entity to this scene
         /// </summary>
         /// <param name="entity">The entity to be added</param>
         /// <returns>The added entity</returns>
         public Entity Add(Entity entity)
         {
-            this.Entities.Add(entity);
+            this.entities.Add(entity);
             return entity;
         }
 
@@ -44,7 +85,7 @@ namespace Crystal.Framework.ECS
         /// <returns>The added system</returns>
         public ISystem Add(ISystem s)
         {
-            this.Systems.Add(s);
+            this.systems.Add(s);
             return s;
         }
 
@@ -55,7 +96,7 @@ namespace Crystal.Framework.ECS
         /// <returns>The added renderer</returns>
         public IRenderer Add(IRenderer r)
         {
-            this.Renderers.Add(r);
+            this.renderers.Add(r);
             return r;
         }
 
@@ -76,7 +117,7 @@ namespace Crystal.Framework.ECS
         /// <returns></returns>
         public T Resource<T>(string name)
         {
-            return (T)this.resources[name]; 
+            return (T)this.resources[name];
         }
 
         public void AddResource(string name, object res)

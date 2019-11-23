@@ -30,6 +30,8 @@ namespace Crystal.Framework.ECS.Systems.Graphical
 
                 foreach (var sprite in entity.FindAll<Sprite>())
                 {
+                    // TODO: Apply camera transformations on the sprite
+                    
                     sprite.Draw(pos);
                 }
             }
