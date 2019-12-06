@@ -1,5 +1,4 @@
 using System;
-using Crystal.Framework;
 using Crystal.Framework.Graphics;
 
 namespace Crystal.Framework.ECS.Components.Graphical
@@ -9,7 +8,7 @@ namespace Crystal.Framework.ECS.Components.Graphical
         /// <summary>
         /// The texture of this sprite
         /// </summary>
-        private ITexture texture;
+        private IDrawable texture;
 
         /// <summary>
         /// Point indicating the origin of the sprite
@@ -18,13 +17,6 @@ namespace Crystal.Framework.ECS.Components.Graphical
         /// (1, 1) means bottom right
         /// </summary>
         public Vector2 Origin;
-
-        /// <summary>
-        /// The order in which to draw this sprite
-        /// The less it is, the further back it is
-        /// Should be in range [0, 1]
-        /// </summary>
-        public float Index = 0;
 
         /// <summary>
         /// Sprite rotarion in radians
@@ -38,7 +30,7 @@ namespace Crystal.Framework.ECS.Components.Graphical
 
         public Vector2 Scale = new Vector2(1);
 
-        public Sprite(ITexture texture, Vector2? origin = null)
+        public Sprite(IDrawable texture, Vector2? origin = null)
         {
             this.texture = texture;
 
@@ -53,15 +45,15 @@ namespace Crystal.Framework.ECS.Components.Graphical
             }
         }
 
-        public void Draw(Vector2 position)
+        public void Draw(Vector2 position, IDrawer spriteBatch)
         {
-            this.texture.Draw(
+            spriteBatch.Draw(
+                this.texture,
                 position,
                 this.Origin,
                 this.Rotation,
                 this.Scale,
-                null, // TODO: SourceRect
-                this.Index
+                null // TODO: SourceRect
             );
         }
 

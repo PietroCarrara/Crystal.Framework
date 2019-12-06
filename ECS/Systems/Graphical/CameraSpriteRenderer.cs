@@ -24,6 +24,8 @@ namespace Crystal.Framework.ECS.Systems.Graphical
                 .HasComponents(typeof(Sprite), typeof(Position))
                 .Run(s);
 
+            s.SpriteBatch.BeginDraw();
+
             foreach (var entity in entities)
             {
                 var pos = entity.FindFirst<Position>();
@@ -31,10 +33,11 @@ namespace Crystal.Framework.ECS.Systems.Graphical
                 foreach (var sprite in entity.FindAll<Sprite>())
                 {
                     // TODO: Apply camera transformations on the sprite
-                    
-                    sprite.Draw(pos);
+                    sprite.Draw(pos, s.SpriteBatch);
                 }
             }
+
+            s.SpriteBatch.EndDraw();
         }
     }
 }

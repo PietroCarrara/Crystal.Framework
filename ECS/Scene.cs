@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using Crystal.Framework.ECS.Collections.Specialized;
 using Crystal.Framework.Input;
+using Crystal.Framework.Graphics;
+using Crystal.Framework.ECS.Collections.Specialized;
 
 namespace Crystal.Framework.ECS
 {
@@ -10,12 +11,39 @@ namespace Crystal.Framework.ECS
         private SystemStorage systems = new SystemStorage();
         private RendererStorage renderers = new RendererStorage();
 
+        public IDrawable Viewport;
+        public IDrawer SpriteBatch;
+        
         public IInput Input;
-
+        
         public EntityStorage Entities
         {
             get => entities;
         }
+
+        /// <summary>
+        /// Load and initialize scene
+        /// </summary>
+        public virtual void Load()
+        { }
+
+        /// <summary>
+        /// Unload scene
+        /// </summary>
+        public virtual void Unload()
+        { }
+        
+        /// <summary>
+        /// Called before starting to render this scene
+        /// </summary>
+        public virtual void BeforeRender()
+        { }
+
+        /// <summary>
+        /// Called after ending to render this scene
+        /// </summary>
+        public virtual void AfterRender()
+        { }
 
         /// <summary>
         /// Dictionary of resources
@@ -57,14 +85,18 @@ namespace Crystal.Framework.ECS
         }
 
         /// <summary>
-        /// Draws the current state to the screen
+        /// Creates a drawable representing the game state
         /// </summary>
         public void Render()
         {
+            this.BeforeRender();
+
             foreach (var renderer in this.renderers)
             {
                 renderer.Render(this);
             }
+
+            this.AfterRender();
         }
 
         /// <summary>
@@ -114,7 +146,7 @@ namespace Crystal.Framework.ECS
         /// </summary>
         /// <param name="name">Resource name</param>
         /// <typeparam name="T">The resource type</typeparam>
-        /// <returns></returns>
+        /// <returns>The resource</returns>
         public T Resource<T>(string name)
         {
             return (T)this.resources[name];
