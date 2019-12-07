@@ -28,6 +28,9 @@ namespace Crystal.Framework.ECS.Components.Graphical
         /// </summary>
         public float Rotation;
 
+        public float Width => texture.Width * Scale.X;
+        public float Height => texture.Height * Scale.Y;
+
         public Vector2 Scale = new Vector2(1);
 
         public Sprite(IDrawable texture, Vector2? origin = null)

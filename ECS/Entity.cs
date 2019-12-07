@@ -52,5 +52,84 @@ namespace Crystal.Framework.ECS
         {
             return this.Components.FindAll<T>();
         }
+
+        /// <summary>
+        /// Searches and executes an action with some of this entities components
+        /// </summary>
+        /// <param name="action">The action to perform on the components</param>
+        public void With<T1>(Action<T1> action) where T1 : IComponent
+        {
+            action(
+                this.FindFirst<T1>()
+            );
+        }
+
+        /// <summary>
+        /// Searches and executes an action with some of this entities components
+        /// </summary>
+        /// <param name="action">The action to perform on the components</param>
+        public void With<T1, T2>(Action<T1, T2> action)
+            where T1 : IComponent
+            where T2 : IComponent
+        {
+            action(
+                this.FindFirst<T1>(),
+                this.FindFirst<T2>()
+            );
+        }
+
+        /// <summary>
+        /// Searches and executes an action with some of this entities components
+        /// </summary>
+        /// <param name="action">The action to perform on the components</param>
+        public void With<T1, T2, T3>(Action<T1, T2, T3> action) 
+            where T1 : IComponent
+            where T2 : IComponent
+            where T3 : IComponent
+        {
+            action(
+                this.FindFirst<T1>(),
+                this.FindFirst<T2>(),
+                this.FindFirst<T3>()
+            );
+        }
+
+        /// <summary>
+        /// Searches and executes an action with some of this entities components
+        /// </summary>
+        /// <param name="action">The action to perform on the components</param>
+        public void With<T1, T2, T3, T4>(Action<T1, T2, T3, T4> action) 
+            where T1 : IComponent
+            where T2 : IComponent
+            where T3 : IComponent
+            where T4 : IComponent
+        {
+            action(
+                this.FindFirst<T1>(),
+                this.FindFirst<T2>(),
+                this.FindFirst<T3>(),
+                this.FindFirst<T4>()
+            );
+        }
+
+        /// <summary>
+        /// Searches and executes an action with some of this entities components
+        /// </summary>
+        /// <param name="action">The action to perform on the components</param>
+        public void With<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5> action) 
+            where T1 : IComponent
+            where T2 : IComponent
+            where T3 : IComponent
+            where T4 : IComponent
+            where T5 : IComponent
+        {
+            action(
+                this.FindFirst<T1>(),
+                this.FindFirst<T2>(),
+                this.FindFirst<T3>(),
+                this.FindFirst<T4>(),
+                this.FindFirst<T5>()
+            );
+        }
     }
 }
