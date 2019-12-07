@@ -58,7 +58,7 @@ namespace Crystal.Framework.ECS.Query
             return new EntityQuery(
                 this.selector,
                 (e) => {
-                    T c1 = e.FindFirst<T>();
+                    T c1 = e.Find<T>();
 
                     if (c1 == null)
                     {

@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using Crystal.Framework.ECS.Collections.Specialized;
 
@@ -38,15 +38,7 @@ namespace Crystal.Framework.ECS
             return this;
         }
 
-        /// <summary>
-        /// Finds the first component of type T
-        /// </summary>
-        /// <typeparam name="T">The type to look for</typeparam>
-        /// <returns></returns>
-        public T FindFirst<T>() where T : IComponent
-        {
-            return this.Components.FindFirst<T>();
-        }
+        
 
         public IEnumerable<T> FindAll<T>() where T : IComponent
         {
@@ -54,82 +46,210 @@ namespace Crystal.Framework.ECS
         }
 
         /// <summary>
-        /// Searches and executes an action with some of this entities components
+        /// Finds the first component of type T
         /// </summary>
-        /// <param name="action">The action to perform on the components</param>
-        public void With<T1>(Action<T1> action) where T1 : IComponent
+        /// <typeparam name="T">The type to look for</typeparam>
+        /// <returns></returns>
+        public T Find<T>() where T : IComponent
         {
-            action(
-                this.FindFirst<T1>()
-            );
+            return this.Components.FindFirst<T>();
         }
 
         /// <summary>
-        /// Searches and executes an action with some of this entities components
+        /// Finds the first components of type T
         /// </summary>
-        /// <param name="action">The action to perform on the components</param>
-        public void With<T1, T2>(Action<T1, T2> action)
+        public (T1, T2) Find<T1, T2>()
             where T1 : IComponent
             where T2 : IComponent
         {
-            action(
-                this.FindFirst<T1>(),
-                this.FindFirst<T2>()
-            );
+            T1 a = default(T1);
+            T2 b = default(T2);
+            var found = new bool[2];
+
+            foreach (var component in this.Components)
+            {
+                if (!found[0] && component is T1 t1)
+                {
+                    a = t1;
+                    found[0] = true;
+                    continue;
+                }
+
+                if (!found[1] && component is T2 t2)
+                {
+                    b = t2;
+                    found[1] = true;
+                    continue;
+                }
+
+                if (found.All(p => p))
+                {
+                    break;
+                }
+            }
+
+            return (a, b);
         }
 
         /// <summary>
-        /// Searches and executes an action with some of this entities components
+        /// Finds the first components of type T
         /// </summary>
-        /// <param name="action">The action to perform on the components</param>
-        public void With<T1, T2, T3>(Action<T1, T2, T3> action) 
+        public (T1, T2, T3) Find<T1, T2, T3>()
             where T1 : IComponent
             where T2 : IComponent
             where T3 : IComponent
         {
-            action(
-                this.FindFirst<T1>(),
-                this.FindFirst<T2>(),
-                this.FindFirst<T3>()
-            );
+            T1 a = default(T1);
+            T2 b = default(T2);
+            T3 c = default(T3);
+            var found = new bool[3];
+
+            foreach (var component in this.Components)
+            {
+                if (!found[0] && component is T1 t1)
+                {
+                    a = t1;
+                    found[0] = true;
+                    continue;
+                }
+
+                if (!found[1] && component is T2 t2)
+                {
+                    b = t2;
+                    found[1] = true;
+                    continue;
+                }
+
+                if (!found[2] && component is T3 t3)
+                {
+                    c = t3;
+                    found[2] = true;
+                    continue;
+                }
+
+                if (found.All(p => p))
+                {
+                    break;
+                }
+            }
+
+            return (a, b, c);
         }
 
         /// <summary>
-        /// Searches and executes an action with some of this entities components
+        /// Finds the first components of type T
         /// </summary>
-        /// <param name="action">The action to perform on the components</param>
-        public void With<T1, T2, T3, T4>(Action<T1, T2, T3, T4> action) 
+        public (T1, T2, T3, T4) Find<T1, T2, T3, T4>()
             where T1 : IComponent
             where T2 : IComponent
             where T3 : IComponent
             where T4 : IComponent
         {
-            action(
-                this.FindFirst<T1>(),
-                this.FindFirst<T2>(),
-                this.FindFirst<T3>(),
-                this.FindFirst<T4>()
-            );
+            T1 a = default(T1);
+            T2 b = default(T2);
+            T3 c = default(T3);
+            T4 d = default(T4);
+            var found = new bool[4];
+
+            foreach (var component in this.Components)
+            {
+                if (!found[0] && component is T1 t1)
+                {
+                    a = t1;
+                    found[0] = true;
+                    continue;
+                }
+
+                if (!found[1] && component is T2 t2)
+                {
+                    b = t2;
+                    found[1] = true;
+                    continue;
+                }
+
+                if (!found[2] && component is T3 t3)
+                {
+                    c = t3;
+                    found[2] = true;
+                    continue;
+                }
+
+                if (!found[3] && component is T4 t4)
+                {
+                    d = t4;
+                    found[3] = true;
+                    continue;
+                }
+
+                if (found.All(p => p))
+                {
+                    break;
+                }
+            }
+
+            return (a, b, c, d);
         }
 
         /// <summary>
-        /// Searches and executes an action with some of this entities components
+        /// Finds the first components of type T
         /// </summary>
-        /// <param name="action">The action to perform on the components</param>
-        public void With<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5> action) 
+        public (T1, T2, T3, T4, T5) Find<T1, T2, T3, T4, T5>()
             where T1 : IComponent
             where T2 : IComponent
             where T3 : IComponent
             where T4 : IComponent
-            where T5 : IComponent
         {
-            action(
-                this.FindFirst<T1>(),
-                this.FindFirst<T2>(),
-                this.FindFirst<T3>(),
-                this.FindFirst<T4>(),
-                this.FindFirst<T5>()
-            );
+            T1 a = default(T1);
+            T2 b = default(T2);
+            T3 c = default(T3);
+            T4 d = default(T4);
+            T5 e = default(T5);
+            var found = new bool[5];
+
+            foreach (var component in this.Components)
+            {
+                if (!found[0] && component is T1 t1)
+                {
+                    a = t1;
+                    found[0] = true;
+                    continue;
+                }
+
+                if (!found[1] && component is T2 t2)
+                {
+                    b = t2;
+                    found[1] = true;
+                    continue;
+                }
+
+                if (!found[2] && component is T3 t3)
+                {
+                    c = t3;
+                    found[2] = true;
+                    continue;
+                }
+
+                if (!found[3] && component is T4 t4)
+                {
+                    d = t4;
+                    found[3] = true;
+                    continue;
+                }
+
+                if (!found[4] && component is T5 t5)
+                {
+                    e = t5;
+                    found[4] = true;
+                    continue;
+                }
+
+                if (found.All(p => p))
+                {
+                    break;
+                }
+            }
+
+            return (a, b, c, d, e);
         }
     }
 }

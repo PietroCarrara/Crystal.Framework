@@ -35,15 +35,7 @@ namespace Crystal.Framework.ECS.Collections.Specialized
         /// <returns></returns>
         public T FindFirst<T>() where T : IComponent
         {
-            foreach (var component in this.data)
-            {
-                if (component is T type)
-                {
-                    return type;
-                }
-            }
-
-            return default(T);
+            return this.data.OfType<T>().FirstOrDefault();
         }
 
         public IEnumerable<T> FindAll<T>() where T : IComponent
@@ -61,7 +53,6 @@ namespace Crystal.Framework.ECS.Collections.Specialized
         {
             // Array telling which types have already been found
             bool[] contains = new bool[components.Length];
-
 
             foreach (var component in this.data)
             {

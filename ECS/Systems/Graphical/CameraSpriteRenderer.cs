@@ -28,12 +28,12 @@ namespace Crystal.Framework.ECS.Systems.Graphical
 
             foreach (var entity in entities)
             {
-                var pos = entity.FindFirst<Position>();
+                var pos = entity.Find<Position>();
 
                 foreach (var sprite in entity.FindAll<Sprite>())
                 {
                     // TODO: Apply camera transformations on the sprite
-                    sprite.Draw(pos, s.SpriteBatch);
+                    sprite.Draw(pos.Vector, s.SpriteBatch);
                 }
             }
 

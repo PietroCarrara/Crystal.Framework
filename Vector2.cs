@@ -32,6 +32,24 @@ namespace Crystal.Framework
             );
         }
 
+        public static Vector2 operator *(float left, Vector2 right)
+        {
+            return right * left;
+        }
+
+        public static Vector2 operator /(Vector2 left, float right)
+        {
+            return new Vector2(
+                left.X / right,
+                left.Y / right
+            );
+        }
+
+        public static Vector2 operator /(float left, Vector2 right)
+        {
+            return right / left;
+        }
+
         public static Vector2 operator +(Vector2 left, Vector2 right)
         {
             return new Vector2(

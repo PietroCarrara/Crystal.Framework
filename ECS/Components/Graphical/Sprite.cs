@@ -28,8 +28,17 @@ namespace Crystal.Framework.ECS.Components.Graphical
         /// </summary>
         public float Rotation;
 
-        public float Width => texture.Width * Scale.X;
-        public float Height => texture.Height * Scale.Y;
+        public Vector2 Size
+        {
+            get => new Vector2(this.texture.Width, this.texture.Height) * this.Scale;
+            set
+            {
+                this.Scale = new Vector2(
+                    value.X / this.texture.Width,
+                    value.Y / this.texture.Height
+                );
+            }   
+        }
 
         public Vector2 Scale = new Vector2(1);
 

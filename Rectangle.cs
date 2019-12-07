@@ -11,6 +11,8 @@ namespace Crystal.Framework
         public Vector2 Position;
 
         public float Width, Height;
+        
+        public float Area => Width * Height;
 
         public float Left => this.Position.X;
         public float Right => this.Position.X + this.Width;
@@ -27,6 +29,10 @@ namespace Crystal.Framework
 
         public Rectangle(Vector2 pos, float width, float height)
         : this(pos.X, pos.Y, width, height)
+        { }
+
+        public Rectangle(Vector2 pos, Vector2 size)
+        : this(pos.X, pos.Y, size.X, size.Y)
         { }
 
         public TextureSlice ToTextureSlice()
@@ -57,7 +63,8 @@ namespace Crystal.Framework
             }
             else
             {
-                throw new Exception("No overlap");
+                // No overlap
+                return new Rectangle(0, 0, 0, 0);
             }
         }
 
