@@ -12,8 +12,6 @@ namespace Crystal.Framework
 
         public float Width, Height;
         
-        public float Area => Width * Height;
-
         public float Left => this.Position.X;
         public float Right => this.Position.X + this.Width;
         public float Top => this.Position.Y;
@@ -45,27 +43,12 @@ namespace Crystal.Framework
             );
         }
 
-        public Rectangle Intersection(Rectangle that)
+        public bool Intersects(Rectangle that)
         {
-            float leftX = Math.Max(this.Position.X, that.Position.X);
-            float rightX = Math.Min(this.Position.X + this.Width, this.Position.X + this.Width);
-            float topY = Math.Max(this.Position.Y, that.Position.Y);
-            float bottomY = Math.Min(this.Position.Y + this.Height, that.Position.Y + that.Height);
-
-            if (leftX < rightX && topY < bottomY)
-            {
-                return new Rectangle(
-                    leftX,
-                    topY,
-                    rightX - leftX,
-                    bottomY - topY
-                );
-            }
-            else
-            {
-                // No overlap
-                return new Rectangle(0, 0, 0, 0);
-            }
+            return this.Position.Y < that.Position.Y + that.Height &&
+                   this.Position.Y + this.Height > that.Position.Y &&
+                   this.Position.X < that.Position.X + that.Width &&
+                   this.Position.X + this.Width > that.Position.X; 
         }
 
         public static Rectangle operator +(Rectangle left, Vector2 right)
