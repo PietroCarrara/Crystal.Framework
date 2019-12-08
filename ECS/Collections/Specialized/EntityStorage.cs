@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using System;
+using Crystal.Framework.ECS.Query;
 
 namespace Crystal.Framework.ECS.Collections.Specialized
 {
-    public class EntityStorage : IEnumerable<Entity>
+    public class EntityStorage : IEnumerable<IEntity>, IEntityQuery
     {
-        private List<Entity> data = new List<Entity>();
+        private List<IEntity> data = new List<IEntity>();
 
-        public IEnumerator<Entity> GetEnumerator()
+        public IEnumerator<IEntity> GetEnumerator()
         {
             return data.GetEnumerator();
         }
@@ -22,24 +22,20 @@ namespace Crystal.Framework.ECS.Collections.Specialized
         /// Add an entity to this collection
         /// </summary>
         /// <param name="e">The entity to be added</param>
-        public void Add(Entity e)
+        public virtual void Add(IEntity e)
         {
             this.data.Add(e);
         }
 
-        /// <summary>
-        /// Finds a named entity
-        /// </summary>
-        /// <param name="name">The name to look for</param>
-        /// <returns></returns>
-        public Entity FindNamed(string name)
+        public EntityFilter<T, IEntity> With<T>()
+        where T : IComponent
         {
-            if (name == null)
-            {
-                throw new Exception("Cannot search for a named entity with name null!");
-            }
+            return new EntityFilter<T, IEntity>(this.data);
+        }
 
-            return this.data.Find(x => x.Name == name);
+        IEntityQuery IEntityQuery.With<T>()
+        {
+            return this.With<T>();
         }
     }
 }

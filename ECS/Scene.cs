@@ -104,7 +104,7 @@ namespace Crystal.Framework.ECS
         /// </summary>
         /// <param name="entity">The entity to be added</param>
         /// <returns>The added entity</returns>
-        public Entity Add(Entity entity)
+        public IEntity Add(IEntity entity)
         {
             this.entities.Add(entity);
             return entity;
@@ -136,7 +136,7 @@ namespace Crystal.Framework.ECS
         /// Create a entity, add it to the scene and return it
         /// </summary>
         /// <returns>The newly created entity</returns>
-        public Entity Entity(string name = null)
+        public IEntity Entity(string name = null)
         {
             return this.Add(new Entity(name));
         }

@@ -1,5 +1,4 @@
 using System.Linq;
-using Crystal.Framework.ECS.Query;
 using Crystal.Framework.ECS.Components;
 using Crystal.Framework.ECS.Components.Graphical;
 
@@ -9,10 +8,15 @@ namespace Crystal.Framework.ECS.Systems.Graphical
     {
         public void Render(Scene s)
         {
-            var camera = new EntityQuery()
-                .HasComponents(typeof(Position), typeof(Camera))
-                .WhereComponent<Camera>(c => c.Active)
-                .Run(s)
+            var camera = s.Entities
+                .With<Position>()
+                .With<Camera>()
+                .Many()
+                .Where(e =>
+                {
+                    var (cam, _) = e;
+                    return cam.Active;
+                })
                 .FirstOrDefault();
 
             if (camera == null)
@@ -20,9 +24,10 @@ namespace Crystal.Framework.ECS.Systems.Graphical
                 return;
             }
 
-            var entities = new EntityQuery()
-                .HasComponents(typeof(Sprite), typeof(Position))
-                .Run(s);
+            var entities = s.Entities
+                .With<Sprite>()
+                .With<Position>()
+                .Many();
 
             s.SpriteBatch.BeginDraw();
 
