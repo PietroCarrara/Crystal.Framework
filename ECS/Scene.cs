@@ -5,45 +5,21 @@ using Crystal.Framework.ECS.Collections.Specialized;
 
 namespace Crystal.Framework.ECS
 {
-    public class Scene
+    public abstract class Scene
     {
+        public IDrawable Viewport;
+        public IDrawer SpriteBatch;
+
+        public IInput Input;
+
         private EntityStorage entities = new EntityStorage();
         private SystemStorage systems = new SystemStorage();
         private RendererStorage renderers = new RendererStorage();
 
-        public IDrawable Viewport;
-        public IDrawer SpriteBatch;
-        
-        public IInput Input;
-        
         public EntityStorage Entities
         {
             get => entities;
         }
-
-        /// <summary>
-        /// Load and initialize scene
-        /// </summary>
-        public virtual void Load()
-        { }
-
-        /// <summary>
-        /// Unload scene
-        /// </summary>
-        public virtual void Unload()
-        { }
-        
-        /// <summary>
-        /// Called before starting to render this scene
-        /// </summary>
-        public virtual void BeforeRender()
-        { }
-
-        /// <summary>
-        /// Called after ending to render this scene
-        /// </summary>
-        public virtual void AfterRender()
-        { }
 
         /// <summary>
         /// Dictionary of resources
@@ -58,6 +34,50 @@ namespace Crystal.Framework.ECS
         {
             this.Name = name;
         }
+
+        /// <summary>
+        /// Pushes a new scene into the scene stack
+        /// </summary>
+        /// <param name="name">The name of the scene to be pushed</param>
+        /// <returns>The initialized scene</returns>
+        public abstract Scene Push(string name);
+
+        /// <summary>
+        /// Swaps this scene scene with the informed scene onto the stack
+        /// </summary>
+        /// <param name="name">The name of the scene to swap</param>
+        /// <returns>The initialized scene</returns>
+        public abstract Scene Swap(string name);
+
+        /// <summary>
+        /// Remove this scene from the stack. If there are no scenes left on the
+        /// stack, the game should exit
+        /// </summary>
+        public abstract void Pop();
+
+        /// <summary>
+        /// Load and initialize scene
+        /// </summary>
+        public virtual void Load()
+        { }
+
+        /// <summary>
+        /// Unload scene
+        /// </summary>
+        public virtual void Unload()
+        { }
+
+        /// <summary>
+        /// Called before starting to render this scene
+        /// </summary>
+        public virtual void BeforeRender()
+        { }
+
+        /// <summary>
+        /// Called after ending to render this scene
+        /// </summary>
+        public virtual void AfterRender()
+        { }
 
         /// <summary>
         /// Initialize all this scenes systems

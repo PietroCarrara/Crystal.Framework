@@ -12,17 +12,15 @@ namespace Crystal.Framework.ECS.Systems.Graphical
                 .With<Position>()
                 .With<Camera>()
                 .Many()
-                .Where(e =>
-                {
-                    var (cam, _) = e;
-                    return cam.Active;
-                })
+                .Where(e => e.Component.Active)
                 .FirstOrDefault();
 
             if (camera == null)
             {
                 return;
             }
+
+            var (_, (camPos, _)) = camera;
 
             var entities = s.Entities
                 .With<Sprite>()
@@ -33,12 +31,12 @@ namespace Crystal.Framework.ECS.Systems.Graphical
 
             foreach (var entity in entities)
             {
-                var pos = entity.Find<Position>();
+                var (pos, _) = entity;
 
                 foreach (var sprite in entity.FindAll<Sprite>())
                 {
-                    // TODO: Apply camera transformations on the sprite
-                    sprite.Draw(pos.Vector, s.SpriteBatch);
+                    // TODO: Apply other camera transformations to the sprite
+                    sprite.Draw(pos.Vector - camPos.Vector, s.SpriteBatch);
                 }
             }
 
