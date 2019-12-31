@@ -6,7 +6,7 @@ namespace Crystal.Framework.ECS.Systems.Graphical
 {
     public class CameraSpriteRenderer : IRenderer
     {
-        public void Render(Scene s)
+        public void Render(Scene s, float delta)
         {
             var camera = s.Entities
                 .With<Position>()
@@ -23,7 +23,7 @@ namespace Crystal.Framework.ECS.Systems.Graphical
             var (_, (camPos, _)) = camera;
 
             var entities = s.Entities
-                .With<Sprite>()
+                .With<ISprite>()
                 .With<Position>()
                 .Many();
 
@@ -33,10 +33,10 @@ namespace Crystal.Framework.ECS.Systems.Graphical
             {
                 var (pos, _) = entity;
 
-                foreach (var sprite in entity.FindAll<Sprite>())
+                foreach (var sprite in entity.FindAll<ISprite>())
                 {
                     // TODO: Apply other camera transformations to the sprite
-                    sprite.Draw(pos.Vector - camPos.Vector, s.SpriteBatch);
+                    sprite.Draw(pos.Vector - camPos.Vector, delta, s.SpriteBatch);
                 }
             }
 

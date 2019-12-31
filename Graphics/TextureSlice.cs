@@ -30,6 +30,19 @@ namespace Crystal.Framework.Graphics
             return $"TextureSlice {{ TopLeft = {TopLeft}, Width = {Width}, Height = {Height} }}";
         }
 
+        public static Vector2 operator *(TextureSlice left, Vector2 right)
+        {
+            return new Vector2(
+                left.Width * right.X,
+                left.Height * right.Y
+            );
+        }
+
+        public static Vector2 operator *(Vector2 left, TextureSlice right)
+        {
+            return right * left;
+        }
+
         public static implicit operator Rectangle(TextureSlice self)
         {
             return new Rectangle(

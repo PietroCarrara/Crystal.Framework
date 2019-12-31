@@ -3,75 +3,58 @@ using Crystal.Framework.Graphics;
 
 namespace Crystal.Framework.ECS.Components.Graphical
 {
-    public class Sprite : IComponent, IDisposable
+    public class Sprite : IComponent, ISprite, IDrawable
     {
-        /// <summary>
-        /// The texture of this sprite
-        /// </summary>
-        private IDrawable texture;
+        public readonly IDrawable Texture;
 
-        /// <summary>
-        /// Point indicating the origin of the sprite
-        /// X and Y must be in range [0, 1]
-        /// (0, 0) means top left
-        /// (1, 1) means bottom right
-        /// </summary>
-        public Vector2 Origin;
+        public Vector2 Origin { get; set; } = new Vector2(.5f);
 
-        /// <summary>
-        /// Sprite rotarion in radians
-        /// Flows on a clock-wise direction
-        /// 0       >
-        /// Pi/2    v
-        /// Pi      <
-        /// 3Pi/2   ^
-        /// </summary>
-        public float Rotation;
+        public float Rotation { get; set; }
+
+        public Vector2 Scale { get; set; } = new Vector2(1);
 
         public Vector2 Size
         {
-            get => new Vector2(this.texture.Width, this.texture.Height) * this.Scale;
+            get => new Vector2(this.Texture.Width, this.Texture.Height) * this.Scale;
             set
             {
                 this.Scale = new Vector2(
-                    value.X / this.texture.Width,
-                    value.Y / this.texture.Height
+                    value.X / this.Texture.Width,
+                    value.Y / this.Texture.Height
                 );
             }   
         }
 
-        public Vector2 Scale = new Vector2(1);
+        public int Width => (int)this.Size.X;
+        public int Height => (int)this.Size.Y;
+
 
         public Sprite(IDrawable texture, Vector2? origin = null)
         {
-            this.texture = texture;
+            this.Texture = texture;
 
             if (origin.HasValue)
             {
                 this.Origin = origin.Value;
             }
-            else
-            {
-                // Centered origin
-                this.Origin = new Vector2(.5f);
-            }
         }
 
-        public void Draw(Vector2 position, IDrawer spriteBatch)
+        public void Draw(Vector2 position, float delta, IDrawer spriteBatch)
         {
             spriteBatch.Draw(
-                this.texture,
+                this.Texture,
                 position,
+                delta,
                 this.Origin,
                 this.Rotation,
                 this.Scale,
-                null // TODO: SourceRect
+                null
             );
         }
 
         public void Dispose()
         {
-            this.texture.Dispose();
+            this.Texture.Dispose();
         }
     }
 }

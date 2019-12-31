@@ -1,6 +1,6 @@
 namespace Crystal.Framework
 {
-    public class Point
+    public struct Point
     {
         public int X, Y;
 

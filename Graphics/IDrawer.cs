@@ -38,6 +38,7 @@ namespace Crystal.Framework.Graphics
         void Draw(
             IDrawable texture,
             Vector2 position,
+            float deltaTime,
             Vector2? origin = null,
             float rotation = 0,
             Vector2? scale = null,

@@ -91,7 +91,7 @@ namespace Crystal.Framework.ECS
         }
 
         /// <summary>
-        /// Update all this scenes systems
+        /// Update all this scene's systems
         /// </summary>
         /// <param name="deltaTime">Time in seconds elapsed since last update</param>
         public void Update(float deltaTime)
@@ -105,15 +105,15 @@ namespace Crystal.Framework.ECS
         }
 
         /// <summary>
-        /// Creates a drawable representing the game state
+        /// Draws the game state
         /// </summary>
-        public void Render()
+        public void Render(float deltaTime)
         {
             this.BeforeRender();
 
             foreach (var renderer in this.renderers)
             {
-                renderer.Render(this);
+                renderer.Render(this, deltaTime);
             }
 
             this.AfterRender();
