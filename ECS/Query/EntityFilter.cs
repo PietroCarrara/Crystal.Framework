@@ -18,7 +18,6 @@ namespace Crystal.Framework.ECS.Query
 
         public EntityFilter(IEnumerable<E> data)
         {
-            // TODO: Filter
             this.data = data.Select(e => 
             {
                 var c = e.Find<C>();
