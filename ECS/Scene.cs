@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Crystal.Framework.Input;
 using Crystal.Framework.Graphics;
@@ -7,6 +8,8 @@ namespace Crystal.Framework.ECS
 {
     public abstract class Scene
     {
+        private bool initialized;
+        
         public IDrawable Viewport;
         public IDrawer SpriteBatch;
 
@@ -84,10 +87,17 @@ namespace Crystal.Framework.ECS
         /// </summary>
         public void Initialize()
         {
+            if (this.initialized)
+            {
+                throw new Exception("Scene already initialized!");
+            }
+            
             foreach (var system in this.systems)
             {
                 system.Initialize(this);
             }
+
+            this.initialized = true;
         }
 
         /// <summary>
@@ -138,6 +148,12 @@ namespace Crystal.Framework.ECS
         public ISystem Add(ISystem s)
         {
             this.systems.Add(s);
+
+            if (this.initialized)
+            {
+                s.Initialize(this);
+            }
+            
             return s;
         }
 
