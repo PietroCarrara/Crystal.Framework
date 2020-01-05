@@ -1,3 +1,5 @@
+using Crystal.Framework.Math;
+
 namespace Crystal.Framework.Graphics
 {
     public interface IDrawer
@@ -6,7 +8,8 @@ namespace Crystal.Framework.Graphics
         /// Starts drawing on the given viewport
         /// </summary>
         /// <param name="screen">The viewport to draw on. If null, uses the whole screen</param>
-        void BeginDraw(TextureSlice? viewport = null);
+        /// <param name="transformMatrix">The matrix used to apply transforms</param>
+        void BeginDraw(TextureSlice? viewport = null, Matrix4 transformMatrix = null);
 
         /// <summary>
         /// Ends the drawing cycle and flushes the textures to the screen

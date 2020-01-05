@@ -27,7 +27,7 @@ namespace Crystal.Framework.ECS.Systems.Graphical
                 .With<Position>()
                 .Many();
 
-            s.SpriteBatch.BeginDraw();
+            s.SpriteBatch.BeginDraw(transformMatrix: s.Viewport.TransformMatrix);
 
             foreach (var entity in entities)
             {

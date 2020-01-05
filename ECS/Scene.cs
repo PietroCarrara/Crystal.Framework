@@ -8,12 +8,27 @@ namespace Crystal.Framework.ECS
 {
     public abstract class Scene
     {
-        private bool initialized;
-        
-        public IDrawable Viewport;
+        /// <summary>
+        /// The "screen" of the scene
+        /// </summary>
+        public SceneViewport Viewport;
+        /// <summary>
+        /// The spritebatch used to draw
+        /// </summary>
         public IDrawer SpriteBatch;
 
+        /// <summary>
+        /// The user input object
+        /// </summary>
         public IInput Input;
+
+        /// <summary>
+        /// The design size of this scene. You can assume the screen is always
+        /// this size, and the engine will scale everything accordingly
+        /// </summary>
+        public readonly Vector2 Size = new Vector2(1280, 720);
+
+        private bool initialized;
 
         private EntityStorage entities = new EntityStorage();
         private SystemStorage systems = new SystemStorage();
@@ -33,9 +48,14 @@ namespace Crystal.Framework.ECS
 
         public readonly string Name;
 
-        public Scene(string name)
+        public Scene(string name, Vector2? size = null)
         {
             this.Name = name;
+
+            if (size.HasValue)
+            {
+                this.Size = size.Value;
+            }
         }
 
         /// <summary>
