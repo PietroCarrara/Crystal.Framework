@@ -13,6 +13,9 @@ namespace Crystal.Framework.Graphics
 
         public abstract int Height { get; }
 
+        /// <summary>
+        /// Matrix to scale from design coordinates to screen coordinates
+        /// </summary>
         public Matrix4 TransformMatrix { get; private set; }
 
         public SceneViewport(Scene scene)

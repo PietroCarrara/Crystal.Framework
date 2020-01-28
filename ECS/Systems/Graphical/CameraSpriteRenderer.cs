@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using Crystal.Framework.Math;
 using Crystal.Framework.ECS.Components;
 using Crystal.Framework.ECS.Components.Graphical;
 
@@ -9,7 +11,6 @@ namespace Crystal.Framework.ECS.Systems.Graphical
         public void Render(Scene s, float delta)
         {
             var camera = s.Entities
-                .With<Position>()
                 .With<Camera>()
                 .Many()
                 .Where(e => e.Component.Active)
@@ -20,14 +21,14 @@ namespace Crystal.Framework.ECS.Systems.Graphical
                 return;
             }
 
-            var (_, (camPos, _)) = camera;
+            var cam = camera.Component;
 
             var entities = s.Entities
                 .With<ISprite>()
                 .With<Position>()
                 .Many();
 
-            s.SpriteBatch.BeginDraw(transformMatrix: s.Viewport.TransformMatrix);
+            s.SpriteBatch.BeginDraw(transformMatrix: cam.TransformationMatrix * s.Viewport.TransformMatrix);
 
             foreach (var entity in entities)
             {
@@ -35,8 +36,7 @@ namespace Crystal.Framework.ECS.Systems.Graphical
 
                 foreach (var sprite in entity.FindAll<ISprite>())
                 {
-                    // TODO: Apply other camera transformations to the sprite
-                    sprite.Draw(pos.Vector - camPos.Vector, delta, s.SpriteBatch);
+                    sprite.Draw(pos.Vector, delta, s.SpriteBatch);
                 }
             }
 
