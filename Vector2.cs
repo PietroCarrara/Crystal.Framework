@@ -1,3 +1,5 @@
+using Crystal.Framework.Math;
+
 namespace Crystal.Framework
 {
     public struct Vector2
@@ -15,6 +17,16 @@ namespace Crystal.Framework
 
         public Vector2(float xy) : this(xy, xy)
         { }
+
+        public Vector2 Transform(Matrix4 matrix)
+        {
+            var mat = matrix.ToFloatArray();
+            
+            return new Vector2(
+                this.X * mat[0, 0] + this.Y * mat[1, 0] + mat[3, 0],
+                this.X * mat[0, 1] + this.Y * mat[1, 1] + mat[3, 1]
+            );
+        }
 
         public override string ToString()
         {

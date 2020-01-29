@@ -70,6 +70,11 @@ namespace Crystal.Framework.ECS.Components.Graphical
         /// </summary>
         public Matrix4 TransformationMatrix { get; private set; }
 
+        /// <summary>
+        /// The inverse of the TransformationMatrix
+        /// </summary>
+        public Matrix4 InverseTransformationMatrix { get; private set; }
+
         public Camera(Vector2 origin)
         {
             this.origin = origin;
@@ -92,9 +97,20 @@ namespace Crystal.Framework.ECS.Components.Graphical
             updateTransform();
         }
 
+        public Vector2 ScreenToWorld(Vector2 vector)
+        {
+            return vector.Transform(this.InverseTransformationMatrix);
+        }
+
+        public Vector2 WorldToScreen(Vector2 vector)
+        {
+            return vector.Transform(this.TransformationMatrix);
+        }
+
         private void updateTransform()
         {
             this.TransformationMatrix = this.translate * this.rotate * this.scale * this.originMatrix;
+            this.InverseTransformationMatrix = this.TransformationMatrix.Invert();
         }
     }
 }

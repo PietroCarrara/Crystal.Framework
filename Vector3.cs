@@ -20,6 +20,11 @@ namespace Crystal.Framework
             this.Z = xyz;
         }
 
+        public Vector2 ToVector2()
+        {
+            return new Vector2(this.X, this.Y);
+        }
+
         public static Vector3 Zero
         {
             get => new Vector3(0);
@@ -30,12 +35,12 @@ namespace Crystal.Framework
             get => new Vector3(1);
         }
 
-        public static Vector3 operator -(Vector3 left, Vector2 right)
+        public static Vector3 operator -(Vector3 left, Vector3 right)
         {
             return new Vector3(
                 left.X - right.X,
                 left.Y - right.Y,
-                left.Z
+                left.Z - right.Z
             );
         }
 

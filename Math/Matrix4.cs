@@ -132,6 +132,16 @@ namespace Crystal.Framework.Math
                    $"({p(m.M41)}, {p(m.M42)}, {p(m.M43)}, {p(m.M44)})";
         }
 
+        public Matrix4 Invert()
+        {
+            var res = Matrix4x4.Identity;
+            
+            // TODO: Throw exception if not invertible?
+            Matrix4x4.Invert(this.matrix, out res);
+            
+            return new Matrix4(res);
+        }
+
         public Vector3 Scale
         {
             get => new Vector3(this.matrix.M11, this.matrix.M22, this.matrix.M33);
