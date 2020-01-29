@@ -12,6 +12,7 @@ namespace Crystal.Framework.ECS
         /// The "screen" of the scene
         /// </summary>
         public SceneViewport Viewport;
+        
         /// <summary>
         /// The spritebatch used to draw
         /// </summary>
