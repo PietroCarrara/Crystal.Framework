@@ -1,8 +1,8 @@
 using System.Linq;
 using System.Collections.Generic;
-using Crystal.Framework.ECS.Collections.Specialized;
+using Crystal.Framework.Collections.Specialized;
 
-namespace Crystal.Framework.ECS
+namespace Crystal.Framework
 {
     /// <summary>
     /// Entity that has a component C owned by entity of type E

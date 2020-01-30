@@ -1,6 +1,4 @@
-using Crystal.Framework.Graphics;
-
-namespace Crystal.Framework.ECS
+namespace Crystal.Framework
 {
     public interface IRenderer
     {

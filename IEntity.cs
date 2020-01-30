@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-namespace Crystal.Framework.ECS
+
+namespace Crystal.Framework
 {
     public interface IEntity
     {

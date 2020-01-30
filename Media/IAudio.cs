@@ -1,6 +1,6 @@
 using System;
 
-namespace Crystal.Framework.Audio
+namespace Crystal.Framework.Media
 {
     public interface IAudio : IDisposable
     {

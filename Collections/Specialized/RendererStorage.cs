@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Crystal.Framework.ECS.Collections.Specialized
+namespace Crystal.Framework.Collections.Specialized
 {
-    public class SystemStorage : IEnumerable<ISystem>
+    public class RendererStorage : IEnumerable<IRenderer>
     {
-        private List<ISystem> data = new List<ISystem>();
+        private List<IRenderer> data = new List<IRenderer>();
         
-        public IEnumerator<ISystem> GetEnumerator()
+        public IEnumerator<IRenderer> GetEnumerator()
         {
             return data.GetEnumerator();
         }
@@ -17,7 +17,7 @@ namespace Crystal.Framework.ECS.Collections.Specialized
             return data.GetEnumerator();
         }
 
-        public void Add(ISystem s)
+        public void Add(IRenderer s)
         {
             this.data.Add(s);
         }

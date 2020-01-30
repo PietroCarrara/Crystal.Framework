@@ -1,6 +1,6 @@
 using Crystal.Framework.Graphics;
 
-namespace Crystal.Framework.ECS.Components.Graphical
+namespace Crystal.Framework.Components
 {
     public interface ISprite : IComponent
     {

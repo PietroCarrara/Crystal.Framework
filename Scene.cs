@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using Crystal.Framework.Input;
 using Crystal.Framework.Graphics;
-using Crystal.Framework.ECS.Collections.Specialized;
+using Crystal.Framework.Collections.Specialized;
 
-namespace Crystal.Framework.ECS
+namespace Crystal.Framework
 {
     public abstract class Scene
     {

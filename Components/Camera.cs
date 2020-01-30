@@ -1,6 +1,6 @@
 using Crystal.Framework.Math;
 
-namespace Crystal.Framework.ECS.Components.Graphical
+namespace Crystal.Framework.Components
 {
     public class Camera : IComponent
     {

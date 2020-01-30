@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Crystal.Framework.ECS.Query;
 
-namespace Crystal.Framework.ECS.Collections.Specialized
+namespace Crystal.Framework.Collections.Specialized
 {
     public class EntityStorage : IEnumerable<IEntity>, IEntityQuery
     {

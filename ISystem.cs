@@ -1,4 +1,4 @@
-namespace Crystal.Framework.ECS
+namespace Crystal.Framework
 {
     public interface ISystem
     {

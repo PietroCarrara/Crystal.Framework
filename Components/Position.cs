@@ -1,6 +1,6 @@
 using Crystal.Framework;
 
-namespace Crystal.Framework.ECS.Components
+namespace Crystal.Framework.Components
 {
     public class Position : IComponent
     {

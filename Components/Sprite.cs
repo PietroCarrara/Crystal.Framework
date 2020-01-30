@@ -1,7 +1,7 @@
 using System;
 using Crystal.Framework.Graphics;
 
-namespace Crystal.Framework.ECS.Components.Graphical
+namespace Crystal.Framework.Components
 {
     public class Sprite : IComponent, ISprite, IDrawable
     {
