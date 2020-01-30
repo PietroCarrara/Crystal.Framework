@@ -9,7 +9,12 @@ namespace Crystal.Framework.Graphics
         /// </summary>
         /// <param name="screen">The viewport to draw on. If null, uses the whole screen</param>
         /// <param name="transformMatrix">The matrix used to apply transforms</param>
-        void BeginDraw(TextureSlice? viewport = null, Matrix4 transformMatrix = null);
+        /// <param name="samplerState">What strategy to use when upscaling or downscaling the textures</param>
+        void BeginDraw(
+            TextureSlice? viewport = null,
+            Matrix4 transformMatrix = null,
+            SamplerState samplerState = SamplerState.LinearClamp
+        );
 
         /// <summary>
         /// Ends the drawing cycle and flushes the textures to the screen

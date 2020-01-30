@@ -3,11 +3,19 @@ using System.Linq;
 using Crystal.Framework.Math;
 using Crystal.Framework.ECS.Components;
 using Crystal.Framework.ECS.Components.Graphical;
+using Crystal.Framework.Graphics;
 
 namespace Crystal.Framework.ECS.Systems.Graphical
 {
     public class CameraSpriteRenderer : IRenderer
     {
+        private SamplerState sampler;
+        
+        public CameraSpriteRenderer(SamplerState sampler = SamplerState.LinearClamp)
+        {
+            this.sampler = sampler;
+        }
+        
         public void Render(Scene s, float delta)
         {
             var camera = s.Entities
@@ -28,7 +36,10 @@ namespace Crystal.Framework.ECS.Systems.Graphical
                 .With<Position>()
                 .Many();
 
-            s.SpriteBatch.BeginDraw(transformMatrix: cam.TransformationMatrix * s.Viewport.TransformMatrix);
+            s.SpriteBatch.BeginDraw(
+                transformMatrix: cam.TransformationMatrix * s.Viewport.TransformMatrix,
+                samplerState: sampler
+            );
 
             foreach (var entity in entities)
             {
