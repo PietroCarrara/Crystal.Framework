@@ -1,4 +1,5 @@
 using Crystal.Framework.Math;
+using Crystal.Framework.UI;
 
 namespace Crystal.Framework.Graphics
 {
@@ -22,14 +23,15 @@ namespace Crystal.Framework.Graphics
         void EndDraw();
 
         /// <summary>
-        /// Draw a texture on the given canvas
+        /// Draw a texture
         /// </summary>
         /// <param name="texture">The texture to be drawn</param>
         /// <param name="position">Where to draw the texture</param>
+        /// <param name="deltaTime">Time elapsed sice the last frame</param>
         /// <param name="origin">
         ///     The texture's origin. X and Y should be in range
-        ///     [-0, 1]. (0, 0) means top left, (1, 1) means bottom right
-        ///     Defaults to 0.5, 0.5
+        ///     [0, 1]. (0, 0) means top left, (1, 1) means bottom right
+        ///     Should default to 0.5, 0.5
         /// </param>
         /// <param name="rotation">
         ///     The clockwise rotation in radians of the texture.
@@ -52,6 +54,49 @@ namespace Crystal.Framework.Graphics
             Vector2? scale = null,
             TextureSlice? sourceRectangle = null
             // TODO: Color color
+        );
+
+
+        /// <summary>
+        /// Draw a texture
+        /// </summary>
+        /// <param name="texture">The texture to be drawn</param>
+        /// <param name="destinationRectangle">Where to draw the texture</param>
+        /// <param name="deltaTime">Time elapsed sice the last frame</param>
+        /// <param name="origin">
+        ///     The texture's origin. X and Y should be in range
+        ///     [0, 1]. (0, 0) means top left, (1, 1) means bottom right
+        ///     Should default to 0.5, 0.5
+        /// </param>
+        /// <param name="rotation">
+        ///     The clockwise rotation in radians of the texture.
+        /// </param>
+        /// <param name="sourceRectangle">
+        ///     The "slice" of the texture to draw.
+        ///     If null, draw the whole sprite
+        /// </param>
+        void Draw(
+            IDrawable texture,
+            Rectangle destinationRectangle,
+            float deltaTime,
+            Vector2? origin = null,
+            float rotation = 0,
+            TextureSlice? sourceRectangle = null
+            // TODO: Color color
+        );
+
+        /// <summary>
+        /// Draw a string
+        /// </summary>
+        /// <param name="font">The font to use</param>
+        /// <param name="position">Where to position the string</param>
+        /// <param name="text">The text to draw</param>
+        /// <param name="rotation">Clockwise rotation in radians</param>
+        void DrawString(
+            IFont font,
+            Vector2 position,
+            string text,
+            float rotation = 0
         );
     }
 }

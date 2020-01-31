@@ -12,11 +12,6 @@ namespace Crystal.Framework
 
         public float Width, Height;
         
-        public float Left => this.Position.X;
-        public float Right => this.Position.X + this.Width;
-        public float Top => this.Position.Y;
-        public float Bottom => this.Position.Y + this.Height;
-
         public Rectangle(float posX, float posY, float width, float height)
         {
             this.Position = new Vector2(posX, posY);
@@ -49,6 +44,11 @@ namespace Crystal.Framework
                    this.Position.Y + this.Height > that.Position.Y &&
                    this.Position.X < that.Position.X + that.Width &&
                    this.Position.X + this.Width > that.Position.X; 
+        }
+
+        public override string ToString()
+        {
+            return $"{{{this.Position} [{Width} {Height}]}}";
         }
 
         public static Rectangle operator +(Rectangle left, Vector2 right)

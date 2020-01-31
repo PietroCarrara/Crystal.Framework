@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Crystal.Framework.UI;
 using Crystal.Framework.Input;
 using Crystal.Framework.Graphics;
 using Crystal.Framework.Collections.Specialized;
@@ -34,6 +35,7 @@ namespace Crystal.Framework
         private EntityStorage entities = new EntityStorage();
         private SystemStorage systems = new SystemStorage();
         private RendererStorage renderers = new RendererStorage();
+        private UIElementStorage uiElements = new UIElementStorage();
 
         public EntityStorage Entities
         {
@@ -133,6 +135,11 @@ namespace Crystal.Framework
             {
                 system.Update(this, deltaTime);
             }
+
+            foreach (var uiElement in this.uiElements)
+            {
+                uiElement.Update(deltaTime);
+            }
         }
 
         /// <summary>
@@ -146,6 +153,13 @@ namespace Crystal.Framework
             {
                 renderer.Render(this, deltaTime);
             }
+
+            this.SpriteBatch.BeginDraw();
+            foreach (var uiElement in this.uiElements)
+            {
+                uiElement.Draw(this.SpriteBatch, deltaTime);
+            }
+            this.SpriteBatch.EndDraw();
 
             this.AfterRender();
         }
@@ -187,6 +201,17 @@ namespace Crystal.Framework
         {
             this.renderers.Add(r);
             return r;
+        }
+
+        /// <summary>
+        /// Adds a UI element to the scene
+        /// </summary>
+        /// <param name="e">The element to add</param>
+        /// <returns>The added element</returns>
+        public IUIElement Add(IUIElement e)
+        {
+            this.uiElements.Add(e);
+            return e;
         }
 
         /// <summary>
