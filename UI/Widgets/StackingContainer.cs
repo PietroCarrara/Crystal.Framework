@@ -5,19 +5,8 @@ using Crystal.Framework.UI.UILayouts;
 
 namespace Crystal.Framework.UI.Widgets
 {
-    public class StackingContainer : Widget
+    public class StackingContainer : Container
     {
-        private List<Widget> widgets = new List<Widget>();
-
-        public Widget Add(Widget widget)
-        {
-            this.widgets.Add(widget);
-            widget.BecomeChildOf(this);
-            this.ChangeState();
-
-            return widget;
-        }
-
         protected override IUILayout Build()
         {
             foreach (var child in this.widgets)
