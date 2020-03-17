@@ -27,7 +27,7 @@ namespace Crystal.Framework.UI.Widgets
         {
             get => alignment.HasValue ? alignment.Value :
                    Parent != null ? Parent.Alignment :
-                                    Alignment.BottomRight;
+                                    Alignment.Center;
             set
             {
                 this.alignment = value;

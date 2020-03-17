@@ -7,8 +7,10 @@ namespace Crystal.Framework.UI.UILayouts
     {
         TextureSlice IUILayout.Area => this.Area;
 
+        public Vector2? Origin;
         public TextureSlice Area;
         public IDrawable Drawable;
+        public TextureSlice? SourceRectangle;
 
         public void Match(Action<OrderedUILayouts> a,
                           Action<IDrawableUILayout> b,

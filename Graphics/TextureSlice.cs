@@ -47,17 +47,31 @@ namespace Crystal.Framework.Graphics
             return $"TextureSlice {{ TopLeft = {TopLeft}, Width = {Width}, Height = {Height} }}";
         }
 
-        public static Vector2 operator *(TextureSlice left, Vector2 right)
+        public static TextureSlice operator +(TextureSlice left, Point right)
         {
-            return new Vector2(
-                left.Width * right.X,
-                left.Height * right.Y
+            return new TextureSlice(
+                left.TopLeft + right,
+                left.Size
             );
         }
 
-        public static Vector2 operator *(Vector2 left, TextureSlice right)
+        public static TextureSlice operator +(Point left, TextureSlice right)
         {
-            return right * left;
+            return right + left;
+        }
+
+        /// <summary>
+        /// Creates a texture slice that has the requested top left and bottom right
+        /// </summary>
+        /// <returns>A texture slice that has the requested top left and bottom right</returns>
+        public static TextureSlice FromTwoPoints(Point topLeft, Point bottomRight)
+        {
+            var size = bottomRight - topLeft;
+
+            return new TextureSlice(
+                topLeft,
+                size
+            );
         }
 
         /// <summary>

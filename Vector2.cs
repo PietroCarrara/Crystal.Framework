@@ -88,6 +88,11 @@ namespace Crystal.Framework
             );
         }
 
+        public static implicit operator Vector2((float, float) self)
+        {
+            return new Vector2(self.Item1, self.Item2);
+        }
+
         public static explicit operator Point(Vector2 v)
         {
             return new Point((int)v.X, (int)v.Y);

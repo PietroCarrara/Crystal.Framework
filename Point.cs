@@ -30,6 +30,11 @@ namespace Crystal.Framework
             return new Point(left.X - right.X, left.Y - right.Y);
         }
 
+        public static implicit operator Point((int, int) self)
+        {
+            return new Point(self.Item1, self.Item2);
+        }
+
         public static implicit operator Vector2(Point self)
         {
             return new Vector2(self.X, self.Y);

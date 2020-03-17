@@ -11,7 +11,9 @@ namespace Crystal.Framework.Renderers
     {
         public void Render(Scene scene, float delta)
         {
-            scene.Drawer.BeginDraw();
+            scene.Drawer.BeginDraw(
+                samplerState: SamplerState.PointClamp
+            );
             drawIUILayout(scene.Widgets.Layout, delta, scene.Drawer);
             scene.Drawer.EndDraw();
         }
@@ -39,7 +41,10 @@ namespace Crystal.Framework.Renderers
             drawer.Draw(
                 drawable.Drawable,
                 drawable.Area,
-                delta
+                delta,
+                drawable.Origin,
+                0,
+                drawable.SourceRectangle
             );
         }
 
