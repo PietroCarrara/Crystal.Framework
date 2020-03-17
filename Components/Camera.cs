@@ -1,3 +1,4 @@
+using System;
 using Crystal.Framework.Math;
 
 namespace Crystal.Framework.Components
@@ -35,6 +36,7 @@ namespace Crystal.Framework.Components
             get => rotationZ;
             set
             {
+                Console.WriteLine(rotationZ);
                 rotationZ = value;
                 this.rotate = Matrix4.CreateRotationZ(rotationZ);
                 updateTransform();

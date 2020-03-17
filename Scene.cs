@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Crystal.Framework.UI;
 using Crystal.Framework.Input;
 using Crystal.Framework.Graphics;
+using Crystal.Framework.UI;
+using Crystal.Framework.UI.Widgets;
 using Crystal.Framework.Collections.Specialized;
 
 namespace Crystal.Framework
@@ -10,19 +11,24 @@ namespace Crystal.Framework
     public abstract class Scene
     {
         /// <summary>
-        /// The "screen" of the scene
+        /// The "canvas" of the scene
         /// </summary>
         public SceneViewport Viewport;
         
         /// <summary>
         /// The spritebatch used to draw
         /// </summary>
-        public IDrawer SpriteBatch;
+        public IDrawer Drawer;
 
         /// <summary>
         /// The user input object
         /// </summary>
         public IInput Input;
+
+        /// <summary>
+        /// The default theme of the UI
+        /// </summary>
+        public ITheme Theme;
 
         /// <summary>
         /// The design size of this scene. You can assume the screen is always
@@ -35,12 +41,10 @@ namespace Crystal.Framework
         private EntityStorage entities = new EntityStorage();
         private SystemStorage systems = new SystemStorage();
         private RendererStorage renderers = new RendererStorage();
-        private UIElementStorage uiElements = new UIElementStorage();
+        private WidgetStorage widgets;
 
-        public EntityStorage Entities
-        {
-            get => entities;
-        }
+        public EntityStorage Entities => entities;
+        public WidgetStorage Widgets => widgets;
 
         /// <summary>
         /// Dictionary of resources
@@ -59,6 +63,8 @@ namespace Crystal.Framework
             {
                 this.Size = size.Value;
             }
+
+            this.widgets = new WidgetStorage(this);
         }
 
         /// <summary>
@@ -135,11 +141,6 @@ namespace Crystal.Framework
             {
                 system.Update(this, deltaTime);
             }
-
-            foreach (var uiElement in this.uiElements)
-            {
-                uiElement.Update(deltaTime);
-            }
         }
 
         /// <summary>
@@ -153,13 +154,6 @@ namespace Crystal.Framework
             {
                 renderer.Render(this, deltaTime);
             }
-
-            this.SpriteBatch.BeginDraw();
-            foreach (var uiElement in this.uiElements)
-            {
-                uiElement.Draw(this.SpriteBatch, deltaTime);
-            }
-            this.SpriteBatch.EndDraw();
 
             this.AfterRender();
         }
@@ -203,15 +197,10 @@ namespace Crystal.Framework
             return r;
         }
 
-        /// <summary>
-        /// Adds a UI element to the scene
-        /// </summary>
-        /// <param name="e">The element to add</param>
-        /// <returns>The added element</returns>
-        public IUIElement Add(IUIElement e)
+        public Widget Add(Widget w)
         {
-            this.uiElements.Add(e);
-            return e;
+            this.Widgets.Add(w);
+            return w;
         }
 
         /// <summary>

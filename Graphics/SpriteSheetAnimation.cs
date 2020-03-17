@@ -52,7 +52,7 @@ namespace Crystal.Framework.Graphics
             this.Texture.Dispose();
         }
 
-        public TextureSlice GetSlice()
+        public TextureSlice GetSourceRectangle()
         {
             return this.currentFrame;
         }

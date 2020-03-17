@@ -1,5 +1,5 @@
-using Crystal.Framework.Math;
 using Crystal.Framework.UI;
+using Crystal.Framework.Math;
 
 namespace Crystal.Framework.Graphics
 {
@@ -77,7 +77,7 @@ namespace Crystal.Framework.Graphics
         /// </param>
         void Draw(
             IDrawable texture,
-            Rectangle destinationRectangle,
+            TextureSlice destinationRectangle,
             float deltaTime,
             Vector2? origin = null,
             float rotation = 0,
@@ -91,12 +91,38 @@ namespace Crystal.Framework.Graphics
         /// <param name="font">The font to use</param>
         /// <param name="position">Where to position the string</param>
         /// <param name="text">The text to draw</param>
+        /// <param name="scale">Scale the text in the X and Y axis. Null means (1, 1)</param>
         /// <param name="rotation">Clockwise rotation in radians</param>
         void DrawString(
             IFont font,
             Vector2 position,
             string text,
+            Vector2? scale = null,
             float rotation = 0
         );
+
+        /// <summary>
+        /// Scales and draws a string inside a rectangle
+        /// </summary>
+        /// <param name="font">The font to use</param>
+        /// <param name="destinationRectangle">The rectangle where to draw</param>
+        /// <param name="text">The text to draw</param>
+        void DrawString(
+            IFont font,
+            TextureSlice destinationRectangle,
+            string text
+        )
+        {
+            var size = font.MeasureString(text);
+
+            var scale = destinationRectangle.Size / size;
+
+            this.DrawString(
+                font,
+                destinationRectangle.TopLeft,
+                text,
+                scale
+            );
+        }
     }
 }

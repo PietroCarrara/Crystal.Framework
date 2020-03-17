@@ -3,13 +3,13 @@ using Crystal.Framework.Graphics;
 
 namespace Crystal.Framework.Components
 {
-    public class SpriteAnimation : IComponent, ISprite, IAnimatable
+    public class SpriteAnimation : ISpriteComponent, IAnimatable
     {
         public readonly IAnimatable Animation;
 
-        public int Width => this.Animation.GetSlice().Width;
+        public int Width => this.Animation.GetSourceRectangle().Width;
 
-        public int Height => this.Animation.GetSlice().Height;
+        public int Height => this.Animation.GetSourceRectangle().Height;
 
         public Vector2 Origin { get; set; } = new Vector2(.5f);
         public float Rotation { get; set; }
@@ -56,7 +56,7 @@ namespace Crystal.Framework.Components
                 this.Origin,
                 this.Rotation,
                 this.Scale,
-                this.Animation.GetSlice()
+                this.Animation.GetSourceRectangle()
             );
         }
 
@@ -86,9 +86,9 @@ namespace Crystal.Framework.Components
             this.Animation.PreDraw(delta);
         }
 
-        public TextureSlice GetSlice()
+        public TextureSlice GetSourceRectangle()
         {
-            return this.Animation.GetSlice();
+            return this.Animation.GetSourceRectangle();
         }
     }
 }

@@ -29,6 +29,6 @@ namespace Crystal.Framework.Graphics
         /// <summary>
         /// Returns wich part of the texture should be drawn
         /// </summary>
-        TextureSlice GetSlice();
+        TextureSlice GetSourceRectangle();
     }
 }

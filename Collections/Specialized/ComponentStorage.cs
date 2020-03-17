@@ -29,7 +29,7 @@ namespace Crystal.Framework.Collections.Specialized
         }
 
         /// <summary>
-        /// Returns the first component of type T
+        /// Returns the first component assignable to type T
         /// </summary>
         /// <typeparam name="T">The type to look for</typeparam>
         /// <returns></returns>

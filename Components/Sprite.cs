@@ -3,7 +3,7 @@ using Crystal.Framework.Graphics;
 
 namespace Crystal.Framework.Components
 {
-    public class Sprite : IComponent, ISprite, IDrawable
+    public class Sprite : ISpriteComponent, IDrawable
     {
         public readonly IDrawable Texture;
 

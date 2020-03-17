@@ -34,7 +34,7 @@ namespace Crystal.Framework.Renderers
                 .With<Position>()
                 .Many();
 
-            s.SpriteBatch.BeginDraw(
+            s.Drawer.BeginDraw(
                 transformMatrix: cam.TransformationMatrix * s.Viewport.TransformMatrix,
                 samplerState: sampler
             );
@@ -45,11 +45,11 @@ namespace Crystal.Framework.Renderers
 
                 foreach (var sprite in entity.FindAll<ISprite>())
                 {
-                    sprite.Draw(pos.Vector, delta, s.SpriteBatch);
+                    sprite.Draw(pos.Vector, delta, s.Drawer);
                 }
             }
 
-            s.SpriteBatch.EndDraw();
+            s.Drawer.EndDraw();
         }
     }
 }
