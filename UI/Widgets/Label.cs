@@ -5,7 +5,7 @@ namespace Crystal.Framework.UI.Widgets
 {
     public class Label : Widget
     {
-        private string text, font;
+        private string text = "", font = "";
 
         public string Text
         {
@@ -29,7 +29,15 @@ namespace Crystal.Framework.UI.Widgets
 
         protected override IUILayout Build()
         {
-            var font = this.Theme.Fonts[this.font];
+            IFont font;
+            if (this.font != "")
+            {
+                font = this.Theme.Fonts[this.font];
+            }
+            else
+            {
+                font = this.Theme.MediumFont;
+            }
 
             // Scale the font so it fits in the area but is not distorted
             var size = font.MeasureString(this.text);
