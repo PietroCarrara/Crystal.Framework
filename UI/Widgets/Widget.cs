@@ -13,15 +13,27 @@ namespace Crystal.Framework.UI.Widgets
         public TextureSlice Area;
 
         /// <summary>
-        /// The alignment this widget should follow
-        /// </summary>
-        public Alignment? Alignment;
-
-        /// <summary>
         /// The widget this is associated with.
         /// Null if this is the root element of a UI tree
         /// </summary>
         public Widget Parent { get; private set; }
+
+        private Alignment? alignment;
+        /// <summary>
+        /// The alignment this widget should follow.
+        /// Defaults to it's parent's alignment.
+        /// </summary>
+        public Alignment Alignment
+        {
+            get => alignment.HasValue ? alignment.Value :
+                   Parent != null ? Parent.Alignment :
+                                    Alignment.BottomRight;
+            set
+            {
+                this.alignment = value;
+            }
+        }
+
 
         private ITheme theme;
         /// <summary>
@@ -40,13 +52,13 @@ namespace Crystal.Framework.UI.Widgets
                 return null;
             }
         }
-        
+
         private bool needsRebuild = true;
         /// <summary>
         /// Whether or not this widget has changed its state
         /// </summary>
         public bool NeedsRebuild => this.needsRebuild;
-        
+
         private IUILayout layout;
         /// <summary>
         /// The information on how should this widget be drawn
@@ -78,7 +90,7 @@ namespace Crystal.Framework.UI.Widgets
             {
                 throw new Exception("Widget already has a parent!");
             }
-            
+
             this.Parent = w;
         }
 

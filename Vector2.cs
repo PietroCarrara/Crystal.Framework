@@ -87,5 +87,10 @@ namespace Crystal.Framework
                 left.Y - right.Y
             );
         }
+
+        public static explicit operator Point(Vector2 v)
+        {
+            return new Point((int)v.X, (int)v.Y);
+        }
     }
 }
