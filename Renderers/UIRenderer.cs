@@ -11,7 +11,9 @@ namespace Crystal.Framework.Renderers
     {
         public void Render(Scene scene, float delta)
         {
+            scene.Drawer.BeginDraw();
             drawIUILayout(scene.Widgets.Layout, delta, scene.Drawer);
+            scene.Drawer.EndDraw();
         }
 
         private void drawIUILayout(IUILayout ui, float delta, IDrawer drawer)

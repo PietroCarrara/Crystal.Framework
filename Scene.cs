@@ -4,6 +4,7 @@ using Crystal.Framework.Input;
 using Crystal.Framework.Graphics;
 using Crystal.Framework.UI;
 using Crystal.Framework.UI.Widgets;
+using Crystal.Framework.Content;
 using Crystal.Framework.Collections.Specialized;
 
 namespace Crystal.Framework
@@ -14,7 +15,7 @@ namespace Crystal.Framework
         /// The "canvas" of the scene
         /// </summary>
         public SceneViewport Viewport;
-        
+
         /// <summary>
         /// The spritebatch used to draw
         /// </summary>
@@ -29,6 +30,12 @@ namespace Crystal.Framework
         /// The default theme of the UI
         /// </summary>
         public ITheme Theme;
+
+        /// <summary>
+        /// Dynamic loader of content. Use only if your
+        /// content can't be used with scene.Resource()
+        /// </summary>
+        public IContentManager Content;
 
         /// <summary>
         /// The design size of this scene. You can assume the screen is always
@@ -120,7 +127,7 @@ namespace Crystal.Framework
             {
                 throw new Exception("Scene already initialized!");
             }
-            
+
             foreach (var system in this.systems)
             {
                 system.Initialize(this);
@@ -182,7 +189,7 @@ namespace Crystal.Framework
             {
                 s.Initialize(this);
             }
-            
+
             return s;
         }
 

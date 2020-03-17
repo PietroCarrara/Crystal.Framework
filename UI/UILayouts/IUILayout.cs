@@ -18,5 +18,7 @@ namespace Crystal.Framework.UI.UILayouts
                    Action<IDrawableUILayout> b,
                    Action<TextUILayout> c,
                    Action<IAnimatableUILayout> d);
+
+        public static IUILayout Empty => new OrderedUILayouts { Children = new IUILayout[0] };
     }
 }

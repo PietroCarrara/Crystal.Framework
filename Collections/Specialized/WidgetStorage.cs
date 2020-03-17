@@ -30,6 +30,7 @@ namespace Crystal.Framework.Collections.Specialized
             {
                 if (root.NeedsRebuild)
                 {
+                    root.Theme = scene.Theme;
                     root.Area = new TextureSlice(Point.Zero, scene.Viewport.Size);
                 }
                 
