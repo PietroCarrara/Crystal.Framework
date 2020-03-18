@@ -6,7 +6,9 @@ namespace Crystal.Framework.UI.Widgets
     public class Panel : SingleChildWidget
     {
         private NinePatchImage background;
+
         private NinePatchImageWidget bgWidget;
+        private Margins margins;
 
         public Panel()
         {
@@ -26,10 +28,11 @@ namespace Crystal.Framework.UI.Widgets
         
         protected override IUILayout Build()
         {
-            Child.Area = this.Area;
             bgWidget.Area = this.Area;
-
             bgWidget.Image = background != null ? background : Theme.PanelBackground;
+
+            this.margins = Margins.XY(bgWidget.Image.BorderThickness.X, bgWidget.Image.BorderThickness.Y);
+            Child.Area = this.margins.Apply(this.Area);
 
             return new OrderedUILayouts
             {
