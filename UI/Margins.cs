@@ -30,11 +30,9 @@ namespace Crystal.Framework.UI
 
         public TextureSlice Apply(TextureSlice area)
         {
-            return new TextureSlice(
-                area.TopLeft.X + this.Left,
-                area.TopLeft.Y + this.Top,
-                area.Width - this.Right,
-                area.Height - this.Bottom
+            return TextureSlice.FromTwoPoints(
+                area.TopLeft + (this.Left, this.Top),
+                area.BottomRight - (this.Right, this.Bottom)
             );
         }
     }
