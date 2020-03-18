@@ -28,11 +28,11 @@ namespace Crystal.Framework.UI.Widgets
         
         protected override IUILayout Build()
         {
-            bgWidget.Area = this.Area;
+            bgWidget.AvailableArea = this.Area;
             bgWidget.Image = background != null ? background : Theme.PanelBackground;
 
             this.margins = Margins.XY(bgWidget.Image.BorderThickness.X, bgWidget.Image.BorderThickness.Y);
-            Child.Area = this.margins.Apply(this.Area);
+            Child.AvailableArea = this.margins.Apply(this.Area);
 
             return new OrderedUILayouts
             {

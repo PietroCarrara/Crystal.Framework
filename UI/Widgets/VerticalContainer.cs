@@ -22,7 +22,7 @@ namespace Crystal.Framework.UI.Widgets
             var i = 0;
             foreach (var child in this.widgets)
             {
-                child.Area = new TextureSlice(
+                child.AvailableArea = new TextureSlice(
                     this.Area.TopLeft.X,
                     this.Area.TopLeft.Y + height * i,
                     this.Area.Width,

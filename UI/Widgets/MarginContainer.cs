@@ -19,7 +19,7 @@ namespace Crystal.Framework.UI.Widgets
         
         protected override IUILayout Build()
         {
-            Child.Area = this.margins.Apply(this.Area);
+            Child.AvailableArea = this.margins.Apply(this.Area);
 
             return Child.Layout;
         }

@@ -11,7 +11,7 @@ namespace Crystal.Framework.UI.Widgets
         {
             foreach (var child in this.widgets)
             {
-                child.Area = this.Area;
+                child.AvailableArea = this.Area;
             }
 
             return new OrderedUILayouts

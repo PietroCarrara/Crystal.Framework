@@ -10,7 +10,21 @@ namespace Crystal.Framework.UI.Widgets
         /// <summary>
         /// The area available to this widget
         /// </summary>
-        public TextureSlice Area;
+        public TextureSlice AvailableArea;
+
+        private TextureSlice? area;
+        /// <summary>
+        /// The area this widget actually occupies
+        /// </summary>
+        /// <value></value>
+        public TextureSlice Area
+        {
+            get => area.HasValue ? area.Value : AvailableArea;
+            protected set
+            {
+                area = value;
+            }
+        }
 
         /// <summary>
         /// The widget this is associated with.
@@ -106,7 +120,7 @@ namespace Crystal.Framework.UI.Widgets
         [Conditional("DEBUG")]
         private void debugValidate()
         {
-            Debug.Assert(this.Area.Area > 0, "A widget must have a area!");
+            Debug.Assert(this.AvailableArea.Area > 0, "A widget must have some available area!");
         }
     }
 }
