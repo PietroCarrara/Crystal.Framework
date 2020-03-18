@@ -6,6 +6,13 @@ namespace Crystal.Framework.UI.Widgets
     public class Panel : SingleChildWidget
     {
         private NinePatchImage background;
+        private NinePatchImageWidget bgWidget;
+
+        public Panel()
+        {
+            bgWidget = new NinePatchImageWidget();
+            bgWidget.BecomeChildOf(this);
+        }
         
         public NinePatchImage Background
         {
@@ -19,27 +26,16 @@ namespace Crystal.Framework.UI.Widgets
         
         protected override IUILayout Build()
         {
-            var bg = Background;
-
-            if (bg == null)
-            {
-                bg = Theme.PanelBackground;    
-            }
-
             Child.Area = this.Area;
+            bgWidget.Area = this.Area;
 
-            var ninePatch = new NinePatchImageWidget
-            {
-                Area = this.Area,
-                Image = bg,
-            };
-            ninePatch.BecomeChildOf(this);
+            bgWidget.Image = background != null ? background : Theme.PanelBackground;
 
             return new OrderedUILayouts
             {
                 Children = new IUILayout[]
                 {
-                    ninePatch.Layout,
+                    bgWidget.Layout,
                     Child.Layout
                 }
             };

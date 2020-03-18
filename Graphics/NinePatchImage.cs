@@ -11,9 +11,11 @@ namespace Crystal.Framework.Graphics
         public int Height => this.Texture.Height;
 
         /// <summary>
-        /// Value to multiply the border sizes
+        /// Value of the border sizes
+        /// X is for the left and right borders
+        /// Y is for the top and bottom borders
         /// </summary>
-        public float BorderThickness;
+        public Point BorderThickness;
 
         public NinePatchImage(
             IDrawable texture,
@@ -21,7 +23,7 @@ namespace Crystal.Framework.Graphics
             Point topRight,
             Point bottomLeft,
             Point bottomRight,
-            float borderThickness = 1)
+            Point borderThickness)
         {
             this.Texture = texture;
 
@@ -41,12 +43,15 @@ namespace Crystal.Framework.Graphics
         {
             // Top Left
             yield return (
-                new TextureSlice(0, 0, topLeft.X, topLeft.Y),
+                TextureSlice.FromTwoPoints(
+                    (0, 0),
+                    topLeft
+                ),
                 new TextureSlice(
                     0,
                     0,
-                    thick(topLeft.X),
-                    thick(topLeft.Y)
+                    BorderThickness.X,
+                    BorderThickness.Y
                 ) + area.TopLeft
             );
 
@@ -57,26 +62,24 @@ namespace Crystal.Framework.Graphics
                     (topRight.X, topRight.Y)
                 ),
                 new TextureSlice(
-                    thick(topLeft.X),
+                    BorderThickness.X,
                     0,
                     squeezeCenterWidth(area.Width),
-                    thick(topLeft.Y)
+                    BorderThickness.Y
                 ) + area.TopLeft
             );
 
             // Top Right
             yield return (
-                new TextureSlice(
-                    topRight.X,
-                    0,
-                    Texture.Width - topRight.X,
-                    topRight.Y
+                TextureSlice.FromTwoPoints(
+                    (topRight.X, 0),
+                    (Texture.Width, topRight.Y)
                 ),
                 new TextureSlice(
-                    area.Width - thick(Texture.Width - topRight.X),
+                    area.Width - BorderThickness.X,
                     0,
-                    thick(Texture.Width - topRight.X),
-                    thick(topRight.Y)
+                    BorderThickness.X,
+                    BorderThickness.Y
                 ) + area.TopLeft
             );
 
@@ -88,9 +91,9 @@ namespace Crystal.Framework.Graphics
                 ),
                 new TextureSlice(
                     0,
-                    thick(topLeft.Y),
-                    thick(topLeft.X),
-                    squeezeCenterHeight(area.Height)                    
+                    BorderThickness.Y,
+                    BorderThickness.X,
+                    squeezeCenterHeight(area.Height)
                 ) + area.TopLeft
             );
 
@@ -101,8 +104,8 @@ namespace Crystal.Framework.Graphics
                     bottomRight
                 ),
                 new TextureSlice(
-                    thick(topLeft.X),
-                    thick(topLeft.Y),
+                    BorderThickness.X,
+                    BorderThickness.Y,
                     squeezeCenterWidth(area.Width),
                     squeezeCenterHeight(area.Height)
                 ) + area.TopLeft
@@ -115,9 +118,9 @@ namespace Crystal.Framework.Graphics
                     (Texture.Width, bottomRight.Y)
                 ),
                 new TextureSlice(
-                    area.Width - thick(Texture.Width - topRight.X),
-                    thick(topRight.Y),
-                    thick(Texture.Width - topRight.X),
+                    area.Width - BorderThickness.X,
+                    BorderThickness.Y,
+                    BorderThickness.X,
                     squeezeCenterHeight(area.Height)
                 ) + area.TopLeft
             );
@@ -130,9 +133,9 @@ namespace Crystal.Framework.Graphics
                 ),
                 new TextureSlice(
                     0,
-                    area.Height - thick(Texture.Height - bottomLeft.Y),
-                    thick(bottomLeft.X),
-                    thick(Texture.Height - bottomLeft.Y)
+                    area.Height - BorderThickness.Y,
+                    BorderThickness.X,
+                    BorderThickness.Y
                 ) + area.TopLeft
             );
 
@@ -143,10 +146,10 @@ namespace Crystal.Framework.Graphics
                     (bottomRight.X, Texture.Height)
                 ),
                 new TextureSlice(
-                    thick(bottomLeft.X),
-                    area.Height - thick(Texture.Height - bottomLeft.Y),
+                    BorderThickness.X,
+                    area.Height - BorderThickness.Y,
                     squeezeCenterWidth(area.Width),
-                    thick(Texture.Height - bottomLeft.Y)
+                    BorderThickness.Y
                 ) + area.TopLeft
             );
 
@@ -157,40 +160,24 @@ namespace Crystal.Framework.Graphics
                     (Texture.Width, Texture.Height)
                 ),
                 new TextureSlice(
-                    area.Width - thick(Texture.Width - bottomRight.X),
-                    area.Height - thick(Texture.Height - bottomRight.Y),
-                    thick(Texture.Width - bottomRight.X),
-                    thick(Texture.Height - bottomRight.Y)
+                    area.Width - BorderThickness.X,
+                    area.Height - BorderThickness.Y,
+                    BorderThickness.X,
+                    BorderThickness.Y
                 ) + area.TopLeft
             );
-        }
-
-        /// <summary>
-        /// Applies the border thickness to some value
-        /// </summary>
-        private int thick(int value)
-        {
-            return (int)(value * this.BorderThickness);
-        }
-
-        /// <summary>
-        /// Applies the border thickness to some point
-        /// </summary>
-        private Point thick(Point p)
-        {
-            return new Point(thick(p.X), thick(p.Y));
         }
 
         private int squeezeCenterWidth(int totalWidth)
         {
             // total Width of the image - total width of the corners
-            return totalWidth - thick(topLeft.X) - thick(Texture.Width - topRight.X);
+            return totalWidth - 2 * BorderThickness.X;
         }
 
         private int squeezeCenterHeight(int totalHeight)
         {
             // total height of the image - total height of the corners
-            return totalHeight - thick(topLeft.Y) - thick(Texture.Height - bottomLeft.Y);
+            return totalHeight - 2 * BorderThickness.Y;
         }
 
         public void Dispose()

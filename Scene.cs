@@ -12,12 +12,13 @@ namespace Crystal.Framework
     public abstract class Scene
     {
         /// <summary>
-        /// The "canvas" of the scene
+        /// The "canvas" of the scene.
+        /// This is where all of the scenes contents are drawn.
         /// </summary>
         public SceneViewport Viewport;
 
         /// <summary>
-        /// The spritebatch used to draw
+        /// The object to which we can delegate draw calls
         /// </summary>
         public IDrawer Drawer;
 
@@ -132,7 +133,7 @@ namespace Crystal.Framework
             {
                 system.Initialize(this);
             }
-
+            
             this.initialized = true;
         }
 

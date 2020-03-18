@@ -18,8 +18,8 @@ namespace Crystal.Framework.UI.Widgets
             }   
         }
 
-        private float? borderThickness;
-        public float BorderThickness
+        private Point? borderThickness;
+        public Point BorderThickness
         {
             get => borderThickness.HasValue ? borderThickness.Value : image.BorderThickness;
             set
