@@ -6,6 +6,7 @@ namespace Crystal.Framework.UI.Widgets
     public class Label : Widget
     {
         private string text = "", font = "";
+        private bool expand = true;
 
         public string Text
         {
@@ -27,6 +28,16 @@ namespace Crystal.Framework.UI.Widgets
             }
         }
 
+        public bool Expand
+        {
+            get => expand;
+            set
+            {
+                this.expand = value;
+                this.ChangeState();
+            }
+        }
+
         protected override IUILayout Build()
         {
             IFont font;
@@ -39,9 +50,14 @@ namespace Crystal.Framework.UI.Widgets
                 font = this.Theme.MediumFont;
             }
 
-            // Scale the font so it fits in the area but is not distorted
             var size = font.MeasureString(this.text);
 
+            var area = new TextureSlice(
+                this.Area.TopLeft,
+                (Point)size
+            );
+
+            // Scale the font so it fits in the area but is not distorted
             var scaleX = size.X / this.Area.Width;
             var scaleY = size.Y / this.Area.Height;
             var scale = System.Math.Max(scaleY, scaleX);
@@ -49,11 +65,15 @@ namespace Crystal.Framework.UI.Widgets
             var width = (int)(size.X / scale);
             var height = (int)(size.Y / scale);
 
-            var area = new TextureSlice(
-                this.Area.TopLeft,
-                width,
-                height
-            );
+            // If we are shrinking or are set to expand
+            if (scale > 1 || expand)
+            {
+                area = new TextureSlice(
+                    this.Area.TopLeft,
+                    width,
+                    height
+                );
+            }
 
             return new TextUILayout
             {
