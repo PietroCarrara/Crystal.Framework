@@ -1,3 +1,4 @@
+using Crystal.Framework.Graphics;
 
 namespace Crystal.Framework.LowLevel
 {
@@ -8,10 +9,12 @@ namespace Crystal.Framework.LowLevel
         /// Must be run before doing anything
         /// </summary>
         public static void Execute(
-            CanvasFactory canvasFactory
+            CanvasFactory canvasFactory,
+            IScaler scaler
         )
         {
             CanvasFactory.Instance = canvasFactory;
+            Scaler.Instance = scaler;
         }
     }
 }

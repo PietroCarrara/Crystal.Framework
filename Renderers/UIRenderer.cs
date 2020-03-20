@@ -20,6 +20,8 @@ namespace Crystal.Framework.Renderers
         {
             var root = scene.Widgets.Root;
             root.AvailableArea = new TextureSlice(Point.Zero, canvas.Size);
+
+            canvas.Clear();
             
             scene.Drawer.BeginDraw(
                 canvas,

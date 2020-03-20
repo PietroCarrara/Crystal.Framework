@@ -17,8 +17,7 @@ namespace Crystal.Framework.Renderers
 
         public void Initialize(Scene scene)
         {
-            // this.canvas = scene.Canvases.Create((Point)scene.Size);
-            this.canvas = scene.Canvases.Create();
+            this.canvas = scene.Canvases.Create((Point)scene.Size);
         }
         
         public void Render(Scene s, float delta)
