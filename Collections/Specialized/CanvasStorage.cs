@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using Crystal.Framework.LowLevel;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ namespace Crystal.Framework.Collections.Specialized
             data.Add(c);
             return c;
         }
+
+        public IEnumerable<Canvas> Visible => this.Where(c => c.Visible);
 
         public IEnumerator<Canvas> GetEnumerator()
         {

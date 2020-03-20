@@ -11,6 +11,8 @@ namespace Crystal.Framework.Graphics
         public delegate void SizeChangedEventHandler(Canvas canvas, Point size);
 
         public event SizeChangedEventHandler SizeChanged;
+
+        public bool Visible = true;
         
         public Point Size { get; private set; }
 
