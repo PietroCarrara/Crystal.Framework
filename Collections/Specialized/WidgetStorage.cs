@@ -6,13 +6,11 @@ namespace Crystal.Framework.Collections.Specialized
 {
     public class WidgetStorage
     {
-        private Scene scene;
-        private StackingContainer root;
+        public StackingContainer Root;
 
-        public WidgetStorage(Scene s)
+        public WidgetStorage()
         {
-            this.scene = s;
-            root = new StackingContainer();
+            Root = new StackingContainer();
         }
 
         /// <summary>
@@ -21,21 +19,7 @@ namespace Crystal.Framework.Collections.Specialized
         /// <param name="widget">The widget to add</param>
         public void Add(Widget widget)
         {
-            this.root.Add(widget);
-        }
-
-        public IUILayout Layout
-        {
-            get 
-            {
-                if (root.NeedsRebuild)
-                {
-                    root.Theme = scene.Theme;
-                    root.AvailableArea = new TextureSlice(Point.Zero, scene.Viewport.Size);
-                }
-                
-                return root.Layout;
-            }
+            this.Root.Add(widget);
         }
     }
 }

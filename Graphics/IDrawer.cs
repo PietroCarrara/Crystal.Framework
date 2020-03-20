@@ -8,10 +8,12 @@ namespace Crystal.Framework.Graphics
         /// <summary>
         /// Starts drawing on the given viewport
         /// </summary>
-        /// <param name="screen">The viewport to draw on. If null, uses the whole screen</param>
+        /// <param name="target">Where the things should be drawn</param>
+        /// <param name="screen">What slice of the target to draw on</param>
         /// <param name="transformMatrix">The matrix used to apply transforms</param>
         /// <param name="samplerState">What strategy to use when upscaling or downscaling the textures</param>
         void BeginDraw(
+            IRenderTarget target,
             TextureSlice? viewport = null,
             Matrix4 transformMatrix = null,
             SamplerState samplerState = SamplerState.LinearClamp

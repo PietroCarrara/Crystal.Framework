@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Crystal.Framework.LowLevel;
 using System.Collections.Generic;
@@ -5,9 +6,9 @@ using Crystal.Framework.Graphics;
 
 namespace Crystal.Framework.Collections.Specialized
 {
-    public class CanvasStorage : IEnumerable<Canvas>
+    public class CanvasStorage : IEnumerable<Canvas>, IDisposable
     {
-        private List<Canvas> data;
+        private List<Canvas> data = new List<Canvas>();
 
         /// <summary>
         /// Creates a canvas that is the size of the window and resizes when the window does
@@ -37,6 +38,14 @@ namespace Crystal.Framework.Collections.Specialized
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
+        }
+
+        public void Dispose()
+        {
+            foreach (var canvas in this.data)
+            {
+                canvas.Dispose();
+            }
         }
     }
 }

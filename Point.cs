@@ -20,6 +20,16 @@ namespace Crystal.Framework
             return $"({X}, {Y})";
         }
 
+        public static bool operator ==(Point left, Point right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Point left, Point right)
+        {
+            return !(left == right);
+        }
+
         public static Point operator +(Point left, Point right)
         {
             return new Point(left.X + right.X, left.Y + right.Y);
@@ -38,6 +48,32 @@ namespace Crystal.Framework
         public static implicit operator Vector2(Point self)
         {
             return new Vector2(self.X, self.Y);
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = 11;
+
+            hash = 7 * hash + this.X;
+            hash = 7 * hash + this.Y;
+
+            return hash;
+        }
+
+        public bool Equals(Point p)
+        {
+            return this.X == p.X &&
+                   this.Y == p.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Point p)
+            {
+                return this.Equals(p);
+            }
+
+            return false;
         }
     }
 }

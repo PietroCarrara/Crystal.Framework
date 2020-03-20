@@ -9,12 +9,23 @@ namespace Crystal.Framework.Renderers
     /// </summary>
     public class UIRenderer : IRenderer
     {
+        private Canvas canvas;
+        
+        public void Initialize(Scene scene)
+        {
+            this.canvas = scene.Canvases.Create();
+        }
+
         public void Render(Scene scene, float delta)
         {
+            var root = scene.Widgets.Root;
+            root.AvailableArea = new TextureSlice(Point.Zero, canvas.Size);
+            
             scene.Drawer.BeginDraw(
+                canvas,
                 samplerState: SamplerState.PointClamp
             );
-            drawIUILayout(scene.Widgets.Layout, delta, scene.Drawer);
+            drawIUILayout(root.Layout, delta, scene.Drawer);
             scene.Drawer.EndDraw();
         }
 

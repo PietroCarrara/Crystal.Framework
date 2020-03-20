@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Crystal.Framework.Math;
+
 namespace Crystal.Framework.Graphics
 {
     /// <summary>
@@ -5,8 +8,21 @@ namespace Crystal.Framework.Graphics
     /// </summary>
     public abstract class Canvas : IRenderTarget
     {
-        public abstract void SetSize(Point size);
+        public delegate void SizeChangedEventHandler(Canvas canvas, Point size);
+
+        public event SizeChangedEventHandler SizeChanged;
+        
+        public Point Size { get; private set; }
+
+        public virtual void SetSize(Point size)
+        {
+            this.Size = size;
+
+            SizeChanged?.Invoke(this, size);
+        }
 
         public abstract void Dispose();
+
+        public abstract void Clear();
     }
 }

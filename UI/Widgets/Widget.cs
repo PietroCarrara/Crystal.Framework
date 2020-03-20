@@ -7,10 +7,22 @@ namespace Crystal.Framework.UI.Widgets
 {
     public abstract class Widget
     {
+        private TextureSlice availableArea;
         /// <summary>
         /// The area available to this widget
         /// </summary>
-        public TextureSlice AvailableArea;
+        public TextureSlice AvailableArea
+        {
+            get => availableArea;
+            set
+            {
+                if (value != availableArea)
+                {
+                    this.availableArea = value;
+                    this.ChangeState();
+                }
+            }
+        }
 
         private TextureSlice? area;
         /// <summary>

@@ -8,14 +8,23 @@ namespace Crystal.Framework.Renderers
     public class CameraSpriteRenderer : IRenderer
     {
         private SamplerState sampler;
+        private Canvas canvas;
         
         public CameraSpriteRenderer(SamplerState sampler = SamplerState.LinearClamp)
         {
             this.sampler = sampler;
         }
+
+        public void Initialize(Scene scene)
+        {
+            // this.canvas = scene.Canvases.Create((Point)scene.Size);
+            this.canvas = scene.Canvases.Create();
+        }
         
         public void Render(Scene s, float delta)
         {
+            canvas.Clear();
+            
             var camera = s.Entities
                 .With<Camera>()
                 .Many()
@@ -34,8 +43,11 @@ namespace Crystal.Framework.Renderers
                 .With<Position>()
                 .Many();
 
+            // TODO: Implement resolution independence
+            // Right now, if the size of this.canvas changes, the screen will look different
             s.Drawer.BeginDraw(
-                transformMatrix: cam.TransformationMatrix * s.Viewport.TransformMatrix,
+                this.canvas,
+                transformMatrix: cam.TransformationMatrix,
                 samplerState: sampler
             );
 

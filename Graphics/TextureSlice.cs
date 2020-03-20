@@ -1,7 +1,5 @@
 using System.Linq;
-using System.Diagnostics;
 using System.Collections.Generic;
-using Crystal.Framework;
 
 namespace Crystal.Framework.Graphics
 {
@@ -45,6 +43,16 @@ namespace Crystal.Framework.Graphics
         public override string ToString()
         {
             return $"TextureSlice {{ TopLeft = {TopLeft}, Width = {Width}, Height = {Height} }}";
+        }
+
+        public static bool operator ==(TextureSlice left, TextureSlice right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(TextureSlice left, TextureSlice right)
+        {
+            return !(left == right);
         }
 
         public static TextureSlice operator +(TextureSlice left, Point right)
@@ -122,6 +130,34 @@ namespace Crystal.Framework.Graphics
                 topLeft,
                 bottomRight - topLeft
             );
+        }
+
+        public bool Equals(TextureSlice t)
+        {
+            return this.TopLeft == t.TopLeft &&
+                   this.Width == t.Width &&
+                   this.Height == t.Height;
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = 13;
+            
+            hash = hash * 7 + this.TopLeft.GetHashCode();
+            hash = hash * 7 + this.Width.GetHashCode();
+            hash = hash * 7 + this.Height.GetHashCode();
+
+            return hash;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is TextureSlice t)
+            {
+                return this.Equals(t);
+            }
+
+            return false;
         }
     }
 }

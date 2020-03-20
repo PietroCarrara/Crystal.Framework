@@ -9,14 +9,8 @@ using Crystal.Framework.Collections.Specialized;
 
 namespace Crystal.Framework
 {
-    public abstract class Scene
+    public abstract class Scene : IDisposable
     {
-        /// <summary>
-        /// The "canvas" of the scene.
-        /// This is where all of the scenes contents are drawn.
-        /// </summary>
-        public SceneViewport Viewport;
-
         /// <summary>
         /// The object to which we can delegate draw calls
         /// </summary>
@@ -30,7 +24,11 @@ namespace Crystal.Framework
         /// <summary>
         /// The default theme of the UI
         /// </summary>
-        public ITheme Theme;
+        public ITheme Theme
+        {
+            get => this.widgets.Root.Theme;
+            set => this.widgets.Root.Theme = value;
+        }
 
         /// <summary>
         /// Dynamic loader of content. Use only if your
@@ -49,10 +47,12 @@ namespace Crystal.Framework
         private EntityStorage entities = new EntityStorage();
         private SystemStorage systems = new SystemStorage();
         private RendererStorage renderers = new RendererStorage();
-        private WidgetStorage widgets;
+        private CanvasStorage canvases = new CanvasStorage();
+        private WidgetStorage widgets = new WidgetStorage();
 
         public EntityStorage Entities => entities;
         public WidgetStorage Widgets => widgets;
+        public CanvasStorage Canvases => canvases;
 
         /// <summary>
         /// Dictionary of resources
@@ -71,8 +71,6 @@ namespace Crystal.Framework
             {
                 this.Size = size.Value;
             }
-
-            this.widgets = new WidgetStorage(this);
         }
 
         /// <summary>
@@ -133,7 +131,7 @@ namespace Crystal.Framework
             {
                 system.Initialize(this);
             }
-            
+
             this.initialized = true;
         }
 
@@ -234,6 +232,11 @@ namespace Crystal.Framework
         public void AddResource(string name, object res)
         {
             this.resources.Add(name, res);
+        }
+
+        public void Dispose()
+        {
+            this.Canvases.Dispose();
         }
     }
 }

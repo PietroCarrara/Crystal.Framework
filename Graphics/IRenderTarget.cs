@@ -6,6 +6,7 @@ namespace Crystal.Framework.Graphics
     /// </summary>
     public interface IRenderTarget : IDisposable
     {
-        
+        // Removes any previously drawn objects
+        void Clear();
     }
 }
