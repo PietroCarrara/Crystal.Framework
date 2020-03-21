@@ -3,26 +3,25 @@ using Crystal.Framework.Math;
 namespace Crystal.Framework.Graphics
 {
     /// <summary>
-    /// An object that is aware of the screen size and can
-    /// scale textures to fit on the screen
+    /// An object that can reposition a rectangle (usually a texture)
+    /// to fit inside another rectangle (usually a canvas)
     /// </summary>
     public interface IScaler
     {
         /// <summary>
-        /// Given the dimensions and position of a texture,
-        /// returns the slice of the screen where it should be rendered
+        /// Fits a rectangle inside another
         /// </summary>
-        /// <param name="texture">The dimensions and position of a texture</param>
-        /// <returns>Where on the screen the texture should be rendered</returns>
-        TextureSlice Scale(TextureSlice texture);
+        /// <param name="container">The rectangle that will contain the other</param>
+        /// <param name="fitting">The rectangle to be resized and </param>
+        /// <returns>The shape that the secong parameter has to assume in order to fit it's container</returns>
+        TextureSlice Scale(TextureSlice container, TextureSlice fitting);
 
         /// <summary>
-        /// Given the dimensions and position of a texture,
-        /// return a transformation that translates coordinates from screen space
-        /// to this texture's space
+        /// Creates a transformation that fits vectors in the second argument inside the first argument
         /// </summary>
-        /// <param name="texture">The dimensions and position of a texture</param>
-        /// <returns>A transformation that translates screen space to texture space</returns>
-        Matrix4 Invert(TextureSlice texture);
+        /// <param name="container">The rectangle that will contain the other</param>
+        /// <param name="fitting">The rectangle to be resized and </param>
+        /// <returns>The transformation for vectors to fit inside the container</returns>
+        Matrix4 ScaleMatrix(TextureSlice container, TextureSlice fitting);
     }
 }

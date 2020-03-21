@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Crystal.Framework.LowLevel;
 using Crystal.Framework.Components;
 using Crystal.Framework.Graphics;
 
@@ -42,11 +43,15 @@ namespace Crystal.Framework.Renderers
                 .With<Position>()
                 .Many();
 
-            // TODO: Implement resolution independence
-            // Right now, if the size of this.canvas changes, the screen will look different
+            // TODO: Stop rebuilding this every frame
+            var mat = Scaler.Instance.ScaleMatrix(
+                new TextureSlice(Point.Zero, canvas.Size),
+                new TextureSlice(Point.Zero, (Point)s.Size)
+            );
+
             s.Drawer.BeginDraw(
                 this.canvas,
-                transformMatrix: cam.TransformationMatrix,
+                transformMatrix: mat * cam.TransformationMatrix,
                 samplerState: sampler
             );
 
