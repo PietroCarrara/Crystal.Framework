@@ -1,3 +1,4 @@
+using System.Numerics;
 using System;
 using System.Linq;
 using Crystal.Framework.LowLevel;
@@ -10,6 +11,7 @@ namespace Crystal.Framework.Renderers
     {
         private SamplerState sampler;
         private Canvas canvas;
+        private Matrix4x4 scale;
         
         public CameraSpriteRenderer(SamplerState sampler = SamplerState.LinearClamp)
         {
@@ -18,7 +20,20 @@ namespace Crystal.Framework.Renderers
 
         public void Initialize(Scene scene)
         {
-            this.canvas = scene.Canvases.Create((Point)scene.Size);
+            this.canvas = scene.Canvases.Create(scene.Size);
+
+            this.scale = Scaler.Instance.ScaleMatrix(
+                new TextureSlice(Point.Zero, canvas.Size),
+                new TextureSlice(Point.Zero, scene.Size)
+            );
+
+            this.canvas.SizeChanged += (c, size) =>
+            {
+                this.scale = Scaler.Instance.ScaleMatrix(
+                    new TextureSlice(Point.Zero, size),
+                    new TextureSlice(Point.Zero, scene.Size)
+                );
+            };
         }
         
         public void Render(Scene s, float delta)
@@ -43,15 +58,9 @@ namespace Crystal.Framework.Renderers
                 .With<Position>()
                 .Many();
 
-            // TODO: Stop rebuilding this every frame
-            var mat = Scaler.Instance.ScaleMatrix(
-                new TextureSlice(Point.Zero, canvas.Size),
-                new TextureSlice(Point.Zero, (Point)s.Size)
-            );
-
             s.Drawer.BeginDraw(
                 this.canvas,
-                transformMatrix: mat * cam.TransformationMatrix,
+                transformMatrix: this.scale * cam.TransformationMatrix,
                 samplerState: sampler
             );
 
