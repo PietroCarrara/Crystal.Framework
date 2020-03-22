@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Crystal.Framework.Input
 {
     public interface IInput

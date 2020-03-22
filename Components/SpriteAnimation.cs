@@ -1,21 +1,14 @@
+using System.Numerics;
 using System;
 using Crystal.Framework.Graphics;
 
 namespace Crystal.Framework.Components
 {
-    public class SpriteAnimation : ISpriteComponent, IAnimatable
+    public class SpriteAnimation : Sprite
     {
         public readonly IAnimatable Animation;
 
-        public int Width => this.Animation.GetSourceRectangle().Width;
-
-        public int Height => this.Animation.GetSourceRectangle().Height;
-
-        public Vector2 Origin { get; set; } = new Vector2(.5f);
-        public float Rotation { get; set; }
-        public Vector2 Scale { get; set; }
-
-        public Vector2 Size
+        public override Vector2 Size
         {
             get => new Vector2(this.Animation.Width, this.Animation.Height) * this.Scale;
             set
@@ -27,7 +20,7 @@ namespace Crystal.Framework.Components
             }
         }
 
-        public SpriteAnimation(IAnimatable animation, Vector2? origin = null)
+        public SpriteAnimation(IAnimatable animation, Vector2? origin = null) : base(animation, origin)
         {
             this.Animation = animation;
         }
@@ -36,7 +29,7 @@ namespace Crystal.Framework.Components
                                Point indivudualSize,
                                float fps,
                                Vector2? scale = null,
-                               int? numberOfSprites = null)
+                               int? numberOfSprites = null) : base(texture, null)
         {
             this.Animation = new SpriteSheetAnimation(texture,
                                                       indivudualSize,
@@ -45,7 +38,7 @@ namespace Crystal.Framework.Components
             this.Scale = scale.HasValue ? scale.Value : Vector2.One;
         }
 
-        public void Draw(Vector2 position, float delta, IDrawer spriteBatch)
+        public override void Draw(Vector2 position, float delta, IDrawer spriteBatch)
         {
             this.Animation.PreDraw(delta);
 
@@ -76,19 +69,16 @@ namespace Crystal.Framework.Components
             this.Animation.Reset();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
+            base.Dispose();
+            
             this.Animation.Dispose();
         }
 
         public void PreDraw(float delta)
         {
             this.Animation.PreDraw(delta);
-        }
-
-        public TextureSlice GetSourceRectangle()
-        {
-            return this.Animation.GetSourceRectangle();
         }
     }
 }

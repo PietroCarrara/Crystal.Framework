@@ -40,7 +40,7 @@ namespace Crystal.Framework
         /// The design size of this scene. You can assume the screen is always
         /// this size, and the engine will scale everything accordingly
         /// </summary>
-        public readonly Vector2 Size = new Vector2(1280, 720);
+        public readonly Point Size = new Point(1280, 720);
 
         private bool initialized;
 
@@ -63,7 +63,7 @@ namespace Crystal.Framework
 
         public readonly string Name;
 
-        public Scene(string name, Vector2? size = null)
+        public Scene(string name, Point? size = null)
         {
             this.Name = name;
 

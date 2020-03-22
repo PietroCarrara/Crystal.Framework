@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using Crystal.Framework.Math;
-
 namespace Crystal.Framework.Graphics
 {
     /// <summary>

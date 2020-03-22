@@ -1,5 +1,5 @@
+using System.Numerics;
 using Crystal.Framework.UI;
-using Crystal.Framework.Math;
 
 namespace Crystal.Framework.Graphics
 {
@@ -15,7 +15,7 @@ namespace Crystal.Framework.Graphics
         void BeginDraw(
             IRenderTarget target,
             TextureSlice? viewport = null,
-            Matrix4 transformMatrix = null,
+            Matrix4x4? transformMatrix = null,
             SamplerState samplerState = SamplerState.LinearClamp
         );
 

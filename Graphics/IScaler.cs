@@ -1,4 +1,4 @@
-using Crystal.Framework.Math;
+using System.Numerics;
 
 namespace Crystal.Framework.Graphics
 {
@@ -22,6 +22,6 @@ namespace Crystal.Framework.Graphics
         /// <param name="container">The rectangle that will contain the other</param>
         /// <param name="fitting">The rectangle to be resized and </param>
         /// <returns>The transformation for vectors to fit inside the container</returns>
-        Matrix4 ScaleMatrix(TextureSlice container, TextureSlice fitting);
+        Matrix4x4 ScaleMatrix(TextureSlice container, TextureSlice fitting);
     }
 }

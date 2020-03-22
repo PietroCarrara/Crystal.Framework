@@ -1,9 +1,11 @@
+using System.Numerics;
+
 namespace Crystal.Framework
 {
     public struct Point
     {
         public static Point Zero { get; } = new Point(0, 0);
-        
+
         public int X, Y;
 
         public Point(int x, int y)
@@ -40,6 +42,11 @@ namespace Crystal.Framework
             return new Point(left.X - right.X, left.Y - right.Y);
         }
 
+        public static Point operator /(Point left, int right)
+        {
+            return new Point(left.X / right, left.Y / right);
+        }
+
         public static implicit operator Point((int, int) self)
         {
             return new Point(self.Item1, self.Item2);
@@ -48,6 +55,16 @@ namespace Crystal.Framework
         public static implicit operator Vector2(Point self)
         {
             return new Vector2(self.X, self.Y);
+        }
+
+        public static implicit operator Vector3(Point self)
+        {
+            return new Vector3(self.X, self.Y, 0);
+        }
+
+        public static explicit operator Point(Vector2 v)
+        {
+            return new Point((int)v.X, (int)v.Y);
         }
 
         public override int GetHashCode()

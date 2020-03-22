@@ -1,4 +1,4 @@
-using Crystal.Framework;
+using System.Numerics;
 
 namespace Crystal.Framework.Components
 {

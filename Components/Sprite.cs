@@ -1,9 +1,9 @@
-using System;
+using System.Numerics;
 using Crystal.Framework.Graphics;
 
 namespace Crystal.Framework.Components
 {
-    public class Sprite : ISpriteComponent, IDrawable
+    public class Sprite : ISprite
     {
         public readonly IDrawable Texture;
 
@@ -13,7 +13,7 @@ namespace Crystal.Framework.Components
 
         public Vector2 Scale { get; set; } = new Vector2(1);
 
-        public Vector2 Size
+        public virtual Vector2 Size
         {
             get => new Vector2(this.Texture.Width, this.Texture.Height) * this.Scale;
             set
@@ -25,10 +25,6 @@ namespace Crystal.Framework.Components
             }   
         }
 
-        public int Width => (int)this.Size.X;
-        public int Height => (int)this.Size.Y;
-
-
         public Sprite(IDrawable texture, Vector2? origin = null)
         {
             this.Texture = texture;
@@ -39,7 +35,7 @@ namespace Crystal.Framework.Components
             }
         }
 
-        public void Draw(Vector2 position, float delta, IDrawer spriteBatch)
+        public virtual void Draw(Vector2 position, float delta, IDrawer spriteBatch)
         {
             spriteBatch.Draw(
                 this.Texture,
@@ -52,7 +48,7 @@ namespace Crystal.Framework.Components
             );
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             this.Texture.Dispose();
         }
