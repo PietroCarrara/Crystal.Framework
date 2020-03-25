@@ -1,11 +1,14 @@
 using System;
 using Crystal.Framework.Graphics;
+using Crystal.Framework.UI.Widgets;
 
 namespace Crystal.Framework.UI.UILayouts
 {
     public interface IUILayout
     {
         TextureSlice Area { get; }
+
+        Widget Builder { get; }
 
         /// <summary>
         /// Calls the appropriate action based on the layout type

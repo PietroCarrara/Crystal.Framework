@@ -2,6 +2,7 @@ using System.Linq;
 using System;
 using Crystal.Framework.Graphics;
 using System.Collections.Generic;
+using Crystal.Framework.UI.Widgets;
 
 namespace Crystal.Framework.UI.UILayouts
 {
@@ -19,6 +20,9 @@ namespace Crystal.Framework.UI.UILayouts
                 return this.area.Value;
             }
         }
+
+        internal Widget Builder;
+        Widget IUILayout.Builder { get => Builder; }
 
         public IEnumerable<IUILayout> Children;
 

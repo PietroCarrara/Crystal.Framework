@@ -122,6 +122,13 @@ namespace Crystal.Framework.UI.Widgets
             debugValidate();
             this.needsRebuild = false;
             this.layout = this.Build();
+            // Just marvel at this beauty
+            this.layout.Match(
+                setBuilder,
+                setBuilder,
+                setBuilder,
+                setBuilder
+            );
         }
 
         /// <summary>
@@ -153,6 +160,31 @@ namespace Crystal.Framework.UI.Widgets
         private void debugValidate()
         {
             Debug.Assert(this.AvailableArea.Area > 0, "A widget must have some available area!");
+        }
+
+        
+        private void setBuilder(OrderedUILayouts l)
+        {
+            l.Builder = this;
+            this.layout = l;
+        }
+        
+        private void setBuilder(IDrawableUILayout l)
+        {
+            l.Builder = this;
+            this.layout = l;
+        }
+        
+        private void setBuilder(TextUILayout l)
+        {
+            l.Builder = this;
+            this.layout = l;
+        }
+        
+        private void setBuilder(IAnimatableUILayout l)
+        {
+            l.Builder = this;
+            this.layout = l;
         }
     }
 }
