@@ -8,7 +8,6 @@ namespace Crystal.Framework.UI.Widgets
         private NinePatchImage background;
 
         private NinePatchImageWidget bgWidget;
-        private Margins margins;
 
         public Panel()
         {
@@ -31,8 +30,8 @@ namespace Crystal.Framework.UI.Widgets
             bgWidget.AvailableArea = this.Area;
             bgWidget.Image = background != null ? background : Theme.PanelBackground;
 
-            this.margins = Margins.XY(bgWidget.Image.BorderThickness.X, bgWidget.Image.BorderThickness.Y);
-            Child.AvailableArea = this.margins.Apply(this.Area);
+            var margins = Margins.XY(bgWidget.Image.BorderThickness.X, bgWidget.Image.BorderThickness.Y);
+            Child.AvailableArea = margins.Apply(this.Area);
 
             return new OrderedUILayouts
             {

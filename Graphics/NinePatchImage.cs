@@ -1,14 +1,11 @@
+using System;
 using System.Collections.Generic;
 namespace Crystal.Framework.Graphics
 {
-    public class NinePatchImage : IDrawable
+    public class NinePatchImage : IDisposable
     {
         public readonly IDrawable Texture;
         private readonly Point topLeft, topRight, bottomLeft, bottomRight;
-
-        public int Width => this.Texture.Width;
-
-        public int Height => this.Texture.Height;
 
         /// <summary>
         /// Value of the border sizes

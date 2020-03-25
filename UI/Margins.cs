@@ -28,6 +28,17 @@ namespace Crystal.Framework.UI
             };
         }
 
+        public static Margins Horizontal(int x)
+        {
+            return new Margins
+            {
+                Top = 0,
+                Bottom = 0,
+                Left = x,
+                Right = x,
+            };
+        }
+
         public TextureSlice Apply(TextureSlice area)
         {
             return TextureSlice.FromTwoPoints(

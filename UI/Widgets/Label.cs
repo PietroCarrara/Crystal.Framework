@@ -75,11 +75,13 @@ namespace Crystal.Framework.UI.Widgets
                 );
             }
 
+            this.Area = this.Alignment.Apply(this.AvailableArea, area);
+
             return new TextUILayout
             {
                 Text = this.text,
                 Font = font,
-                Area = this.Alignment.Apply(this.Area, area),
+                Area = this.Area,
             };
         }
     }

@@ -29,8 +29,13 @@ namespace Crystal.Framework.UI
         /// <summary>
         /// The default panel background
         /// </summary>
-        /// <value></value>
         NinePatchImage PanelBackground { get; } 
+
+        /// <summary>
+        /// The default button theme
+        /// </summary>
+        /// <value></value>
+        ButtonTheme ButtonTheme { get; }
         
         /// <summary>
         /// The available fonts in the theme
@@ -41,5 +46,10 @@ namespace Crystal.Framework.UI
         /// The available panels in the theme
         /// </summary>
         Dictionary<string, NinePatchImage> PanelBackgrounds { get; }
+
+        /// <summary>
+        /// The available button themes in the theme
+        /// </summary>
+        Dictionary<string, ButtonTheme> ButtonThemes { get; }
     }
 }

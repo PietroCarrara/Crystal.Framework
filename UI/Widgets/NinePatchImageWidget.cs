@@ -25,6 +25,7 @@ namespace Crystal.Framework.UI.Widgets
             set
             {
                 this.borderThickness = value;
+                image.BorderThickness = value;
                 this.ChangeState();
             }
         }

@@ -31,7 +31,22 @@ namespace Crystal.Framework.UI.Widgets
         /// <value></value>
         public TextureSlice Area
         {
-            get => area.HasValue ? area.Value : AvailableArea;
+            get
+            {
+                if (this.needsRebuild)
+                {
+                    this.rebuild();
+                }
+                
+                if (area.HasValue)
+                {
+                    return area.Value;
+                }
+                else
+                {
+                    return this.AvailableArea;
+                }
+            }
             protected set
             {
                 area = value;
@@ -95,13 +110,18 @@ namespace Crystal.Framework.UI.Widgets
             {
                 if (needsRebuild)
                 {
-                    debugValidate();
-                    this.layout = this.Build();
-                    this.needsRebuild = false;
+                    this.rebuild();
                 }
 
                 return this.layout;
             }
+        }
+
+        private void rebuild()
+        {
+            debugValidate();
+            this.needsRebuild = false;
+            this.layout = this.Build();
         }
 
         /// <summary>
