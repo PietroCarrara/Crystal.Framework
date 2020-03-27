@@ -1,5 +1,7 @@
+using System.Collections.ObjectModel;
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 using Crystal.Framework.Graphics;
 using Crystal.Framework.UI.UILayouts;
 
@@ -7,6 +9,9 @@ namespace Crystal.Framework.UI.Widgets
 {
     public abstract class Widget
     {
+        private List<Widget> children = new List<Widget>();
+        public ReadOnlyCollection<Widget> Children => children.AsReadOnly();
+        
         private TextureSlice availableArea;
         /// <summary>
         /// The area available to this widget
@@ -72,6 +77,7 @@ namespace Crystal.Framework.UI.Widgets
             set
             {
                 this.alignment = value;
+                this.ChangeState();
             }
         }
 
@@ -80,7 +86,6 @@ namespace Crystal.Framework.UI.Widgets
         /// <summary>
         /// The information about how should we style this widget
         /// </summary>
-        /// <value></value>
         public ITheme Theme
         {
             set => this.theme = value;
@@ -144,6 +149,7 @@ namespace Crystal.Framework.UI.Widgets
                 throw new Exception("Widget already has a parent!");
             }
 
+            w.children.Add(this);
             this.Parent = w;
         }
 
@@ -152,6 +158,14 @@ namespace Crystal.Framework.UI.Widgets
         /// Signals to other objects that this widget has changed its state.
         /// </summary>
         protected void ChangeState()
+        {
+            this.sigalForRebuild();
+        }
+
+        /// <summary>
+        /// Should be called to signal this widget to be rebuilt
+        /// </summary>
+        private void sigalForRebuild()
         {
             this.needsRebuild = true;
         }

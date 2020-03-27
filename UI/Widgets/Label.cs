@@ -53,13 +53,13 @@ namespace Crystal.Framework.UI.Widgets
             var size = font.MeasureString(this.text);
 
             var area = new TextureSlice(
-                this.Area.TopLeft,
+                this.AvailableArea.TopLeft,
                 (Point)size
             );
 
             // Scale the font so it fits in the area but is not distorted
-            var scaleX = size.X / this.Area.Width;
-            var scaleY = size.Y / this.Area.Height;
+            var scaleX = size.X / this.AvailableArea.Width;
+            var scaleY = size.Y / this.AvailableArea.Height;
             var scale = System.Math.Max(scaleY, scaleX);
 
             var width = (int)(size.X / scale);
@@ -69,7 +69,7 @@ namespace Crystal.Framework.UI.Widgets
             if (scale > 1 || expand)
             {
                 area = new TextureSlice(
-                    this.Area.TopLeft,
+                    this.AvailableArea.TopLeft,
                     width,
                     height
                 );

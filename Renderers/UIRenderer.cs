@@ -1,5 +1,6 @@
 using Crystal.Framework.Graphics;
 using Crystal.Framework.UI.UILayouts;
+using Crystal.Framework.UI.Widgets;
 
 namespace Crystal.Framework.Renderers
 {
@@ -27,13 +28,13 @@ namespace Crystal.Framework.Renderers
                 canvas,
                 samplerState: SamplerState.PointClamp
             );
-            drawIUILayout(root.Layout, delta, scene.Drawer);
+            drawWidget(root, delta, scene.Drawer);
             scene.Drawer.EndDraw();
         }
 
-        private void drawIUILayout(IUILayout ui, float delta, IDrawer drawer)
+        private void drawWidget(Widget ui, float delta, IDrawer drawer)
         {
-            ui.Match(
+            ui.Layout.Match(
                 (ui) => drawOrderedUILayout(ui, delta, drawer),
                 (ui) => drawIDrawableUILayout(ui, delta, drawer),
                 (ui) => drawTextUILayout(ui, drawer),
@@ -43,9 +44,9 @@ namespace Crystal.Framework.Renderers
 
         private void drawOrderedUILayout(OrderedUILayouts ordered, float delta, IDrawer drawer)
         {
-            foreach (var child in ordered.Children)
+            foreach (var widget in ordered.Children)
             {
-                drawIUILayout(child, delta, drawer);
+                drawWidget(widget, delta, drawer);
             }
         }
 

@@ -7,6 +7,8 @@ namespace Crystal.Framework.UI.Widgets
 {
     public class NinePatchImageWidget : Widget
     {
+        private IDrawableWidget[] widgets;
+        
         private NinePatchImage image;
         public NinePatchImage Image
         {
@@ -30,24 +32,40 @@ namespace Crystal.Framework.UI.Widgets
             }
         }
         
+        public NinePatchImageWidget()
+        {
+            this.widgets = new IDrawableWidget[9];
+
+            for (int i = 0; i < 9; i++)
+            {
+                this.widgets[i] = new IDrawableWidget
+                {
+                    Fit = ImageFit.Distort,
+                };
+                this.widgets[i].BecomeChildOf(this);
+            }
+        }
+        
         protected override IUILayout Build()
         {
             if (borderThickness.HasValue)
             {
                 image.BorderThickness = borderThickness.Value;
             }
-            
+
+            var i = 0;
+            foreach (var primitive in image.DrawingPrimitives(this.AvailableArea))
+            {
+                this.widgets[i].Drawable = image.Texture;
+                this.widgets[i].SourceRectangle = primitive.source;
+                this.widgets[i].AvailableArea = primitive.destination;
+                
+                i++;
+            }
+
             return new OrderedUILayouts
             {
-                Children = image
-                    .DrawingPrimitives(this.Area)
-                    .Select(primitive => (IUILayout)new IDrawableUILayout
-                    {
-                        Area = primitive.destination,
-                        SourceRectangle = primitive.source,
-                        Drawable = image.Texture,
-                        Origin = Vector2.Zero
-                    })
+                Children = this.widgets,
             };
         }
     }

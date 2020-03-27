@@ -24,7 +24,7 @@ namespace Crystal.Framework.UI.UILayouts
         internal Widget Builder;
         Widget IUILayout.Builder { get => Builder; }
 
-        public IEnumerable<IUILayout> Children;
+        public IEnumerable<Widget> Children;
 
         public void Match(Action<OrderedUILayouts> a,
                           Action<IDrawableUILayout> b,

@@ -16,10 +16,7 @@ namespace Crystal.Framework.UI.Widgets
 
             return new OrderedUILayouts
             {
-                Children = this.widgets.Select(w =>
-                {
-                    return w.Layout;
-                }),
+                Children = this.widgets,
             };
         }
     }

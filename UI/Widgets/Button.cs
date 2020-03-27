@@ -47,10 +47,10 @@ namespace Crystal.Framework.UI.Widgets
 
             return new OrderedUILayouts
             {
-                Children = new IUILayout[]
+                Children = new Widget[]
                 {
-                    background.Layout,
-                    Child.Layout
+                    background,
+                    Child
                 }
             };
         }
