@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -39,6 +40,30 @@ namespace Crystal.Framework.Graphics
         public TextureSlice(Point topLeft, Point size) :
         this(topLeft.X, topLeft.Y, size.X, size.Y)
         { }
+
+        public bool Contains(Vector2 point)
+        {
+            var bottomRight = this.BottomRight;
+
+            return point.X >= this.TopLeft.X &&
+                   point.Y >= this.TopLeft.Y &&
+                   point.X <= bottomRight.X &&
+                   point.Y <= bottomRight.Y;
+        }
+
+        /// <summary>
+        /// Returns the scale that should be applied to the width and height of this
+        /// rectangle to be able to fit in a area of informed size, respecting the
+        /// aspect ratio
+        /// </summary>
+        /// <param name="area">The size of the area this rectangle should fit</param>
+        public float Fit(Vector2 area)
+        {
+            var scaleX = area.X / this.Width;
+            var scaleY = area.Y / this.Height;
+            
+            return System.Math.Min(scaleY, scaleX);
+        }
 
         public override string ToString()
         {
@@ -142,7 +167,7 @@ namespace Crystal.Framework.Graphics
         public override int GetHashCode()
         {
             var hash = 13;
-            
+
             hash = hash * 7 + this.TopLeft.GetHashCode();
             hash = hash * 7 + this.Width.GetHashCode();
             hash = hash * 7 + this.Height.GetHashCode();
