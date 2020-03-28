@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Crystal.Framework.Input;
 using Crystal.Framework.Graphics;
 using Crystal.Framework.UI;
 using Crystal.Framework.UI.Widgets;
@@ -15,11 +14,6 @@ namespace Crystal.Framework
         /// The object to which we can delegate draw calls
         /// </summary>
         public IDrawer Drawer;
-
-        /// <summary>
-        /// The user input object
-        /// </summary>
-        public IInput Input;
 
         /// <summary>
         /// The default theme of the UI
@@ -49,10 +43,12 @@ namespace Crystal.Framework
         private RendererStorage renderers = new RendererStorage();
         private CanvasStorage canvases = new CanvasStorage();
         private WidgetStorage widgets = new WidgetStorage();
+        private InputActionStorage actions = new InputActionStorage();
 
         public EntityStorage Entities => entities;
         public WidgetStorage Widgets => widgets;
         public CanvasStorage Canvases => canvases;
+        public InputActionStorage Actions => actions;
 
         /// <summary>
         /// Dictionary of resources
@@ -141,7 +137,7 @@ namespace Crystal.Framework
         /// <param name="deltaTime">Time in seconds elapsed since last update</param>
         public void Update(float deltaTime)
         {
-            this.Input.Update();
+            Input.Instance.Update();
 
             foreach (var system in this.systems)
             {
