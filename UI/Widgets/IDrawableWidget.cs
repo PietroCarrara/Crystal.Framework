@@ -66,7 +66,7 @@ namespace Crystal.Framework.UI.Widgets
 
                     // Position the image in the area according to our alignment
                     area = this.Alignment.Apply(this.AvailableArea, imgArea);
-                    
+
                     break;
                 case ImageFit.Crop:
                     // Our source rectangle
@@ -89,7 +89,7 @@ namespace Crystal.Framework.UI.Widgets
                         srcRectArea.Height > this.AvailableArea.Height)
                     {
                         // Crop the image
-                        var srcRectScale = srcRectArea.Fit(this.AvailableArea.Size);
+                        var srcRectScale = srcRectArea.Crop(this.AvailableArea.Size);
 
                         srcRectArea.Width = (int)(srcRectArea.Width * srcRectScale);
                         srcRectArea.Height = (int)(srcRectArea.Height * srcRectScale);
@@ -100,8 +100,11 @@ namespace Crystal.Framework.UI.Widgets
                         area = this.Alignment.Apply(this.AvailableArea, srcRectArea);
                     }
 
-                    // Position the source rectangle on the image according to our
-                    // alignment
+                    // Trim the leaking parts of the image
+                    srcRectArea.Width -= srcRectArea.Width - this.AvailableArea.Width;
+                    srcRectArea.Height -= srcRectArea.Height - this.AvailableArea.Height;
+
+                    // Position the source rectangle on the image according to our alignment
                     sourceRectangle = this.Alignment.Apply(
                         new TextureSlice(Point.Zero, drawable.Width, drawable.Height),
                         srcRectArea

@@ -24,7 +24,7 @@ namespace Crystal.Framework.UI
         public static Alignment BottomLeft = new Alignment(0, 1);
         public static Alignment BottomCenter = new Alignment(.5f, 1);
         public static Alignment BottomRight = new Alignment(1, 1);
-        
+
         public float X, Y;
 
         public Alignment(float x, float y)
@@ -55,6 +55,11 @@ namespace Crystal.Framework.UI
         public static implicit operator Vector2(Alignment alignment)
         {
             return new Vector2(alignment.X, alignment.Y);
+        }
+
+        public static implicit operator Alignment(Vector2 vector)
+        {
+            return new Alignment(vector.X, vector.Y);
         }
     }
 }

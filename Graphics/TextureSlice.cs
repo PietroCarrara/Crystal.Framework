@@ -61,8 +61,21 @@ namespace Crystal.Framework.Graphics
         {
             var scaleX = area.X / this.Width;
             var scaleY = area.Y / this.Height;
-            
+
             return System.Math.Min(scaleY, scaleX);
+        }
+
+        /// <summary>
+        /// Returns the scale that should be applied to the width and height of this rectangle,
+        /// so that only one of the axes does not leak out of the area, respecting aspect ratio
+        /// </summary>
+        /// <param name="area">The area to fit</param>
+        public float Crop(Vector2 area)
+        {
+            var scaleX = area.X / this.Width;
+            var scaleY = area.Y / this.Height;
+
+            return System.Math.Max(scaleY, scaleX);
         }
 
         public override string ToString()
