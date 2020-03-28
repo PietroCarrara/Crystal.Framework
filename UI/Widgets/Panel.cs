@@ -14,7 +14,7 @@ namespace Crystal.Framework.UI.Widgets
             bgWidget = new NinePatchImageWidget();
             bgWidget.BecomeChildOf(this);
         }
-        
+
         public NinePatchImage Background
         {
             get => background;
@@ -24,16 +24,16 @@ namespace Crystal.Framework.UI.Widgets
                 this.ChangeState();
             }
         }
-        
+
         protected override IUILayout Build()
         {
-            bgWidget.AvailableArea = this.Area;
+            bgWidget.AvailableArea = this.AvailableArea;
             bgWidget.Image = background != null ? background : Theme.PanelBackground;
 
             var margins = Margins.XY(bgWidget.Image.BorderThickness.X, bgWidget.Image.BorderThickness.Y);
-            Child.AvailableArea = margins.Apply(this.Area);
+            Child.AvailableArea = margins.Apply(this.AvailableArea);
 
-            return new OrderedUILayouts
+            return new OrderedWidgetsLayout
             {
                 Children = new Widget[]
                 {

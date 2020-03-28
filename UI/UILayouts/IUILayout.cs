@@ -8,8 +8,6 @@ namespace Crystal.Framework.UI.UILayouts
     {
         TextureSlice Area { get; }
 
-        Widget Builder { get; }
-
         /// <summary>
         /// Calls the appropriate action based on the layout type
         /// </summary>
@@ -17,11 +15,12 @@ namespace Crystal.Framework.UI.UILayouts
         /// <param name="b">Called in case this is a IDrawableUILayout</param>
         /// <param name="c">Called in case this is a TextUILayout</param>
         /// <param name="d">Called in case this is a IAnimatableUILayout</param>
-        void Match(Action<OrderedUILayouts> a,
+        void Match(Action<OrderedWidgetsLayout> a,
                    Action<IDrawableUILayout> b,
                    Action<TextUILayout> c,
-                   Action<IAnimatableUILayout> d);
+                   Action<IAnimatableUILayout> d,
+                   Action<UnorderedWidgetsLayout> e);
 
-        public static IUILayout Empty => new OrderedUILayouts { Children = new Widget[0] };
+        public static IUILayout Empty => new OrderedWidgetsLayout { Children = new Widget[0] };
     }
 }

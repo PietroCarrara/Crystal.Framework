@@ -1,12 +1,11 @@
+using System;
 using Crystal.Framework.UI.UILayouts;
 
 namespace Crystal.Framework.UI.Widgets
 {
     public class Button : SingleChildWidget
     {
-        public delegate void ButtonClickedHandler(Button button);
-
-        public event ButtonClickedHandler Pressed;
+        public Action<Button> Pressed;
 
         private ThreePatchImageWidget background;
 
@@ -28,6 +27,11 @@ namespace Crystal.Framework.UI.Widgets
             }
         }
 
+        public override void OnMouseReleased()
+        {
+            this.Pressed?.Invoke(this);
+        }
+
         protected override IUILayout Build()
         {
             this.background.Image = this.Theme.ButtonTheme.Default;
@@ -39,13 +43,13 @@ namespace Crystal.Framework.UI.Widgets
             var margins = Margins.Horizontal(this.BorderThickness);
             Child.AvailableArea = margins.Apply(this.AvailableArea);
 
-            var area = Child.Area;
+            var area = Child.Layout.Area;
             area.TopLeft.X -= margins.Left;
             area.Width += margins.Right;
 
             this.background.AvailableArea = area;
 
-            return new OrderedUILayouts
+            return new OrderedWidgetsLayout
             {
                 Children = new Widget[]
                 {

@@ -6,30 +6,20 @@ using Crystal.Framework.UI.Widgets;
 
 namespace Crystal.Framework.UI.UILayouts
 {
-    public struct OrderedUILayouts : IUILayout
+    public struct OrderedWidgetsLayout : IUILayout
     {
-        private TextureSlice? area;
-        
         public TextureSlice Area
         {
-            get
-            {
-                if (this.area.HasValue) return this.area.Value;
-
-                this.area = this.calculateArea();
-                return this.area.Value;
-            }
+            get => calculateArea();
         }
-
-        internal Widget Builder;
-        Widget IUILayout.Builder { get => Builder; }
 
         public IEnumerable<Widget> Children;
 
-        public void Match(Action<OrderedUILayouts> a,
+        public void Match(Action<OrderedWidgetsLayout> a,
                           Action<IDrawableUILayout> b,
                           Action<TextUILayout> c,
-                          Action<IAnimatableUILayout> d)
+                          Action<IAnimatableUILayout> d,
+                          Action<UnorderedWidgetsLayout> e)
         {
             a(this);
         }
@@ -37,7 +27,7 @@ namespace Crystal.Framework.UI.UILayouts
         private TextureSlice calculateArea()
         {
             return TextureSlice.Union(
-                this.Children.Select(c => c.Area)
+                this.Children.Select(c => c.Layout.Area)
             );
         }
     }

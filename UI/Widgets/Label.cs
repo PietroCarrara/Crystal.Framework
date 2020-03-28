@@ -1,3 +1,4 @@
+using System;
 using Crystal.Framework.Graphics;
 using Crystal.Framework.UI.UILayouts;
 
@@ -75,13 +76,13 @@ namespace Crystal.Framework.UI.Widgets
                 );
             }
 
-            this.Area = this.Alignment.Apply(this.AvailableArea, area);
+            area = this.Alignment.Apply(this.AvailableArea, area);
 
             return new TextUILayout
             {
                 Text = this.text,
                 Font = font,
-                Area = this.Area,
+                Area = area,
             };
         }
     }

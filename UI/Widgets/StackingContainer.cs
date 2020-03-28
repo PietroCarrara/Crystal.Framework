@@ -11,10 +11,10 @@ namespace Crystal.Framework.UI.Widgets
         {
             foreach (var child in this.widgets)
             {
-                child.AvailableArea = this.Area;
+                child.AvailableArea = this.AvailableArea;
             }
 
-            return new OrderedUILayouts
+            return new UnorderedWidgetsLayout
             {
                 Children = this.widgets,
             };

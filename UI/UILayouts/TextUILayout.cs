@@ -8,17 +8,15 @@ namespace Crystal.Framework.UI.UILayouts
     {
         TextureSlice IUILayout.Area => this.Area;
 
-        internal Widget Builder;
-        Widget IUILayout.Builder { get => Builder; }
-
         public TextureSlice Area;
         public IFont Font;
         public string Text;
 
-        public void Match(Action<OrderedUILayouts> a,
+        public void Match(Action<OrderedWidgetsLayout> a,
                           Action<IDrawableUILayout> b,
                           Action<TextUILayout> c,
-                          Action<IAnimatableUILayout> d)
+                          Action<IAnimatableUILayout> d,
+                          Action<UnorderedWidgetsLayout> e)
         {
             c(this);
         }

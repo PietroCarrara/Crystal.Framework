@@ -9,18 +9,16 @@ namespace Crystal.Framework.UI.UILayouts
     {
         TextureSlice IUILayout.Area => this.Area;
 
-        internal Widget Builder;
-        Widget IUILayout.Builder { get => Builder; }
-
         public Vector2? Origin;
         public TextureSlice Area;
         public IDrawable Drawable;
         public TextureSlice? SourceRectangle;
 
-        public void Match(Action<OrderedUILayouts> a,
+        public void Match(Action<OrderedWidgetsLayout> a,
                           Action<IDrawableUILayout> b,
                           Action<TextUILayout> c,
-                          Action<IAnimatableUILayout> d)
+                          Action<IAnimatableUILayout> d,
+                          Action<UnorderedWidgetsLayout> e)
         {
             b(this);
         }

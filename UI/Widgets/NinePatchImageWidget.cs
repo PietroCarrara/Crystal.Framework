@@ -63,7 +63,7 @@ namespace Crystal.Framework.UI.Widgets
                 i++;
             }
 
-            return new OrderedUILayouts
+            return new OrderedWidgetsLayout
             {
                 Children = this.widgets,
             };

@@ -11,7 +11,10 @@ namespace Crystal.Framework.UI.Widgets
     {
         private List<Widget> children = new List<Widget>();
         public ReadOnlyCollection<Widget> Children => children.AsReadOnly();
-        
+
+        public delegate void StateChangedHandler(Widget widget);
+        public event StateChangedHandler StateChanged;
+
         private TextureSlice availableArea;
         /// <summary>
         /// The area available to this widget
@@ -26,35 +29,6 @@ namespace Crystal.Framework.UI.Widgets
                     this.availableArea = value;
                     this.ChangeState();
                 }
-            }
-        }
-
-        private TextureSlice? area;
-        /// <summary>
-        /// The area this widget actually occupies
-        /// </summary>
-        /// <value></value>
-        public TextureSlice Area
-        {
-            get
-            {
-                if (this.needsRebuild)
-                {
-                    this.rebuild();
-                }
-                
-                if (area.HasValue)
-                {
-                    return area.Value;
-                }
-                else
-                {
-                    return this.AvailableArea;
-                }
-            }
-            protected set
-            {
-                area = value;
             }
         }
 
@@ -81,6 +55,19 @@ namespace Crystal.Framework.UI.Widgets
             }
         }
 
+        private bool hasFocus;
+        public bool HasFocus
+        {
+            get => hasFocus;
+            internal set
+            {
+                if (hasFocus != value)
+                {
+                    this.hasFocus = value;
+                    this.ChangeState();
+                }
+            }
+        }
 
         private ITheme theme;
         /// <summary>
@@ -127,13 +114,6 @@ namespace Crystal.Framework.UI.Widgets
             debugValidate();
             this.needsRebuild = false;
             this.layout = this.Build();
-            // Just marvel at this beauty
-            this.layout.Match(
-                setBuilder,
-                setBuilder,
-                setBuilder,
-                setBuilder
-            );
         }
 
         /// <summary>
@@ -159,46 +139,62 @@ namespace Crystal.Framework.UI.Widgets
         /// </summary>
         protected void ChangeState()
         {
-            this.sigalForRebuild();
+            this.StateChanged?.Invoke(this);
+            this.needsRebuild = true;
         }
 
         /// <summary>
-        /// Should be called to signal this widget to be rebuilt
+        /// Called everytime the mouse enters this widget's area
         /// </summary>
-        private void sigalForRebuild()
-        {
-            this.needsRebuild = true;
-        }
+        public virtual void OnMouseEnter()
+        { }
+
+        /// <summary>
+        /// Called everytime the mouse leaves this widget's area
+        /// </summary>
+        public virtual void OnMouseLeave()
+        { }
+
+        /// <summary>
+        /// Called when the mouse left clicks this widget's area
+        /// </summary>
+        public virtual void OnMouseClick()
+        { }
+
+        /// <summary>
+        /// Called when the mouse right clicks this widget's area
+        /// </summary>
+        public virtual void OnMouseClickSecondary()
+        { }
+
+        /// <summary>
+        /// Called when the mouse releases the left button on top of this widget
+        /// </summary>
+        public virtual void OnMouseReleased()
+        { }
+
+        /// <summary>
+        /// Called when the mouse releases the right button on top of this widget
+        /// </summary>
+        public virtual void OnMouseReleasedSecondary()
+        { }
+
+        /// <summary>
+        /// Called every frame that the mouse is on top of this window and the left button is down
+        /// </summary>
+        public virtual void OnMouseHold()
+        { }
+
+        /// <summary>
+        /// Called every frame that the mouse is on top of this window and the right button is down
+        /// </summary>
+        public virtual void OnMouseHoldSecondary()
+        { }
 
         [Conditional("DEBUG")]
         private void debugValidate()
         {
             Debug.Assert(this.AvailableArea.Area > 0, "A widget must have some available area!");
-        }
-
-        
-        private void setBuilder(OrderedUILayouts l)
-        {
-            l.Builder = this;
-            this.layout = l;
-        }
-        
-        private void setBuilder(IDrawableUILayout l)
-        {
-            l.Builder = this;
-            this.layout = l;
-        }
-        
-        private void setBuilder(TextUILayout l)
-        {
-            l.Builder = this;
-            this.layout = l;
-        }
-        
-        private void setBuilder(IAnimatableUILayout l)
-        {
-            l.Builder = this;
-            this.layout = l;
         }
     }
 }

@@ -17,22 +17,22 @@ namespace Crystal.Framework.UI.Widgets
                 return IUILayout.Empty;
             }
 
-            var height = this.Area.Height / len;
-            
+            var height = this.AvailableArea.Height / len;
+
             var i = 0;
             foreach (var child in this.widgets)
             {
                 child.AvailableArea = new TextureSlice(
-                    this.Area.TopLeft.X,
-                    this.Area.TopLeft.Y + height * i,
-                    this.Area.Width,
+                    this.AvailableArea.TopLeft.X,
+                    this.AvailableArea.TopLeft.Y + height * i,
+                    this.AvailableArea.Width,
                     height
                 );
 
                 i++;
             }
 
-            return new OrderedUILayouts
+            return new UnorderedWidgetsLayout
             {
                 Children = this.widgets,
             };
