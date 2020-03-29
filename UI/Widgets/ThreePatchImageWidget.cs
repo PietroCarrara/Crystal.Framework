@@ -8,7 +8,7 @@ namespace Crystal.Framework.UI.Widgets
     public class ThreePatchImageWidget : Widget
     {
         private readonly IDrawableWidget[] widgets;
-        
+
         private ThreePatchImage image;
         public ThreePatchImage Image
         {
@@ -20,17 +20,17 @@ namespace Crystal.Framework.UI.Widgets
             }
         }
 
-        private int? borderThickness = new int?();
-        public int BorderThickness
+        public int? BorderThickness
         {
-            get => borderThickness.HasValue ? borderThickness.Value : image.BorderThickness;
+            get => image.BorderThickness;
             set
             {
-                this.borderThickness = value;
                 image.BorderThickness = value;
                 this.ChangeState();
             }
         }
+
+        public Margins Margins => Margins.Horizontal(image.CalculateBorder(this.AvailableArea.Size));
 
         public ThreePatchImageWidget()
         {
@@ -48,21 +48,16 @@ namespace Crystal.Framework.UI.Widgets
 
         protected override IUILayout Build()
         {
-            if (borderThickness.HasValue)
-            {
-                image.BorderThickness = borderThickness.Value;
-            }
-
             var i = 0;
             foreach (var primitive in image.DrawingPrimitives(this.AvailableArea))
             {
                 widgets[i].Drawable = image.Texture;
                 widgets[i].SourceRectangle = primitive.source;
                 widgets[i].AvailableArea = primitive.destination;
-                
+
                 i++;
             }
-            
+
             return new OrderedWidgetsLayout
             {
                 Children = widgets,

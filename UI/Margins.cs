@@ -28,6 +28,11 @@ namespace Crystal.Framework.UI
             };
         }
 
+        public static Margins XY(Point p)
+        {
+            return XY(p.X, p.Y);
+        }
+
         public static Margins Horizontal(int x)
         {
             return new Margins
@@ -36,6 +41,17 @@ namespace Crystal.Framework.UI
                 Bottom = 0,
                 Left = x,
                 Right = x,
+            };
+        }
+
+        public static Margins Vertical(int y)
+        {
+            return new Margins
+            {
+                Top = y,
+                Bottom = y,
+                Left = 0,
+                Right = 0,
             };
         }
 

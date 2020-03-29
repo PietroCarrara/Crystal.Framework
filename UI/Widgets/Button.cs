@@ -15,18 +15,6 @@ namespace Crystal.Framework.UI.Widgets
             this.background.BecomeChildOf(this);
         }
 
-        private int? borderThickness;
-        public int BorderThickness
-        {
-            get => borderThickness.HasValue ? borderThickness.Value : background.BorderThickness;
-            set
-            {
-                this.borderThickness = value;
-                background.BorderThickness = value;
-                this.ChangeState();
-            }
-        }
-
         public override void OnMouseReleased()
         {
             this.Pressed?.Invoke(this);
@@ -35,15 +23,9 @@ namespace Crystal.Framework.UI.Widgets
         protected override IUILayout Build()
         {
             this.background.Image = this.Theme.ButtonTheme.Default;
-            if (this.borderThickness.HasValue)
-            {
-                this.background.BorderThickness = this.borderThickness.Value;
-            }
+            this.background.AvailableArea = this.AvailableArea;
 
-            var margins = Margins.Horizontal(this.BorderThickness);
-            Child.AvailableArea = margins.Apply(this.AvailableArea);
-
-            this.background.AvailableArea = margins.Remove(Child.Layout.Area);
+            Child.AvailableArea = this.background.Margins.Apply(this.AvailableArea);
 
             return new OrderedWidgetsLayout
             {

@@ -8,7 +8,7 @@ namespace Crystal.Framework.UI.Widgets
     public class NinePatchImageWidget : Widget
     {
         private IDrawableWidget[] widgets;
-        
+
         private NinePatchImage image;
         public NinePatchImage Image
         {
@@ -17,21 +17,21 @@ namespace Crystal.Framework.UI.Widgets
             {
                 image = value;
                 this.ChangeState();
-            }   
+            }
         }
 
-        private Point? borderThickness;
-        public Point BorderThickness
+        public int? BorderThickness
         {
-            get => borderThickness.HasValue ? borderThickness.Value : image.BorderThickness;
+            get => image.BorderThickness;
             set
             {
-                this.borderThickness = value;
                 image.BorderThickness = value;
                 this.ChangeState();
             }
         }
-        
+
+        public Margins Margins => Margins.All(image.CalculateBorder(this.AvailableArea.Size));
+
         public NinePatchImageWidget()
         {
             this.widgets = new IDrawableWidget[9];
@@ -45,21 +45,16 @@ namespace Crystal.Framework.UI.Widgets
                 this.widgets[i].BecomeChildOf(this);
             }
         }
-        
+
         protected override IUILayout Build()
         {
-            if (borderThickness.HasValue)
-            {
-                image.BorderThickness = borderThickness.Value;
-            }
-
             var i = 0;
             foreach (var primitive in image.DrawingPrimitives(this.AvailableArea))
             {
                 this.widgets[i].Drawable = image.Texture;
                 this.widgets[i].SourceRectangle = primitive.source;
                 this.widgets[i].AvailableArea = primitive.destination;
-                
+
                 i++;
             }
 
