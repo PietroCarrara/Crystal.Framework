@@ -4,13 +4,13 @@ namespace Crystal.Framework.UI
 {
     public struct ButtonTheme
     {
-        public readonly ThreePatchImage Default;
-        public readonly ThreePatchImage OnHover;
+        public readonly ThreePatchImage Primary;
+        public readonly ThreePatchImage Secondary;
 
-        public ButtonTheme(ThreePatchImage def, ThreePatchImage onHover)
+        public ButtonTheme(ThreePatchImage primary, ThreePatchImage secondary)
         {
-            this.Default = def;
-            this.OnHover = onHover;
+            this.Primary = primary;
+            this.Secondary = secondary;
         }
     }
 }
