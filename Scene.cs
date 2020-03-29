@@ -128,6 +128,11 @@ namespace Crystal.Framework
                 system.Initialize(this);
             }
 
+            foreach (var renderer in this.renderers)
+            {
+                renderer.Initialize(this);
+            }
+
             this.initialized = true;
         }
 
@@ -138,6 +143,8 @@ namespace Crystal.Framework
         public void Update(float deltaTime)
         {
             Input.Instance.Update();
+
+            this.widgets.UpdateInput(Input.Instance);
 
             foreach (var system in this.systems)
             {

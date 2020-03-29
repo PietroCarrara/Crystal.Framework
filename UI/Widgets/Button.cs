@@ -43,11 +43,7 @@ namespace Crystal.Framework.UI.Widgets
             var margins = Margins.Horizontal(this.BorderThickness);
             Child.AvailableArea = margins.Apply(this.AvailableArea);
 
-            var area = Child.Layout.Area;
-            area.TopLeft.X -= margins.Left;
-            area.Width += margins.Right;
-
-            this.background.AvailableArea = area;
+            this.background.AvailableArea = margins.Remove(Child.Layout.Area);
 
             return new OrderedWidgetsLayout
             {

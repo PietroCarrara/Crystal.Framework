@@ -46,5 +46,13 @@ namespace Crystal.Framework.UI
                 area.BottomRight - (this.Right, this.Bottom)
             );
         }
+
+        public TextureSlice Remove(TextureSlice area)
+        {
+            return TextureSlice.FromTwoPoints(
+                area.TopLeft - (this.Left, this.Top),
+                area.BottomRight + (this.Right, this.Bottom)
+            );
+        }
     }
 }

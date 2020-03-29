@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Numerics;
 
 namespace Crystal.Framework
@@ -5,7 +6,18 @@ namespace Crystal.Framework
     public abstract class Input
     {
         public static Input Instance { get; internal set; }
-        
+
+        /// <summary>
+        /// Tells if the mouse is over any UI object
+        /// </summary>
+        public bool IsMouseOverUI { get; internal set; }
+
+        /// <summary>
+        /// Tells if any keys were consumed by the UI
+        /// </summary>
+        /// <value></value>
+        public bool WereKeysConsumed { get; internal set; }
+
         /// <summary>
         /// Returns the position of the mouse relative to window
         /// </summary>

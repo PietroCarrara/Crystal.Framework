@@ -5,6 +5,7 @@ namespace Crystal.Framework
     public struct Point
     {
         public static Point Zero { get; } = new Point(0, 0);
+        public static Point One { get; } = new Point(1, 1);
 
         public int X, Y;
 
@@ -40,6 +41,16 @@ namespace Crystal.Framework
         public static Point operator -(Point left, Point right)
         {
             return new Point(left.X - right.X, left.Y - right.Y);
+        }
+
+        public static Point operator *(Point left, int right)
+        {
+            return new Point(left.X * right, left.Y * right);
+        }
+
+        public static Point operator *(int left, Point right)
+        {
+            return right * left;
         }
 
         public static Point operator /(Point left, int right)
