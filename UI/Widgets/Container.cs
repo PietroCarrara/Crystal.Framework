@@ -6,6 +6,23 @@ namespace Crystal.Framework.UI.Widgets
 {
     public abstract class Container : Widget
     {
+        public Widget[] Widgets
+        {
+            get => this.Children.ToArray();
+            set
+            {
+                if (this.Children.Any())
+                {
+                    throw new Exception("Can't set the list of widgets when it's not empty!");
+                }
+
+                foreach (var child in value)
+                {
+                    this.addChild(child);
+                }
+            }
+        }
+
         public void Add(Widget widget)
         {
             this.addChild(widget);
