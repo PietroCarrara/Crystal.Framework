@@ -54,8 +54,8 @@ namespace Crystal.Framework.UI.Widgets
                     // Area occupied by the unmodified image
                     var imgArea = new TextureSlice(
                         this.AvailableArea.TopLeft,
-                        drawable.Width,
-                        drawable.Height
+                        sourceRectangle.HasValue ? sourceRectangle.Value.Width : drawable.Width,
+                        sourceRectangle.HasValue ? sourceRectangle.Value.Height : drawable.Height
                     );
 
                     // Scale to fit the image into the available area
