@@ -10,7 +10,7 @@ namespace Crystal.Framework.UI.Widgets
     {
         protected override IUILayout Build()
         {
-            var len = this.widgets.Count;
+            var len = this.Children.Count;
 
             if (len <= 0)
             {
@@ -20,7 +20,7 @@ namespace Crystal.Framework.UI.Widgets
             var height = this.AvailableArea.Height / len;
 
             var i = 0;
-            foreach (var child in this.widgets)
+            foreach (var child in this.Children)
             {
                 child.AvailableArea = new TextureSlice(
                     this.AvailableArea.TopLeft.X,
@@ -34,7 +34,7 @@ namespace Crystal.Framework.UI.Widgets
 
             return new UnorderedWidgetsLayout
             {
-                Children = this.widgets,
+                Children = this.Children,
             };
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using Crystal.Framework.Graphics;
@@ -9,14 +10,14 @@ namespace Crystal.Framework.UI.Widgets
     {
         protected override IUILayout Build()
         {
-            foreach (var child in this.widgets)
+            foreach (var child in this.Children)
             {
                 child.AvailableArea = this.AvailableArea;
             }
 
             return new UnorderedWidgetsLayout
             {
-                Children = this.widgets,
+                Children = this.Children,
             };
         }
     }
