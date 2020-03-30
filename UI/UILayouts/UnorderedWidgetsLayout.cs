@@ -17,14 +17,14 @@ namespace Crystal.Framework.UI.UILayouts
 
         public Widget Builder { get; set; }
 
-        private IEnumerable<Widget> children;
+        private Widget[] children;
         public IEnumerable<Widget> Children
         {
             get
             {
                 if (needsResort)
                 {
-                    children = children.OrderBy(w => w.HasFocus ? 1 : 0);
+                    resort(children);
                     needsResort = false;
                 }
 
@@ -40,7 +40,7 @@ namespace Crystal.Framework.UI.UILayouts
                     }
                 }
 
-                children = value;
+                children = value.ToArray();
                 needsResort = true;
 
                 foreach (var child in children)
@@ -69,6 +69,34 @@ namespace Crystal.Framework.UI.UILayouts
             return TextureSlice.Union(
                 this.Children.Select(c => c.Layout.Area)
             );
+        }
+
+        private void resort(Widget[] array)
+        {
+            var focusedIndex = -1;
+
+            for (var i = 0; i < array.Length; i++)
+            {
+                if (focusedIndex < 0 && array[i].HasFocus)
+                {
+                    focusedIndex = i;
+                }
+
+                // If we have seen someone focused and the current
+                // index has no focus, swap them out
+                if (focusedIndex >= 0 && !array[i].HasFocus)
+                {
+                    swap(array, i, focusedIndex);
+                    focusedIndex++;
+                }
+            }
+        }
+
+        private void swap<T>(T[] array, int a, int b)
+        {
+            var tmp = array[a];
+            array[a] = array[b];
+            array[b] = tmp;
         }
     }
 }

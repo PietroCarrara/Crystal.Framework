@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Crystal.Framework.UI.Widgets;
+using Crystal.Framework.UI.UILayouts;
 
 namespace Crystal.Framework.UI
 {
@@ -20,9 +21,9 @@ namespace Crystal.Framework.UI
         /// Updates focus and fires events on UI
         /// </summary>
         /// <param name="widgets">The widgets to update</param>
-        public void Update(IEnumerable<Widget> widgets, Input input)
+        public void Update(UnorderedWidgetsLayout ui, Input input)
         {
-            widgets = widgets.OrderBy(w => w.HasFocus ? 1 : 0);
+            var widgets = ui.Children;
             var currUnderMouse = pathUnderMouse(widgets.Reverse(), input).ToList();
 
             if (input.IsButtonDown(Buttons.MouseLeft) ||

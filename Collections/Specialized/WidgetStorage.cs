@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Crystal.Framework.UI;
 using Crystal.Framework.UI.Widgets;
+using Crystal.Framework.UI.UILayouts;
 
 namespace Crystal.Framework.Collections.Specialized
 {
@@ -18,10 +19,7 @@ namespace Crystal.Framework.Collections.Specialized
         /// <param name="input">The object to query for input information</param>
         public void UpdateInput(Input input)
         {
-            // HACK: Force layout to be built
-            var _ = Root.Layout;
-
-            updater.Update(Root.Children, input);
+            updater.Update((UnorderedWidgetsLayout)Root.Layout, input);
         }
 
         /// <summary>
