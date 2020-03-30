@@ -22,7 +22,7 @@ namespace Crystal.Framework.UI
         /// <param name="widgets">The widgets to update</param>
         public void Update(IEnumerable<Widget> widgets, Input input)
         {
-            widgets = widgets.OrderBy(w => w.HasFocus ? 0 : 1);
+            widgets = widgets.OrderBy(w => w.HasFocus ? 1 : 0);
             var currUnderMouse = pathUnderMouse(widgets.Reverse(), input).ToList();
 
             if (input.IsButtonDown(Buttons.MouseLeft) ||

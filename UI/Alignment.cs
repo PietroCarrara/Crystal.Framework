@@ -41,9 +41,10 @@ namespace Crystal.Framework.UI
         /// <returns>The positioned texture slice</returns>
         public TextureSlice Apply(TextureSlice availableArea, TextureSlice toPosition)
         {
+            // origin - position
             var topLeft = availableArea.TopLeft + availableArea.Size * (Vector2)this
-                          - new Vector2(toPosition.Width * this.X, toPosition.Height * this.Y);
-
+                          - new Vector2(toPosition.Width * this.X, toPosition.Height * this.Y)
+                          - (availableArea.TopLeft - toPosition.TopLeft);
 
             return new TextureSlice(
                 (Point)topLeft,
