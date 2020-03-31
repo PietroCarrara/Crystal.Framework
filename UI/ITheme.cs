@@ -29,14 +29,20 @@ namespace Crystal.Framework.UI
         /// <summary>
         /// The default panel background
         /// </summary>
-        NinePatchImage PanelBackground { get; } 
+        NinePatchImage PanelBackground { get; }
 
         /// <summary>
         /// The default button theme
         /// </summary>
         /// <value></value>
         ButtonTheme ButtonTheme { get; }
-        
+
+        /// <summary>
+        /// The default slider theme
+        /// </summary>
+        /// <value></value>
+        SliderTheme SliderTheme { get; }
+
         /// <summary>
         /// The available fonts in the theme
         /// </summary>
@@ -51,5 +57,10 @@ namespace Crystal.Framework.UI
         /// The available button themes in the theme
         /// </summary>
         Dictionary<string, ButtonTheme> ButtonThemes { get; }
+
+        /// <summary>
+        /// The available button themes in the theme
+        /// </summary>
+        Dictionary<string, SliderTheme> SliderThemes { get; }
     }
 }
