@@ -26,19 +26,18 @@ namespace Crystal.Framework.UI
             var widgets = ui.Children;
             var currUnderMouse = pathUnderMouse(widgets.Reverse(), input).ToList();
 
-            if (input.IsButtonDown(Buttons.MouseLeft) ||
-                input.IsButtonDown(Buttons.MouseRight) ||
-                input.IsButtonReleased(Buttons.MouseLeft) ||
-                input.IsButtonReleased(Buttons.MouseRight))
+            Input.Instance.IsMouseOverUI = underMouse.Any();
+
+            if (input.IsButtonPressed(Buttons.MouseLeft) || input.IsButtonPressed(Buttons.MouseRight))
             {
-                focusedWidgets = clickOn(
+                focusedWidgets = giveFocusTo(
                     input,
                     currUnderMouse,
                     focusedWidgets
                 );
             }
 
-            Input.Instance.IsMouseOverUI = underMouse.Any();
+            updateFocus(input, focusedWidgets);
 
             // TODO: Widgets consume keys input
 
@@ -78,14 +77,15 @@ namespace Crystal.Framework.UI
 
         /// <summary>
         /// Given a path of widgets, gives focus to all of the widgets in the path,
-        /// triggers click events removes focus from the widgets that should lose it,
-        /// and returns a list of the current focused widgets
+        /// and removes focus from the widgets that should lose it.
         /// </summary>
-        /// <param name="path">The path which should gain focus</param>
-        /// <param name="currentFocus">Who has focus before this function is called</param>
-        private LinkedList<Widget> clickOn(Input input,
-                                           IEnumerable<Widget> path,
-                                           LinkedList<Widget> currentFocus)
+        /// <param name="input">Object to query input information</param>
+        /// <param name="path">The widgets to give focus</param>
+        /// <param name="currentFocus">Returns a list of the widgets that are now in focus</param>
+        /// <returns></returns>
+        private LinkedList<Widget> giveFocusTo(Input input,
+                                               IEnumerable<Widget> path,
+                                               LinkedList<Widget> currentFocus)
         {
             var newFocusList = new LinkedList<Widget>();
             var focus = currentFocus.First;
@@ -109,8 +109,35 @@ namespace Crystal.Framework.UI
                     }
                 }
 
-                widget.HasFocus = true;
+                if (!samePath)
+                {
+                    widget.HasFocus = true;
+                }
 
+                newFocusList.AddLast(widget);
+            }
+
+            while (focus != null)
+            {
+                focus.Value.HasFocus = false;
+
+                focus = focus.Next;
+            }
+
+            return newFocusList;
+
+        }
+
+        /// <summary>
+        /// Fires events related to mouse buttons
+        /// </summary>
+        /// <param name="input">Object to query for input information</param>
+        /// <param name="widgets">The widgets to fire the events</param>
+        private void updateFocus(Input input,
+                                 LinkedList<Widget> widgets)
+        {
+            foreach (var widget in widgets)
+            {
                 if (input.IsButtonPressed(Buttons.MouseLeft))
                 {
                     widget.OnMouseClick();
@@ -136,19 +163,16 @@ namespace Crystal.Framework.UI
                     widget.OnMouseReleasedSecondary();
                 }
 
-                newFocusList.AddLast(widget);
             }
-
-            while (focus != null)
-            {
-                focus.Value.HasFocus = false;
-
-                focus = focus.Next;
-            }
-
-            return newFocusList;
         }
 
+        /// <summary>
+        /// Fires events related to mouse hovering
+        /// </summary>
+        /// <param name="input">Object to query for input information</param>
+        /// <param name="path">Objects under the mouse now</param>
+        /// <param name="currentUnder">Objects previously under the mouse</param>
+        /// <returns>The list of objects under the mouse</returns>
         private LinkedList<Widget> hoverOn(Input input, IEnumerable<Widget> path, LinkedList<Widget> currentUnder)
         {
             var newUnderList = new LinkedList<Widget>();
