@@ -49,7 +49,9 @@ namespace Crystal.Framework.UI.Widgets
         {
             var mousePos = Input.Instance.MousePosition;
 
-            if (knob.Layout.Area.Contains(mousePos) || slider.Layout.Area.Contains(mousePos))
+            var area = TextureSlice.Union(knob.Layout.Area, slider.Layout.Area);
+
+            if (area.Contains(mousePos))
             {
                 var pos = mousePos.X - slider.Layout.Area.TopLeft.X;
                 Value = Math.Min(Math.Max(pos / slider.Layout.Area.Width, 0), 1);
