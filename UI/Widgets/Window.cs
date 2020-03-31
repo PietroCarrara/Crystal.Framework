@@ -16,6 +16,11 @@ namespace Crystal.Framework.UI.Widgets
 
         private TextureSlice windowArea;
 
+        private Vector2? mousePos,
+                         mousePosSecondary,
+                         startMousePosSecondary;
+
+
         public bool Resizable, Movable;
 
         public Vector2? MinSize
@@ -90,47 +95,54 @@ namespace Crystal.Framework.UI.Widgets
             background.BecomeChildOf(this);
         }
 
-        private Vector2 mousePos,
-                        mousePosSecondary,
-                        startMousePosSecondary;
-
-        public override void OnMouseClick()
+        public override void OnMouseClick(UIEvent e)
         {
             this.mousePos = Input.Instance.MousePosition;
         }
 
-        public override void OnMouseHold()
+        public override void OnMouseReleased(UIEvent e)
         {
-            if (!Movable)
+            this.mousePos = null;
+        }
+
+        public override void OnMouseHold(UIEvent e)
+        {
+            if (!Movable || !mousePos.HasValue)
             {
                 return;
             }
 
-            this.Position += Input.Instance.MousePosition - mousePos;
+            this.Position += Input.Instance.MousePosition - mousePos.Value;
             this.mousePos = Input.Instance.MousePosition;
+            e.PreventPropagation();
             this.ChangeState();
         }
 
-        public override void OnMouseClickSecondary()
+        public override void OnMouseClickSecondary(UIEvent e)
         {
             startMousePosSecondary = mousePosSecondary = Input.Instance.MousePosition;
         }
 
-        public override void OnMouseHoldSecondary()
+        public override void OnMouseReleasedSecondary(UIEvent e)
         {
-            if (!Resizable)
+            startMousePosSecondary = mousePosSecondary = null;
+        }
+
+        public override void OnMouseHoldSecondary(UIEvent e)
+        {
+            if (!Resizable || !startMousePosSecondary.HasValue || !mousePosSecondary.HasValue)
             {
                 return;
             }
 
             // Distance to the edges, so we can decide the direction to resize
-            var left = startMousePosSecondary.X - windowArea.TopLeft.X;
-            var right = windowArea.BottomRight.X - startMousePosSecondary.X;
-            var top = startMousePosSecondary.Y - windowArea.TopLeft.Y;
-            var bottom = windowArea.BottomRight.Y - startMousePosSecondary.Y;
+            var left = startMousePosSecondary.Value.X - windowArea.TopLeft.X;
+            var right = windowArea.BottomRight.X - startMousePosSecondary.Value.X;
+            var top = startMousePosSecondary.Value.Y - windowArea.TopLeft.Y;
+            var bottom = windowArea.BottomRight.Y - startMousePosSecondary.Value.Y;
 
             // The mouse movement since the last frame
-            var diff = Input.Instance.MousePosition - this.mousePosSecondary;
+            var diff = Input.Instance.MousePosition - this.mousePosSecondary.Value;
 
             // Analyze the mouse movement based on the edge it's touching
             // and check if we can still grow/shrink
@@ -170,6 +182,7 @@ namespace Crystal.Framework.UI.Widgets
             }
 
             this.mousePosSecondary = Input.Instance.MousePosition;
+            e.PreventPropagation();
             this.ChangeState();
         }
 

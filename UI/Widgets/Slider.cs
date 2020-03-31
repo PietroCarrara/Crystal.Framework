@@ -45,7 +45,19 @@ namespace Crystal.Framework.UI.Widgets
             slider.BecomeChildOf(this);
         }
 
-        public override void OnMouseHold()
+        public override void OnMouseClick(UIEvent e)
+        {
+            var mousePos = Input.Instance.MousePosition;
+
+            var area = TextureSlice.Union(knob.Layout.Area, slider.Layout.Area);
+
+            if (area.Contains(mousePos))
+            {
+                e.PreventPropagation();
+            }
+        }
+
+        public override void OnMouseHold(UIEvent e)
         {
             var mousePos = Input.Instance.MousePosition;
 
@@ -55,6 +67,8 @@ namespace Crystal.Framework.UI.Widgets
             {
                 var pos = mousePos.X - slider.Layout.Area.TopLeft.X;
                 Value = Math.Min(Math.Max(pos / slider.Layout.Area.Width, 0), 1);
+
+                e.PreventPropagation();
             }
         }
 

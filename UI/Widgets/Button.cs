@@ -17,16 +17,18 @@ namespace Crystal.Framework.UI.Widgets
             this.background.BecomeChildOf(this);
         }
 
-        public override void OnMouseReleased()
+        public override void OnMouseReleased(UIEvent e)
         {
             this.Pressed?.Invoke(this);
             click = false;
+            e.PreventPropagation();
             this.ChangeState();
         }
 
-        public override void OnMouseClick()
+        public override void OnMouseClick(UIEvent e)
         {
             click = true;
+            e.PreventPropagation();
             this.ChangeState();
         }
 

@@ -158,37 +158,37 @@ namespace Crystal.Framework.UI.Widgets
         /// <summary>
         /// Called when the mouse left clicks this widget's area
         /// </summary>
-        public virtual void OnMouseClick()
+        public virtual void OnMouseClick(UIEvent e)
         { }
 
         /// <summary>
         /// Called when the mouse right clicks this widget's area
         /// </summary>
-        public virtual void OnMouseClickSecondary()
+        public virtual void OnMouseClickSecondary(UIEvent e)
         { }
 
         /// <summary>
         /// Called when the mouse releases the left button on top of this widget
         /// </summary>
-        public virtual void OnMouseReleased()
+        public virtual void OnMouseReleased(UIEvent e)
         { }
 
         /// <summary>
         /// Called when the mouse releases the right button on top of this widget
         /// </summary>
-        public virtual void OnMouseReleasedSecondary()
+        public virtual void OnMouseReleasedSecondary(UIEvent e)
         { }
 
         /// <summary>
         /// Called every frame that the mouse is on top of this window and the left button is down
         /// </summary>
-        public virtual void OnMouseHold()
+        public virtual void OnMouseHold(UIEvent e)
         { }
 
         /// <summary>
         /// Called every frame that the mouse is on top of this window and the right button is down
         /// </summary>
-        public virtual void OnMouseHoldSecondary()
+        public virtual void OnMouseHoldSecondary(UIEvent e)
         { }
 
         [Conditional("DEBUG")]

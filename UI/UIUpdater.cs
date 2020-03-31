@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using Crystal.Framework.UI.Widgets;
@@ -37,7 +38,7 @@ namespace Crystal.Framework.UI
                 );
             }
 
-            updateButtonEvents(input, focusedWidgets);
+            updateButtonEvents(input, focusedWidgets.First);
 
             // TODO: Widgets consume keys input
 
@@ -82,10 +83,8 @@ namespace Crystal.Framework.UI
         /// <param name="input">Object to query input information</param>
         /// <param name="path">The widgets to give focus</param>
         /// <param name="currentFocus">Returns a list of the widgets that are now in focus</param>
-        /// <returns></returns>
-        private LinkedList<Widget> giveFocusTo(Input input,
-                                               IEnumerable<Widget> path,
-                                               LinkedList<Widget> currentFocus)
+        /// <returns>The list of widgets that now have focus</returns>
+        private LinkedList<Widget> giveFocusTo(Input input, IEnumerable<Widget> path, LinkedList<Widget> currentFocus)
         {
             var newFocusList = new LinkedList<Widget>();
             var focus = currentFocus.First;
@@ -132,38 +131,57 @@ namespace Crystal.Framework.UI
         /// Fires events related to mouse buttons
         /// </summary>
         /// <param name="input">Object to query for input information</param>
-        /// <param name="widgets">The widgets to fire the events</param>
-        private void updateButtonEvents(Input input,
-                                 LinkedList<Widget> widgets)
+        /// <param name="widgetList">The widgets to fire the events</param>
+        /// <returns>Returns true when no events were consumed</returns>
+        private void updateButtonEvents(Input input, LinkedListNode<Widget> widgetList)
         {
-            foreach (var widget in widgets)
+            if (input.IsButtonPressed(Buttons.MouseLeft))
             {
-                if (input.IsButtonPressed(Buttons.MouseLeft))
+                updateUIEvent(widgetList, (w, e) => w.OnMouseClick(e));
+            }
+            if (input.IsButtonPressed(Buttons.MouseRight))
+            {
+                updateUIEvent(widgetList, (w, e) => w.OnMouseClickSecondary(e));
+            }
+            if (input.IsButtonDown(Buttons.MouseLeft))
+            {
+                updateUIEvent(widgetList, (w, e) => w.OnMouseHold(e));
+            }
+            if (input.IsButtonDown(Buttons.MouseRight))
+            {
+                updateUIEvent(widgetList, (w, e) => w.OnMouseHoldSecondary(e));
+            }
+            if (input.IsButtonReleased(Buttons.MouseLeft))
+            {
+                updateUIEvent(widgetList, (w, e) => w.OnMouseReleased(e));
+            }
+            if (input.IsButtonReleased(Buttons.MouseRight))
+            {
+                updateUIEvent(widgetList, (w, e) => w.OnMouseReleasedSecondary(e));
+            }
+        }
+
+        /// <summary>
+        /// Updates recursively a event in the list of widgets
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="action"></param>
+        /// <returns>True when the UIEvent if still free to propagate</returns>
+        private bool updateUIEvent(LinkedListNode<Widget> node, Action<Widget, UIEvent> action)
+        {
+            if (node != null)
+            {
+                if (!updateUIEvent(node.Next, action))
                 {
-                    widget.OnMouseClick();
-                }
-                if (input.IsButtonPressed(Buttons.MouseRight))
-                {
-                    widget.OnMouseClickSecondary();
-                }
-                if (input.IsButtonDown(Buttons.MouseLeft))
-                {
-                    widget.OnMouseHold();
-                }
-                if (input.IsButtonDown(Buttons.MouseRight))
-                {
-                    widget.OnMouseHoldSecondary();
-                }
-                if (input.IsButtonReleased(Buttons.MouseLeft))
-                {
-                    widget.OnMouseReleased();
-                }
-                if (input.IsButtonReleased(Buttons.MouseRight))
-                {
-                    widget.OnMouseReleasedSecondary();
+                    return false;
                 }
 
+                var e = new UIEvent();
+                action(node.Value, e);
+                return !e.ShouldPreventPropagation;
             }
+
+            return true;
         }
 
         /// <summary>
