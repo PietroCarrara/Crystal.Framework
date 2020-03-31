@@ -37,7 +37,7 @@ namespace Crystal.Framework.UI
                 );
             }
 
-            updateFocus(input, focusedWidgets);
+            updateButtonEvents(input, focusedWidgets);
 
             // TODO: Widgets consume keys input
 
@@ -133,7 +133,7 @@ namespace Crystal.Framework.UI
         /// </summary>
         /// <param name="input">Object to query for input information</param>
         /// <param name="widgets">The widgets to fire the events</param>
-        private void updateFocus(Input input,
+        private void updateButtonEvents(Input input,
                                  LinkedList<Widget> widgets)
         {
             foreach (var widget in widgets)
