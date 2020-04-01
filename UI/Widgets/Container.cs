@@ -20,6 +20,8 @@ namespace Crystal.Framework.UI.Widgets
                 {
                     this.addChild(child);
                 }
+
+                this.OnSetChildren(value);
             }
         }
 
@@ -32,6 +34,11 @@ namespace Crystal.Framework.UI.Widgets
         {
             widget.BecomeChildOf(this);
             this.ChangeState();
+        }
+
+        protected virtual void OnSetChildren(Widget[] children)
+        {
+
         }
     }
 }

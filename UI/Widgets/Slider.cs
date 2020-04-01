@@ -10,7 +10,7 @@ namespace Crystal.Framework.UI.Widgets
 
         private IDrawableWidget knob, slider;
 
-        public Action<Slider> OnChange;
+        public Action<Slider> OnChangeValue;
 
         public float Value
         {
@@ -23,7 +23,7 @@ namespace Crystal.Framework.UI.Widgets
                 }
 
                 this.value = value;
-                this.OnChange?.Invoke(this);
+                this.OnChangeValue?.Invoke(this);
                 this.ChangeState();
             }
         }

@@ -8,6 +8,42 @@ namespace Crystal.Framework.UI.Widgets
 {
     public class HorizontalContainer : Container
     {
+        private float[] weights = new float[0];
+        private Margins margins = Margins.All(0);
+
+        /// <summary>
+        /// The weights of
+        /// </summary>
+        public float[] Weights
+        {
+            get => weights;
+            set
+            {
+                weights = value;
+                this.ChangeState();
+            }
+        }
+
+        public Margins Margins
+        {
+            get => margins;
+            set
+            {
+                this.margins = value;
+                this.ChangeState();
+            }
+        }
+
+        protected override void OnSetChildren(Widget[] children)
+        {
+            if (!weights.Any())
+            {
+                this.weights = children.Select(w => 1f).ToArray();
+            }
+
+            this.ChangeState();
+        }
+
         protected override IUILayout Build()
         {
             var len = this.Children.Count;
@@ -17,18 +53,27 @@ namespace Crystal.Framework.UI.Widgets
                 return IUILayout.Empty;
             }
 
-            var width = this.AvailableArea.Width / len;
+            if (weights.Length != len)
+            {
+                throw new Exception("Weight count incorrect!");
+            }
+
+            var width = this.AvailableArea.Width / weights.Sum();
 
             var i = 0;
+            var totalWeights = 0f;
             foreach (var child in this.Children)
             {
-                child.AvailableArea = new TextureSlice(
-                    this.AvailableArea.TopLeft.X + width * i,
+                var area = new TextureSlice(
+                    (int)(this.AvailableArea.TopLeft.X + width * totalWeights),
                     this.AvailableArea.TopLeft.Y,
-                    width,
+                    (int)(width * weights[i]),
                     this.AvailableArea.Height
                 );
 
+                child.AvailableArea = margins.Apply(area);
+
+                totalWeights += weights[i];
                 i++;
             }
 
