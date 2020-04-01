@@ -44,6 +44,12 @@ namespace Crystal.Framework.UI
         SliderTheme SliderTheme { get; }
 
         /// <summary>
+        /// The default checkbox theme
+        /// </summary>
+        /// <value></value>
+        CheckboxTheme CheckboxTheme { get; }
+
+        /// <summary>
         /// The available fonts in the theme
         /// </summary>
         Dictionary<string, IFont> Fonts { get; }
@@ -62,5 +68,10 @@ namespace Crystal.Framework.UI
         /// The available button themes in the theme
         /// </summary>
         Dictionary<string, SliderTheme> SliderThemes { get; }
+
+        /// <summary>
+        /// The available checkbox themes in the theme
+        /// </summary>
+        Dictionary<string, CheckboxTheme> CheckboxThemes { get; }
     }
 }
