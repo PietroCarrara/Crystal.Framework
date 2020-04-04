@@ -38,6 +38,11 @@ namespace Crystal.Framework.UI.Widgets
         /// </summary>
         public Widget Parent { get; private set; }
 
+        /// <summary>
+        /// Signals wether this entity should "steal" inputs from the game when focused.
+        /// </summary>
+        public bool StealsInput = false;
+
         private Alignment? alignment;
         /// <summary>
         /// The alignment this widget should follow.
@@ -189,6 +194,31 @@ namespace Crystal.Framework.UI.Widgets
         /// Called every frame that the mouse is on top of this window and the right button is down
         /// </summary>
         public virtual void OnMouseHoldSecondary(UIEvent e)
+        { }
+
+        /// <summary>
+        /// Called everytime the user types text and is focused on this widget
+        /// </summary>
+        /// <param name="e">The UIEvent</param>
+        /// <param name="text">The text data</param>
+        public virtual void OnText(UIEvent e, IEnumerable<TextInputData> text)
+        { }
+
+        /// <summary>
+        /// Called everytime a key is pressed and this widget has focus.
+        /// May be called many times before the release for any given key
+        /// </summary>
+        /// <param name="e">The UIEvent</param>
+        /// <param name="keys">The key data</param>
+        public virtual void OnKey(UIEvent e, IEnumerable<KeyInputData> keys)
+        { }
+
+        /// <summary>
+        /// Called when a key is released and this widget has focus
+        /// </summary>
+        /// <param name="e">The UIEvent</param>
+        /// <param name="keys">The key data</param>
+        public virtual void OnKeyReleased(UIEvent e, IEnumerable<KeyInputData> keys)
         { }
 
         [Conditional("DEBUG")]

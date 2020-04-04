@@ -36,7 +36,6 @@ namespace Crystal.Framework.Components
             get => rotationZ;
             set
             {
-                Console.WriteLine(rotationZ);
                 rotationZ = value;
                 this.rotate = Matrix4x4.CreateRotationZ(rotationZ);
                 updateTransform();
@@ -80,7 +79,7 @@ namespace Crystal.Framework.Components
         public Camera(Vector2 origin)
         {
             this.origin = origin;
-            
+
             this.translate = Matrix4x4.CreateTranslation(-this.Position.X, -this.Position.Y, this.position.Z);
             this.rotate = Matrix4x4.CreateRotationZ(this.rotationZ);
             this.scale = Matrix4x4.CreateScale(this.zoom, this.zoom, this.zoom);

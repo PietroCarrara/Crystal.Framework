@@ -18,6 +18,19 @@ namespace Crystal.Framework.UI
         /// </summary>
         private LinkedList<Widget> underMouse = new LinkedList<Widget>();
 
+        public bool FocusedUIStealsInput()
+        {
+            foreach (var widget in focusedWidgets)
+            {
+                if (widget.StealsInput)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Updates focus and fires events on UI
         /// </summary>
@@ -55,7 +68,6 @@ namespace Crystal.Framework.UI
         /// </summary>
         /// <param name="widgets">Widgets in focus order</param>
         /// <param name="input">Object to query for mouse position information</param>
-        /// <returns></returns>
         private IEnumerable<Widget> pathUnderMouse(IEnumerable<Widget> widgets, Input input)
         {
             var mousePos = input.MousePosition;
@@ -135,6 +147,7 @@ namespace Crystal.Framework.UI
         /// <returns>Returns true when no events were consumed</returns>
         private void updateButtonEvents(Input input, LinkedListNode<Widget> widgetList)
         {
+            // Mouse buttons
             if (input.IsButtonPressed(Buttons.MouseLeft))
             {
                 updateUIEvent(widgetList, (w, e) => w.OnMouseClick(e));
@@ -158,6 +171,20 @@ namespace Crystal.Framework.UI
             if (input.IsButtonReleased(Buttons.MouseRight))
             {
                 updateUIEvent(widgetList, (w, e) => w.OnMouseReleasedSecondary(e));
+            }
+
+            // Keyboard text
+            var text = input.GetText();
+            if (text.Any())
+            {
+                updateUIEvent(widgetList, (w, e) => w.OnText(e, text));
+            }
+
+            // Keyboard non-text keys
+            var keys = input.GetKeysPressed();
+            if (keys.Any())
+            {
+                updateUIEvent(widgetList, (w, e) => w.OnKey(e, keys));
             }
         }
 

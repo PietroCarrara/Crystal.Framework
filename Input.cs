@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Numerics;
+using Crystal.Framework.UI;
 
 namespace Crystal.Framework
 {
@@ -13,10 +15,29 @@ namespace Crystal.Framework
         public bool IsMouseOverUI { get; internal set; }
 
         /// <summary>
-        /// Tells if any keys were consumed by the UI
+        /// Returns the text data of the keys that were pressed this frame.
+        /// This should return info concerning TEXT input, aware of the OS
+        /// keyboard layout, key repetition, and such
         /// </summary>
-        /// <value></value>
-        public bool WereKeysConsumed { get; internal set; }
+        public abstract IEnumerable<TextInputData> GetText();
+
+        /// <summary>
+        /// Returns the keys that were pressed this frame. This should return
+        /// info concerning TEXT input, but for keys that do not represent
+        /// text, but other controls (shift, control, alt, arrow keys...),
+        /// aware of the OS keyboard layout and such. When key repetition
+        /// is triggered, this should be reflected here with the same amount
+        /// of items
+        /// </summary>
+        public abstract IEnumerable<KeyInputData> GetKeysPressed();
+
+        /// <summary>
+        /// Returns the keys that were released this frame. This should return
+        /// info concerning TEXT input, but for keys that do not represent
+        /// text, but other controls (shift, control, alt, arrow keys...),
+        /// aware of the OS keyboard layout and such
+        /// </summary>
+        public abstract IEnumerable<KeyInputData> GetKeysReleased();
 
         /// <summary>
         /// Returns the position of the mouse relative to window
@@ -64,6 +85,7 @@ namespace Crystal.Framework
         /// <summary>
         /// Updates input state
         /// </summary>
-        public abstract void Update();
+        /// <param name="delta">Time elapsed since last frame</param>
+        public abstract void Update(float delta);
     }
 }
