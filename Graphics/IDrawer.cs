@@ -29,6 +29,7 @@ namespace Crystal.Framework.Graphics
         /// </summary>
         /// <param name="texture">The texture to be drawn</param>
         /// <param name="position">Where to draw the texture</param>
+        /// <param name="color">The color to tint the texture</param>
         /// <param name="deltaTime">Time elapsed sice the last frame</param>
         /// <param name="origin">
         ///     The texture's origin. X and Y should be in range
@@ -50,12 +51,12 @@ namespace Crystal.Framework.Graphics
         void Draw(
             IDrawable texture,
             Vector2 position,
+            Color color,
             float deltaTime,
             Vector2? origin = null,
             float rotation = 0,
             Vector2? scale = null,
             TextureSlice? sourceRectangle = null
-            // TODO: Color color
         );
 
 
@@ -64,6 +65,7 @@ namespace Crystal.Framework.Graphics
         /// </summary>
         /// <param name="texture">The texture to be drawn</param>
         /// <param name="destinationRectangle">Where to draw the texture</param>
+        /// <param name="color">The color to tint the texture</param>
         /// <param name="deltaTime">Time elapsed sice the last frame</param>
         /// <param name="origin">
         ///     The texture's origin. X and Y should be in range
@@ -80,11 +82,11 @@ namespace Crystal.Framework.Graphics
         void Draw(
             IDrawable texture,
             TextureSlice destinationRectangle,
+            Color color,
             float deltaTime,
             Vector2? origin = null,
             float rotation = 0,
             TextureSlice? sourceRectangle = null
-            // TODO: Color color
         );
 
         /// <summary>
@@ -92,14 +94,18 @@ namespace Crystal.Framework.Graphics
         /// </summary>
         /// <param name="font">The font to use</param>
         /// <param name="position">Where to position the string</param>
+        /// <param name="color">The color to tint the text</param>
         /// <param name="text">The text to draw</param>
         /// <param name="scale">Scale the text in the X and Y axis. Null means (1, 1)</param>
+        /// <param name="sourceRectangle">Slice of this string to draw (unscaled)</param>
         /// <param name="rotation">Clockwise rotation in radians</param>
         void DrawString(
             IFont font,
             Vector2 position,
+            Color color,
             string text,
             Vector2? scale = null,
+            TextureSlice? sourceRectangle = null,
             float rotation = 0
         );
 
@@ -108,22 +114,38 @@ namespace Crystal.Framework.Graphics
         /// </summary>
         /// <param name="font">The font to use</param>
         /// <param name="destinationRectangle">The rectangle where to draw</param>
+        /// <param name="color">The color to tint the texture</param>
         /// <param name="text">The text to draw</param>
+        /// <param name="sourceRectangle">Slice of the destination rectangle to be drawn (cuts text)</param>
         void DrawString(
             IFont font,
             TextureSlice destinationRectangle,
-            string text
+            Color color,
+            string text,
+            TextureSlice? sourceRectangle = null
         )
         {
             var size = font.MeasureString(text);
 
             var scale = destinationRectangle.Size / size;
 
+            if (sourceRectangle.HasValue)
+            {
+                // Remove the scale
+                sourceRectangle = new TextureSlice(
+                    (Point)(sourceRectangle.Value.TopLeft / scale),
+                    (int)(sourceRectangle.Value.Width / scale.X),
+                    (int)(sourceRectangle.Value.Height / scale.Y)
+                );
+            }
+
             this.DrawString(
                 font,
                 destinationRectangle.TopLeft,
+                color,
                 text,
-                scale
+                scale,
+                sourceRectangle
             );
         }
     }

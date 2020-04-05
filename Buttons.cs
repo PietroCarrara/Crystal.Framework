@@ -2,8 +2,9 @@ namespace Crystal.Framework
 {
     public enum Buttons
     {
-        // Keys and buttons codes from glfw
+        None = -1,
 
+        // Keys and buttons codes from glfw
         MouseLeft = 0,
         MouseRight,
         MouseMiddle,
@@ -16,7 +17,7 @@ namespace Crystal.Framework
         Space = 32,
 
         Apostrophe = 39,
-        
+
         Comma = 44,
         Minus,
         Period,
@@ -36,7 +37,7 @@ namespace Crystal.Framework
         Semicolon = 59,
 
         Equal = 61,
-        
+
         A = 65,
         B,
         C,

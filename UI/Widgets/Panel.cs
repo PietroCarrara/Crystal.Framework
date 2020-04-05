@@ -6,7 +6,6 @@ namespace Crystal.Framework.UI.Widgets
     public class Panel : SingleChildWidget
     {
         private NinePatchImage background;
-
         private NinePatchImageWidget bgWidget;
 
         public Panel()
@@ -21,6 +20,16 @@ namespace Crystal.Framework.UI.Widgets
             set
             {
                 background = value;
+                this.ChangeState();
+            }
+        }
+
+        public Color Tint
+        {
+            get => bgWidget.Tint;
+            set
+            {
+                bgWidget.Tint = value;
                 this.ChangeState();
             }
         }

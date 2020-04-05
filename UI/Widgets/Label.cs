@@ -7,7 +7,8 @@ namespace Crystal.Framework.UI.Widgets
     public class Label : Widget
     {
         private string text = "", font = "";
-        private bool expand = true;
+        private bool expand = true, shrink = true;
+        private Color tint = Color.Black;
 
         public string Text
         {
@@ -39,6 +40,26 @@ namespace Crystal.Framework.UI.Widgets
             }
         }
 
+        public bool Shrink
+        {
+            get => shrink;
+            set
+            {
+                this.shrink = value;
+                this.ChangeState();
+            }
+        }
+
+        public Color Tint
+        {
+            get => tint;
+            set
+            {
+                tint = value;
+                this.ChangeState();
+            }
+        }
+
         protected override IUILayout Build()
         {
             IFont font;
@@ -59,16 +80,18 @@ namespace Crystal.Framework.UI.Widgets
             );
 
             // Scale the font so it fits in the area but is not distorted
-            var scaleX = size.X / this.AvailableArea.Width;
-            var scaleY = size.Y / this.AvailableArea.Height;
-            var scale = System.Math.Max(scaleY, scaleX);
+            var scaleX = this.AvailableArea.Width / size.X;
+            var scaleY = this.AvailableArea.Height / size.Y;
+            var scale = System.Math.Min(scaleY, scaleX);
 
-            var width = (int)(size.X / scale);
-            var height = (int)(size.Y / scale);
+            var source = this.AvailableArea;
 
-            // If we are shrinking or are set to expand
-            if (scale > 1 || expand)
+            // If we are shrinking or expanding
+            if ((scale > 1 && expand) || (scale < 1 && shrink))
             {
+                var width = (int)(size.X * scale);
+                var height = (int)(size.Y * scale);
+
                 area = new TextureSlice(
                     this.AvailableArea.TopLeft,
                     width,
@@ -83,6 +106,8 @@ namespace Crystal.Framework.UI.Widgets
                 Text = this.text,
                 Font = font,
                 Area = area,
+                Tint = tint,
+                SourceRectangle = source,
             };
         }
     }

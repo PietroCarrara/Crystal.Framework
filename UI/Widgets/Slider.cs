@@ -8,7 +8,7 @@ namespace Crystal.Framework.UI.Widgets
     {
         private float value;
 
-        private IDrawableWidget knob, slider;
+        private DrawableWidget knob, slider;
 
         public Action<Slider> OnChangeValue;
 
@@ -30,12 +30,12 @@ namespace Crystal.Framework.UI.Widgets
 
         public Slider()
         {
-            knob = new IDrawableWidget
+            knob = new DrawableWidget
             {
                 Alignment = Alignment.Center,
                 Fit = ImageFit.Scale,
             };
-            slider = new IDrawableWidget
+            slider = new DrawableWidget
             {
                 Alignment = Alignment.Center,
                 Fit = ImageFit.Scale,

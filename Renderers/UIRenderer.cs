@@ -12,26 +12,26 @@ namespace Crystal.Framework.Renderers
     public class UIRenderer : IRenderer
     {
         private Canvas canvas;
-        
+
         public void Initialize(Scene scene)
         {
             this.canvas = scene.Canvases.Create();
-            scene.Widgets.Root.AvailableArea = new TextureSlice(Point.Zero, canvas.Size);
+            scene.UI.Root.AvailableArea = new TextureSlice(Point.Zero, canvas.Size);
             canvas.SizeChanged += (c, size) =>
             {
-                scene.Widgets.Root.AvailableArea = new TextureSlice(Point.Zero, size);
+                scene.UI.Root.AvailableArea = new TextureSlice(Point.Zero, size);
             };
         }
 
         public void Render(Scene scene, float delta)
         {
             canvas.Clear();
-            
+
             scene.Drawer.BeginDraw(
                 canvas,
                 samplerState: SamplerState.PointClamp
             );
-            drawWidget(scene.Widgets.Root, delta, scene.Drawer);
+            drawWidget(scene.UI.Root, delta, scene.Drawer);
             scene.Drawer.EndDraw();
         }
 
@@ -54,11 +54,12 @@ namespace Crystal.Framework.Renderers
             }
         }
 
-        private void drawIDrawableUILayout(IDrawableUILayout drawable, float delta, IDrawer drawer)
+        private void drawIDrawableUILayout(DrawableUILayout drawable, float delta, IDrawer drawer)
         {
             drawer.Draw(
                 drawable.Drawable,
                 drawable.Area,
+                drawable.Tint,
                 delta,
                 drawable.Origin,
                 0,
@@ -71,17 +72,20 @@ namespace Crystal.Framework.Renderers
             drawer.DrawString(
                 drawable.Font,
                 drawable.Area,
-                drawable.Text
+                drawable.Tint,
+                drawable.Text,
+                drawable.SourceRectangle
             );
         }
 
-        private void drawIAnimatableUILayout(IAnimatableUILayout animatable, float delta, IDrawer drawer)
+        private void drawIAnimatableUILayout(AnimatableUILayout animatable, float delta, IDrawer drawer)
         {
             animatable.Animatable.PreDraw(delta);
 
             drawer.Draw(
                 animatable.Animatable,
                 animatable.Area,
+                animatable.Tint,
                 delta,
                 null,
                 0,

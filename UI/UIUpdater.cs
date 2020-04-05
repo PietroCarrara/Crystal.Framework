@@ -53,8 +53,6 @@ namespace Crystal.Framework.UI
 
             updateButtonEvents(input, focusedWidgets.First);
 
-            // TODO: Widgets consume keys input
-
             underMouse = hoverOn(
                 input,
                 currUnderMouse,

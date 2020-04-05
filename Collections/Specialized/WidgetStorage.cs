@@ -22,6 +22,8 @@ namespace Crystal.Framework.Collections.Specialized
             updater.Update((UnorderedWidgetsLayout)Root.Layout, input);
         }
 
+        public bool StealsInput => updater.FocusedUIStealsInput();
+
         /// <summary>
         /// Adds a widget to the pool
         /// </summary>

@@ -7,8 +7,8 @@ namespace Crystal.Framework.UI.Widgets
     {
         private bool value = false;
 
-        private IDrawableWidget box,
-                                check;
+        private DrawableWidget box,
+                               check;
 
         public Action<Checkbox> OnChangeValue;
 
@@ -31,8 +31,8 @@ namespace Crystal.Framework.UI.Widgets
 
         public Checkbox()
         {
-            box = new IDrawableWidget();
-            check = new IDrawableWidget
+            box = new DrawableWidget();
+            check = new DrawableWidget
             {
                 Alignment = Alignment.Center,
             };
@@ -58,8 +58,8 @@ namespace Crystal.Framework.UI.Widgets
                 {
                     Children = new Widget[]
                     {
-                    box,
-                    check,
+                        box,
+                        check,
                     }
                 };
             }

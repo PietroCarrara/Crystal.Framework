@@ -4,11 +4,12 @@ using Crystal.Framework.UI.UILayouts;
 
 namespace Crystal.Framework.UI.Widgets
 {
-    public class IDrawableWidget : Widget
+    public class DrawableWidget : Widget
     {
         private IDrawable drawable;
         private TextureSlice? sourceRectangle;
         private ImageFit fit = ImageFit.Scale;
+        private Color tint = Color.White;
 
         public IDrawable Drawable
         {
@@ -36,6 +37,16 @@ namespace Crystal.Framework.UI.Widgets
             set
             {
                 this.fit = value;
+                this.ChangeState();
+            }
+        }
+
+        public Color Tint
+        {
+            get => tint;
+            set
+            {
+                tint = value;
                 this.ChangeState();
             }
         }
@@ -113,12 +124,13 @@ namespace Crystal.Framework.UI.Widgets
                     break;
             }
 
-            return new IDrawableUILayout
+            return new DrawableUILayout
             {
                 Area = area,
                 Drawable = drawable,
                 Origin = Vector2.Zero,
                 SourceRectangle = sourceRectangle,
+                Tint = tint,
             };
         }
     }

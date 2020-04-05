@@ -45,6 +45,7 @@ namespace Crystal.Framework.Components
             spriteBatch.Draw(
                 this.Animation,
                 position,
+                this.Tint,
                 delta,
                 this.Origin,
                 this.Rotation,
@@ -72,7 +73,7 @@ namespace Crystal.Framework.Components
         public override void Dispose()
         {
             base.Dispose();
-            
+
             this.Animation.Dispose();
         }
 

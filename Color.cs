@@ -1,7 +1,10 @@
-namespace Crystal.Framework.UI
+namespace Crystal.Framework
 {
     public struct Color
     {
+        public static Color White => new Color(255, 255, 255);
+        public static Color Black => new Color(0, 0, 0);
+
         public byte R { get => Red; set => Red = value; }
         public byte G { get => Green; set => Green = value; }
         public byte B { get => Blue; set => Blue = value; }
@@ -15,14 +18,6 @@ namespace Crystal.Framework.UI
             this.Green = g;
             this.Blue = b;
             this.Alpha = a;
-        }
-
-        public Color(uint rgba)
-        {
-            this.Red = (byte)((rgba & 0xff000000) >> 3);
-            this.Green = (byte)((rgba & 0x00ff0000) >> 2);
-            this.Blue = (byte)((rgba & 0x0000ff00) >> 1);
-            this.Alpha = (byte)(rgba & 0x000000ff);
         }
     }
 }

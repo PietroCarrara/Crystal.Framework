@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using Crystal.Framework.Graphics;
 using Crystal.Framework.UI;
@@ -46,7 +47,7 @@ namespace Crystal.Framework
         private InputActionStorage actions = new InputActionStorage();
 
         public EntityStorage Entities => entities;
-        public WidgetStorage Widgets => widgets;
+        public WidgetStorage UI => widgets;
         public CanvasStorage Canvases => canvases;
         public InputActionStorage Actions => actions;
 
@@ -142,7 +143,7 @@ namespace Crystal.Framework
         /// <param name="deltaTime">Time in seconds elapsed since last update</param>
         public void Update(float deltaTime)
         {
-            Input.Instance.Update();
+            Input.Instance.Update(deltaTime);
 
             this.widgets.UpdateInput(Input.Instance);
 
@@ -208,7 +209,7 @@ namespace Crystal.Framework
 
         public Widget Add(Widget w)
         {
-            this.Widgets.Add(w);
+            this.UI.Add(w);
             return w;
         }
 

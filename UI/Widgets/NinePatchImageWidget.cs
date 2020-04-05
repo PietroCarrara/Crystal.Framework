@@ -7,7 +7,7 @@ namespace Crystal.Framework.UI.Widgets
 {
     public class NinePatchImageWidget : Widget
     {
-        private IDrawableWidget[] widgets;
+        private DrawableWidget[] widgets;
 
         private NinePatchImage image;
         public NinePatchImage Image
@@ -16,6 +16,19 @@ namespace Crystal.Framework.UI.Widgets
             set
             {
                 image = value;
+                this.ChangeState();
+            }
+        }
+
+        public Color Tint
+        {
+            get => widgets[0].Tint;
+            set
+            {
+                foreach (var w in widgets)
+                {
+                    w.Tint = value;
+                }
                 this.ChangeState();
             }
         }
@@ -34,11 +47,11 @@ namespace Crystal.Framework.UI.Widgets
 
         public NinePatchImageWidget()
         {
-            this.widgets = new IDrawableWidget[9];
+            this.widgets = new DrawableWidget[9];
 
             for (int i = 0; i < 9; i++)
             {
-                this.widgets[i] = new IDrawableWidget
+                this.widgets[i] = new DrawableWidget
                 {
                     Fit = ImageFit.Distort,
                 };

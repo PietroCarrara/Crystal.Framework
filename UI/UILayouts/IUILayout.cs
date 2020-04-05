@@ -16,9 +16,9 @@ namespace Crystal.Framework.UI.UILayouts
         /// <param name="c">Called in case this is a TextUILayout</param>
         /// <param name="d">Called in case this is a IAnimatableUILayout</param>
         void Match(Action<OrderedWidgetsLayout> a,
-                   Action<IDrawableUILayout> b,
+                   Action<DrawableUILayout> b,
                    Action<TextUILayout> c,
-                   Action<IAnimatableUILayout> d,
+                   Action<AnimatableUILayout> d,
                    Action<UnorderedWidgetsLayout> e);
 
         public static IUILayout Empty => new OrderedWidgetsLayout { Children = new Widget[0] };

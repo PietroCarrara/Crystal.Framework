@@ -7,7 +7,7 @@ namespace Crystal.Framework.UI.Widgets
 {
     public class ThreePatchImageWidget : Widget
     {
-        private readonly IDrawableWidget[] widgets;
+        private readonly DrawableWidget[] widgets;
 
         private ThreePatchImage image;
         public ThreePatchImage Image
@@ -30,15 +30,28 @@ namespace Crystal.Framework.UI.Widgets
             }
         }
 
+        public Color Tint
+        {
+            get => widgets[0].Tint;
+            set
+            {
+                foreach (var w in widgets)
+                {
+                    w.Tint = value;
+                }
+                this.ChangeState();
+            }
+        }
+
         public Margins Margins => Margins.Horizontal(image.CalculateBorder(this.AvailableArea.Size));
 
         public ThreePatchImageWidget()
         {
-            this.widgets = new IDrawableWidget[3];
+            this.widgets = new DrawableWidget[3];
 
             for (int i = 0; i < 3; i++)
             {
-                widgets[i] = new IDrawableWidget
+                widgets[i] = new DrawableWidget
                 {
                     Fit = ImageFit.Distort,
                 };

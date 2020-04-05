@@ -89,6 +89,16 @@ namespace Crystal.Framework.UI.Widgets
             }
         }
 
+        public Color Tint
+        {
+            get => background.Tint;
+            set
+            {
+                background.Tint = value;
+                this.ChangeState();
+            }
+        }
+
         public Window()
         {
             this.background = new Panel();

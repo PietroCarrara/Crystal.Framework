@@ -13,6 +13,8 @@ namespace Crystal.Framework.Components
 
         public Vector2 Scale { get; set; } = new Vector2(1);
 
+        public Color Tint = Color.White;
+
         public virtual Vector2 Size
         {
             get => new Vector2(this.Texture.Width, this.Texture.Height) * this.Scale;
@@ -22,7 +24,7 @@ namespace Crystal.Framework.Components
                     value.X / this.Texture.Width,
                     value.Y / this.Texture.Height
                 );
-            }   
+            }
         }
 
         public Sprite(IDrawable texture, Vector2? origin = null)
@@ -40,6 +42,7 @@ namespace Crystal.Framework.Components
             spriteBatch.Draw(
                 this.Texture,
                 position,
+                this.Tint,
                 delta,
                 this.Origin,
                 this.Rotation,

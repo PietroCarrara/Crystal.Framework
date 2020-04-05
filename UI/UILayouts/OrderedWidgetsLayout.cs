@@ -16,9 +16,9 @@ namespace Crystal.Framework.UI.UILayouts
         public IEnumerable<Widget> Children;
 
         public void Match(Action<OrderedWidgetsLayout> a,
-                          Action<IDrawableUILayout> b,
+                          Action<DrawableUILayout> b,
                           Action<TextUILayout> c,
-                          Action<IAnimatableUILayout> d,
+                          Action<AnimatableUILayout> d,
                           Action<UnorderedWidgetsLayout> e)
         {
             a(this);
