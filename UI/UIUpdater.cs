@@ -40,7 +40,7 @@ namespace Crystal.Framework.UI
             var widgets = ui.Children;
             var currUnderMouse = pathUnderMouse(widgets.Reverse(), input).ToList();
 
-            Input.Instance.IsMouseOverUI = underMouse.Any();
+            input.IsMouseOverUI = underMouse.Any();
 
             if (input.IsButtonPressed(Buttons.MouseLeft) || input.IsButtonPressed(Buttons.MouseRight))
             {
@@ -148,27 +148,27 @@ namespace Crystal.Framework.UI
             // Mouse buttons
             if (input.IsButtonPressed(Buttons.MouseLeft))
             {
-                updateUIEvent(widgetList, (w, e) => w.OnMouseClick(e));
+                updateUIEvent(widgetList, (w, e) => w.OnMouseClick(e, input));
             }
             if (input.IsButtonPressed(Buttons.MouseRight))
             {
-                updateUIEvent(widgetList, (w, e) => w.OnMouseClickSecondary(e));
+                updateUIEvent(widgetList, (w, e) => w.OnMouseClickSecondary(e, input));
             }
             if (input.IsButtonDown(Buttons.MouseLeft))
             {
-                updateUIEvent(widgetList, (w, e) => w.OnMouseHold(e));
+                updateUIEvent(widgetList, (w, e) => w.OnMouseHold(e, input));
             }
             if (input.IsButtonDown(Buttons.MouseRight))
             {
-                updateUIEvent(widgetList, (w, e) => w.OnMouseHoldSecondary(e));
+                updateUIEvent(widgetList, (w, e) => w.OnMouseHoldSecondary(e, input));
             }
             if (input.IsButtonReleased(Buttons.MouseLeft))
             {
-                updateUIEvent(widgetList, (w, e) => w.OnMouseReleased(e));
+                updateUIEvent(widgetList, (w, e) => w.OnMouseReleased(e, input));
             }
             if (input.IsButtonReleased(Buttons.MouseRight))
             {
-                updateUIEvent(widgetList, (w, e) => w.OnMouseReleasedSecondary(e));
+                updateUIEvent(widgetList, (w, e) => w.OnMouseReleasedSecondary(e, input));
             }
 
             // Keyboard text
@@ -242,7 +242,7 @@ namespace Crystal.Framework.UI
 
                 if (!samePath)
                 {
-                    widget.OnMouseEnter();
+                    widget.OnMouseEnter(input);
                 }
 
                 newUnderList.AddLast(widget);
@@ -250,7 +250,7 @@ namespace Crystal.Framework.UI
 
             while (under != null)
             {
-                under.Value.OnMouseLeave();
+                under.Value.OnMouseLeave(input);
 
                 under = under.Next;
             }

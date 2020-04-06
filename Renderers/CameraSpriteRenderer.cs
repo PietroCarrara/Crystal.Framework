@@ -12,7 +12,7 @@ namespace Crystal.Framework.Renderers
         private SamplerState sampler;
         private Canvas canvas;
         private Matrix4x4 scale;
-        
+
         public CameraSpriteRenderer(SamplerState sampler = SamplerState.LinearClamp)
         {
             this.sampler = sampler;
@@ -35,11 +35,11 @@ namespace Crystal.Framework.Renderers
                 );
             };
         }
-        
-        public void Render(Scene s, float delta)
+
+        public void Render(Scene s, IDrawer drawer, float delta)
         {
             canvas.Clear();
-            
+
             var camera = s.Entities
                 .With<Camera>()
                 .Many()
@@ -58,7 +58,7 @@ namespace Crystal.Framework.Renderers
                 .With<Position>()
                 .Many();
 
-            s.Drawer.BeginDraw(
+            drawer.BeginDraw(
                 this.canvas,
                 transformMatrix: this.scale * cam.TransformationMatrix,
                 samplerState: sampler
@@ -70,11 +70,11 @@ namespace Crystal.Framework.Renderers
 
                 foreach (var sprite in entity.FindAll<ISprite>())
                 {
-                    sprite.Draw(pos.Vector, delta, s.Drawer);
+                    sprite.Draw(pos.Vector, delta, drawer);
                 }
             }
 
-            s.Drawer.EndDraw();
+            drawer.EndDraw();
         }
     }
 }

@@ -7,8 +7,6 @@ namespace Crystal.Framework
 {
     public abstract class Input
     {
-        public static Input Instance { get; internal set; }
-
         /// <summary>
         /// Tells if the mouse is over any UI object
         /// </summary>
@@ -81,11 +79,5 @@ namespace Crystal.Framework
         /// <param name="button">The button to check</param>
         public bool IsButtonReleased(Buttons button) =>
             WasButtonDown(button) && IsButtonUp(button);
-
-        /// <summary>
-        /// Updates input state
-        /// </summary>
-        /// <param name="delta">Time elapsed since last frame</param>
-        public abstract void Update(float delta);
     }
 }

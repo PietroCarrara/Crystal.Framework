@@ -17,7 +17,7 @@ namespace Crystal.Framework.UI.Widgets
             this.background.BecomeChildOf(this);
         }
 
-        public override void OnMouseReleased(UIEvent e)
+        public override void OnMouseReleased(UIEvent e, Input input)
         {
             this.Pressed?.Invoke(this);
             click = false;
@@ -25,14 +25,14 @@ namespace Crystal.Framework.UI.Widgets
             this.ChangeState();
         }
 
-        public override void OnMouseClick(UIEvent e)
+        public override void OnMouseClick(UIEvent e, Input input)
         {
             click = true;
             e.PreventPropagation();
             this.ChangeState();
         }
 
-        public override void OnMouseLeave()
+        public override void OnMouseLeave(Input input)
         {
             click = false;
             this.ChangeState();

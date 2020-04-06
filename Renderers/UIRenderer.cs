@@ -23,16 +23,16 @@ namespace Crystal.Framework.Renderers
             };
         }
 
-        public void Render(Scene scene, float delta)
+        public void Render(Scene scene, IDrawer drawer, float delta)
         {
             canvas.Clear();
 
-            scene.Drawer.BeginDraw(
+            drawer.BeginDraw(
                 canvas,
                 samplerState: SamplerState.PointClamp
             );
-            drawWidget(scene.UI.Root, delta, scene.Drawer);
-            scene.Drawer.EndDraw();
+            drawWidget(scene.UI.Root, delta, drawer);
+            drawer.EndDraw();
         }
 
         private void drawWidget(Widget ui, float delta, IDrawer drawer)

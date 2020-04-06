@@ -151,49 +151,49 @@ namespace Crystal.Framework.UI.Widgets
         /// <summary>
         /// Called everytime the mouse enters this widget's area
         /// </summary>
-        public virtual void OnMouseEnter()
+        public virtual void OnMouseEnter(Input input)
         { }
 
         /// <summary>
         /// Called everytime the mouse leaves this widget's area
         /// </summary>
-        public virtual void OnMouseLeave()
+        public virtual void OnMouseLeave(Input input)
         { }
 
         /// <summary>
         /// Called when the mouse left clicks this widget's area
         /// </summary>
-        public virtual void OnMouseClick(UIEvent e)
+        public virtual void OnMouseClick(UIEvent e, Input input)
         { }
 
         /// <summary>
         /// Called when the mouse right clicks this widget's area
         /// </summary>
-        public virtual void OnMouseClickSecondary(UIEvent e)
+        public virtual void OnMouseClickSecondary(UIEvent e, Input input)
         { }
 
         /// <summary>
         /// Called when the mouse releases the left button on top of this widget
         /// </summary>
-        public virtual void OnMouseReleased(UIEvent e)
+        public virtual void OnMouseReleased(UIEvent e, Input input)
         { }
 
         /// <summary>
         /// Called when the mouse releases the right button on top of this widget
         /// </summary>
-        public virtual void OnMouseReleasedSecondary(UIEvent e)
+        public virtual void OnMouseReleasedSecondary(UIEvent e, Input input)
         { }
 
         /// <summary>
         /// Called every frame that the mouse is on top of this window and the left button is down
         /// </summary>
-        public virtual void OnMouseHold(UIEvent e)
+        public virtual void OnMouseHold(UIEvent e, Input input)
         { }
 
         /// <summary>
         /// Called every frame that the mouse is on top of this window and the right button is down
         /// </summary>
-        public virtual void OnMouseHoldSecondary(UIEvent e)
+        public virtual void OnMouseHoldSecondary(UIEvent e, Input input)
         { }
 
         /// <summary>

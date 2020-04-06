@@ -2,6 +2,9 @@ using Crystal.Framework.Graphics;
 
 namespace Crystal.Framework.LowLevel
 {
+    /// <summary>
+    /// TODO: Remove
+    /// </summary>
     public static class CrystalInitialization
     {
         /// <summary>
@@ -16,7 +19,6 @@ namespace Crystal.Framework.LowLevel
         {
             CanvasFactory.Instance = canvasFactory;
             Scaler.Instance = scaler;
-            Input.Instance = input;
         }
     }
 }

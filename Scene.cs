@@ -12,11 +12,6 @@ namespace Crystal.Framework
     public abstract class Scene : IDisposable
     {
         /// <summary>
-        /// The object to which we can delegate draw calls
-        /// </summary>
-        public IDrawer Drawer;
-
-        /// <summary>
         /// The default theme of the UI
         /// </summary>
         public ITheme Theme
@@ -32,8 +27,7 @@ namespace Crystal.Framework
         public IContentManager Content;
 
         /// <summary>
-        /// The design size of this scene. You can assume the screen is always
-        /// this size, and the engine will scale everything accordingly
+        /// The design size of this scene
         /// </summary>
         public readonly Point Size = new Point(1280, 720);
 
@@ -58,6 +52,9 @@ namespace Crystal.Framework
         /// </summary>
         private Dictionary<string, object> resources = new Dictionary<string, object>();
 
+        /// <summary>
+        /// This scene's name, used for identification purposes
+        /// </summary>
         public readonly string Name;
 
         public Scene(string name, Point? size = null)
@@ -117,7 +114,7 @@ namespace Crystal.Framework
         /// <summary>
         /// Initialize all this scenes systems
         /// </summary>
-        public void Initialize()
+        public virtual void Initialize()
         {
             if (this.initialized)
             {
@@ -141,11 +138,9 @@ namespace Crystal.Framework
         /// Update all this scene's systems
         /// </summary>
         /// <param name="deltaTime">Time in seconds elapsed since last update</param>
-        public void Update(float deltaTime)
+        public void Update(float deltaTime, Input input)
         {
-            Input.Instance.Update(deltaTime);
-
-            this.widgets.UpdateInput(Input.Instance);
+            this.widgets.UpdateInput(input);
 
             foreach (var system in this.systems)
             {
@@ -156,13 +151,13 @@ namespace Crystal.Framework
         /// <summary>
         /// Draws the game state
         /// </summary>
-        public void Render(float deltaTime)
+        public void Render(float deltaTime, IDrawer drawer)
         {
             this.BeforeRender();
 
             foreach (var renderer in this.renderers)
             {
-                renderer.Render(this, deltaTime);
+                renderer.Render(this, drawer, deltaTime);
             }
 
             this.AfterRender();

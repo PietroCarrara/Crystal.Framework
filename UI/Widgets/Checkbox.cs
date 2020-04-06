@@ -23,7 +23,7 @@ namespace Crystal.Framework.UI.Widgets
             }
         }
 
-        public override void OnMouseClick(UIEvent e)
+        public override void OnMouseClick(UIEvent e, Input input)
         {
             this.Value = !value;
             e.PreventPropagation();
