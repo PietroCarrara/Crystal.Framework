@@ -10,7 +10,6 @@ namespace Crystal.Framework.Renderers
     public class CameraSpriteRenderer : IRenderer
     {
         private SamplerState sampler;
-        private Canvas canvas;
         private Matrix4x4 scale;
 
         public CameraSpriteRenderer(SamplerState sampler = SamplerState.LinearClamp)
@@ -20,14 +19,12 @@ namespace Crystal.Framework.Renderers
 
         public void Initialize(Scene scene)
         {
-            this.canvas = scene.Canvases.Create(scene.Size);
-
             this.scale = Scaler.Instance.ScaleMatrix(
-                new TextureSlice(Point.Zero, canvas.Size),
+                new TextureSlice(Point.Zero, scene.Canvas.Size),
                 new TextureSlice(Point.Zero, scene.Size)
             );
 
-            this.canvas.SizeChanged += (c, size) =>
+            scene.Canvas.SizeChanged += (c, size) =>
             {
                 this.scale = Scaler.Instance.ScaleMatrix(
                     new TextureSlice(Point.Zero, size),
@@ -38,8 +35,6 @@ namespace Crystal.Framework.Renderers
 
         public void Render(Scene s, IDrawer drawer, float delta)
         {
-            canvas.Clear();
-
             var camera = s.Entities
                 .With<Camera>()
                 .Many()
@@ -59,7 +54,7 @@ namespace Crystal.Framework.Renderers
                 .Many();
 
             drawer.BeginDraw(
-                this.canvas,
+                s.Canvas,
                 transformMatrix: this.scale * cam.TransformationMatrix,
                 samplerState: sampler
             );

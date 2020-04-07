@@ -8,8 +8,15 @@ namespace Crystal.Framework.Content
     ///
     /// Otherwise, you are better using scene.Resource()
     /// </summary>
-    public interface IContentManager
+    public interface IContentManager : IDisposable
     {
-        T Load<T>(string path) where T : IDisposable;
+        /// <summary>
+        /// Load an asset
+        /// </summary>
+        /// <param name="path">Path to the asset</param>
+        /// <param name="manage">Should the content manager handle disposing?</param>
+        /// <typeparam name="T">Type of the object to be loaded</typeparam>
+        /// <returns>The loaded resource</returns>
+        T Load<T>(string path, bool manage = true) where T : IDisposable;
     }
 }

@@ -27,6 +27,11 @@ namespace Crystal.Framework
         public IContentManager Content;
 
         /// <summary>
+        /// Color to clear the canvas with
+        /// </summary>
+        public Color ClearColor;
+
+        /// <summary>
         /// The design size of this scene
         /// </summary>
         public readonly Point Size = new Point(1280, 720);
@@ -36,13 +41,11 @@ namespace Crystal.Framework
         private EntityStorage entities = new EntityStorage();
         private SystemStorage systems = new SystemStorage();
         private RendererStorage renderers = new RendererStorage();
-        private CanvasStorage canvases = new CanvasStorage();
         private WidgetStorage widgets = new WidgetStorage();
         private InputActionStorage actions = new InputActionStorage();
 
         public EntityStorage Entities => entities;
         public WidgetStorage UI => widgets;
-        public CanvasStorage Canvases => canvases;
         public InputActionStorage Actions => actions;
 
         /// <summary>
@@ -50,21 +53,37 @@ namespace Crystal.Framework
         /// The idea is that you preload assets into your scene and
         /// then access them here
         /// </summary>
-        private Dictionary<string, object> resources = new Dictionary<string, object>();
+        private Dictionary<string, IDisposable> resources = new Dictionary<string, IDisposable>();
 
         /// <summary>
         /// This scene's name, used for identification purposes
         /// </summary>
         public readonly string Name;
 
-        public Scene(string name, Point? size = null)
+        /// <summary>
+        /// The main canvas of this scene. It's contents are displayed on the
+        /// screen after the end of each render call
+        /// </summary>
+        public readonly IResizeableRenderTarget Canvas;
+
+        /// <summary>
+        /// A canvas that is always the size of the window
+        /// </summary>
+        public readonly IRenderTarget WindowCanvas;
+
+        /// <summary>
+        /// Creates a new scene
+        /// </summary>
+        /// <param name="name">The scene name</param>
+        /// <param name="size">The design resolution size</param>
+        /// <param name="canvas">The canvas where the scene draws</param>
+        /// <param name="windowCanvas">The canvas where the scene draw, should always be at the window size</param>
+        public Scene(string name, Point size, IResizeableRenderTarget canvas, IRenderTarget windowCanvas)
         {
             this.Name = name;
-
-            if (size.HasValue)
-            {
-                this.Size = size.Value;
-            }
+            this.Size = size;
+            this.Canvas = canvas;
+            this.WindowCanvas = windowCanvas;
         }
 
         /// <summary>
@@ -155,6 +174,9 @@ namespace Crystal.Framework
         {
             this.BeforeRender();
 
+            this.Canvas.Clear(ClearColor);
+            this.WindowCanvas.Clear(ClearColor);
+
             foreach (var renderer in this.renderers)
             {
                 renderer.Render(this, drawer, deltaTime);
@@ -223,19 +245,21 @@ namespace Crystal.Framework
         /// <param name="name">Resource name</param>
         /// <typeparam name="T">The resource type</typeparam>
         /// <returns>The resource</returns>
-        public T Resource<T>(string name)
+        public T Resource<T>(string name) where T : IDisposable
         {
             return (T)this.resources[name];
         }
 
-        public void AddResource(string name, object res)
+        public void AddResource(string name, IDisposable res)
         {
             this.resources.Add(name, res);
         }
 
         public void Dispose()
         {
-            this.Canvases.Dispose();
+            this.Content.Dispose();
+            this.Canvas.Dispose();
+            this.WindowCanvas.Dispose();
         }
     }
 }

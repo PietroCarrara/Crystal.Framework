@@ -5,19 +5,13 @@ using Crystal.Framework.UI.Widgets;
 
 namespace Crystal.Framework.Renderers
 {
-    /// <summary>
-    /// Naive UI rendering
-    /// Does not implement damage control
-    /// </summary>
     public class UIRenderer : IRenderer
     {
-        private Canvas canvas;
-
         public void Initialize(Scene scene)
         {
-            this.canvas = scene.Canvases.Create();
-            scene.UI.Root.AvailableArea = new TextureSlice(Point.Zero, canvas.Size);
-            canvas.SizeChanged += (c, size) =>
+            // TODO: Remove
+            scene.UI.Root.AvailableArea = new TextureSlice(Point.Zero, scene.WindowCanvas.Size);
+            scene.WindowCanvas.SizeChanged += (c, size) =>
             {
                 scene.UI.Root.AvailableArea = new TextureSlice(Point.Zero, size);
             };
@@ -25,10 +19,8 @@ namespace Crystal.Framework.Renderers
 
         public void Render(Scene scene, IDrawer drawer, float delta)
         {
-            canvas.Clear();
-
             drawer.BeginDraw(
-                canvas,
+                scene.WindowCanvas,
                 samplerState: SamplerState.PointClamp
             );
             drawWidget(scene.UI.Root, delta, drawer);

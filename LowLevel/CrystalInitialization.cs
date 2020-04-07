@@ -12,12 +12,9 @@ namespace Crystal.Framework.LowLevel
         /// Must be run before doing anything
         /// </summary>
         public static void Execute(
-            CanvasFactory canvasFactory,
-            IScaler scaler,
-            Input input
+            IScaler scaler
         )
         {
-            CanvasFactory.Instance = canvasFactory;
             Scaler.Instance = scaler;
         }
     }
