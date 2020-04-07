@@ -21,15 +21,9 @@ namespace Crystal.Framework
         }
 
         /// <summary>
-        /// Dynamic loader of content. Use only if your
-        /// content can't be used with scene.Resource()
-        /// </summary>
-        public IContentManager Content;
-
-        /// <summary>
         /// Color to clear the canvas with
         /// </summary>
-        public Color ClearColor;
+        public Color ClearColor = Color.Black;
 
         /// <summary>
         /// The design size of this scene
@@ -49,16 +43,10 @@ namespace Crystal.Framework
         public InputActionStorage Actions => actions;
 
         /// <summary>
-        /// Dictionary of resources
-        /// The idea is that you preload assets into your scene and
-        /// then access them here
+        /// Dynamic loader of content. Use only if your
+        /// content can't be used with scene.Resource()
         /// </summary>
-        private Dictionary<string, IDisposable> resources = new Dictionary<string, IDisposable>();
-
-        /// <summary>
-        /// This scene's name, used for identification purposes
-        /// </summary>
-        public readonly string Name;
+        public readonly IContentManager Content;
 
         /// <summary>
         /// The main canvas of this scene. It's contents are displayed on the
@@ -74,14 +62,16 @@ namespace Crystal.Framework
         /// <summary>
         /// Creates a new scene
         /// </summary>
-        /// <param name="name">The scene name</param>
         /// <param name="size">The design resolution size</param>
         /// <param name="canvas">The canvas where the scene draws</param>
         /// <param name="windowCanvas">The canvas where the scene draw, should always be at the window size</param>
-        public Scene(string name, Point size, IResizeableRenderTarget canvas, IRenderTarget windowCanvas)
+        public Scene(Point size,
+                     IContentManager content,
+                     IResizeableRenderTarget canvas,
+                     IRenderTarget windowCanvas)
         {
-            this.Name = name;
             this.Size = size;
+            this.Content = content;
             this.Canvas = canvas;
             this.WindowCanvas = windowCanvas;
         }
@@ -163,7 +153,7 @@ namespace Crystal.Framework
 
             foreach (var system in this.systems)
             {
-                system.Update(this, deltaTime);
+                system.Update(this, input, deltaTime);
             }
         }
 
@@ -237,22 +227,6 @@ namespace Crystal.Framework
         public IEntity Entity(string name = null)
         {
             return this.Add(new Entity(name));
-        }
-
-        /// <summary>
-        /// Fetch a preloaded resource
-        /// </summary>
-        /// <param name="name">Resource name</param>
-        /// <typeparam name="T">The resource type</typeparam>
-        /// <returns>The resource</returns>
-        public T Resource<T>(string name) where T : IDisposable
-        {
-            return (T)this.resources[name];
-        }
-
-        public void AddResource(string name, IDisposable res)
-        {
-            this.resources.Add(name, res);
         }
 
         public void Dispose()
