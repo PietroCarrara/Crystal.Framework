@@ -60,6 +60,11 @@ namespace Crystal.Framework
         public readonly IRenderTarget WindowCanvas;
 
         /// <summary>
+        /// How to scale the canvases when drawing
+        /// </summary>
+        public readonly IScaler Scaler;
+
+        /// <summary>
         /// Creates a new scene
         /// </summary>
         /// <param name="size">The design resolution size</param>
@@ -68,12 +73,14 @@ namespace Crystal.Framework
         public Scene(Point size,
                      IContentManager content,
                      IResizeableRenderTarget canvas,
-                     IRenderTarget windowCanvas)
+                     IRenderTarget windowCanvas,
+                     IScaler scaler)
         {
             this.Size = size;
             this.Content = content;
             this.Canvas = canvas;
             this.WindowCanvas = windowCanvas;
+            this.Scaler = scaler;
         }
 
         /// <summary>

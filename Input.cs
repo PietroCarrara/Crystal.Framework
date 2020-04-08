@@ -40,7 +40,7 @@ namespace Crystal.Framework
         /// <summary>
         /// Returns the position of the mouse relative to window
         /// </summary>
-        public abstract Vector2 MousePosition { get; }
+        public abstract Vector2 GetMousePositionRaw();
 
         /// <summary>
         /// Tells if a button is being pressed this exact frame

@@ -1,7 +1,6 @@
 using System.Numerics;
 using System;
 using System.Linq;
-using Crystal.Framework.LowLevel;
 using Crystal.Framework.Components;
 using Crystal.Framework.Graphics;
 
@@ -19,14 +18,14 @@ namespace Crystal.Framework.Renderers
 
         public void Initialize(Scene scene)
         {
-            this.scale = Scaler.Instance.ScaleMatrix(
+            this.scale = scene.Scaler.ScaleMatrix(
                 new TextureSlice(Point.Zero, scene.Canvas.Size),
                 new TextureSlice(Point.Zero, scene.Size)
             );
 
             scene.Canvas.SizeChanged += (c, size) =>
             {
-                this.scale = Scaler.Instance.ScaleMatrix(
+                this.scale = scene.Scaler.ScaleMatrix(
                     new TextureSlice(Point.Zero, size),
                     new TextureSlice(Point.Zero, scene.Size)
                 );

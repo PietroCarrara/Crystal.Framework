@@ -47,7 +47,7 @@ namespace Crystal.Framework.UI.Widgets
 
         public override void OnMouseClick(UIEvent e, Input input)
         {
-            var mousePos = input.MousePosition;
+            var mousePos = input.GetMousePositionRaw();
 
             var area = TextureSlice.Union(knob.Layout.Area, slider.Layout.Area);
 
@@ -59,7 +59,7 @@ namespace Crystal.Framework.UI.Widgets
 
         public override void OnMouseHold(UIEvent e, Input input)
         {
-            var mousePos = input.MousePosition;
+            var mousePos = input.GetMousePositionRaw();
 
             var area = TextureSlice.Union(knob.Layout.Area, slider.Layout.Area);
 

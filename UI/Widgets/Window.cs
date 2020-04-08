@@ -107,7 +107,7 @@ namespace Crystal.Framework.UI.Widgets
 
         public override void OnMouseClick(UIEvent e, Input input)
         {
-            this.mousePos = input.MousePosition;
+            this.mousePos = input.GetMousePositionRaw();
         }
 
         public override void OnMouseReleased(UIEvent e, Input input)
@@ -122,15 +122,15 @@ namespace Crystal.Framework.UI.Widgets
                 return;
             }
 
-            this.Position += input.MousePosition - mousePos.Value;
-            this.mousePos = input.MousePosition;
+            this.Position += input.GetMousePositionRaw() - mousePos.Value;
+            this.mousePos = input.GetMousePositionRaw();
             e.PreventPropagation();
             this.ChangeState();
         }
 
         public override void OnMouseClickSecondary(UIEvent e, Input input)
         {
-            startMousePosSecondary = mousePosSecondary = input.MousePosition;
+            startMousePosSecondary = mousePosSecondary = input.GetMousePositionRaw();
         }
 
         public override void OnMouseReleasedSecondary(UIEvent e, Input input)
@@ -152,7 +152,7 @@ namespace Crystal.Framework.UI.Widgets
             var bottom = windowArea.BottomRight.Y - startMousePosSecondary.Value.Y;
 
             // The mouse movement since the last frame
-            var diff = input.MousePosition - this.mousePosSecondary.Value;
+            var diff = input.GetMousePositionRaw() - this.mousePosSecondary.Value;
 
             // Analyze the mouse movement based on the edge it's touching
             // and check if we can still grow/shrink
@@ -191,7 +191,7 @@ namespace Crystal.Framework.UI.Widgets
                 this.position.Y += diff.Y * this.Alignment.Y;
             }
 
-            this.mousePosSecondary = input.MousePosition;
+            this.mousePosSecondary = input.GetMousePositionRaw();
             e.PreventPropagation();
             this.ChangeState();
         }

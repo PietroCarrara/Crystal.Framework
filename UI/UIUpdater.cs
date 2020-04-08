@@ -68,7 +68,7 @@ namespace Crystal.Framework.UI
         /// <param name="input">Object to query for mouse position information</param>
         private IEnumerable<Widget> pathUnderMouse(IEnumerable<Widget> widgets, Input input)
         {
-            var mousePos = input.MousePosition;
+            var mousePos = input.GetMousePositionRaw();
 
             var widget = widgets.Where(w => w.Layout.Area.Contains(mousePos)).FirstOrDefault();
 
