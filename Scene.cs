@@ -21,11 +21,6 @@ namespace Crystal.Framework
         }
 
         /// <summary>
-        /// Color to clear the canvas with
-        /// </summary>
-        public Color ClearColor = Color.Black;
-
-        /// <summary>
         /// The design size of this scene
         /// </summary>
         public readonly Point Size = new Point(1280, 720);
@@ -171,8 +166,8 @@ namespace Crystal.Framework
         {
             this.BeforeRender();
 
-            this.Canvas.Clear(ClearColor);
-            this.WindowCanvas.Clear(ClearColor);
+            this.Canvas.Clear(Color.Transparent);
+            this.WindowCanvas.Clear(Color.Transparent);
 
             foreach (var renderer in this.renderers)
             {

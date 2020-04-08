@@ -1,9 +1,10 @@
-namespace Crystal.Framework
+namespace Crystal.Framework.Graphics
 {
     public struct Color
     {
         public static Color White => new Color(255, 255, 255);
         public static Color Black => new Color(0, 0, 0);
+        public static Color Transparent => new Color(255, 255, 255, 0);
 
         public byte R { get => Red; set => Red = value; }
         public byte G { get => Green; set => Green = value; }
