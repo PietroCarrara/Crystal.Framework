@@ -7,15 +7,9 @@ namespace Crystal.Framework.UI
         /// </summary>
         public readonly char Character;
 
-        /// <summary>
-        /// The button that was pressed to produce this key
-        /// </summary>
-        public readonly Buttons Button;
-
-        public TextInputData(char character, Buttons button)
+        public TextInputData(char character)
         {
             this.Character = character;
-            this.Button = button;
         }
     }
 }

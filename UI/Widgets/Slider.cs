@@ -66,7 +66,7 @@ namespace Crystal.Framework.UI.Widgets
             if (area.Contains(mousePos))
             {
                 var pos = mousePos.X - slider.Layout.Area.TopLeft.X;
-                Value = Math.Min(Math.Max(pos / slider.Layout.Area.Width, 0), 1);
+                Value = Math.Clamp(pos / slider.Layout.Area.Width, 0, 1);
 
                 e.PreventPropagation();
             }

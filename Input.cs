@@ -15,7 +15,7 @@ namespace Crystal.Framework
         /// <summary>
         /// Returns the text data of the keys that were pressed this frame.
         /// This should return info concerning TEXT input, aware of the OS
-        /// keyboard layout, key repetition, and such
+        /// keyboard layout, key repetition, modifier keys, and such
         /// </summary>
         public abstract IEnumerable<TextInputData> GetText();
 

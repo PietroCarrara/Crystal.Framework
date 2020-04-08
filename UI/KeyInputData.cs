@@ -5,7 +5,7 @@ namespace Crystal.Framework.UI
         /// <summary>
         /// The pressed key
         /// </summary>
-        public readonly Buttons Key = Buttons.None;
+        public readonly Buttons Key;
 
         public KeyInputData(Buttons key)
         {
